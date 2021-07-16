@@ -16,6 +16,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const enhancer = applyMiddleware(...middlewares);
-let store = compose(createStore(rootReducer, enhancer));
+const store = compose(createStore(rootReducer, enhancer));
 
 export default store;

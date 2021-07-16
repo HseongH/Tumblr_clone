@@ -11,6 +11,8 @@ import { Text, Title, Image } from '../elements/index';
 const PostStyle = styled.article`
   width: ${(props) => props.theme.size.postWidth};
   background: ${(props) => `rgb(${props.theme.palette.white})`};
+  margin-bottom: 20px;
+  position: relative;
   ${borderBox('3px', '15px 20px')};
 
   header {

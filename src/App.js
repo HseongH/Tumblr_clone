@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 // STYLE
 import theme from './common/style';
+import Post from './components/Post';
 
 // ELEMENTS
 import Container from './elements/Container';
@@ -12,7 +13,9 @@ import Container from './elements/Container';
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Container></Container>
+      <Container>
+        <Post></Post>
+      </Container>
     </ThemeProvider>
   );
 }

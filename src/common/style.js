@@ -3,8 +3,8 @@ import { css } from 'styled-components';
 export const flexBox = (sortHoz = 'center', sortVer = 'center') => {
   return css`
     display: flex;
-    justify-content: ${sortVer};
-    align-items: ${sortHoz};
+    justify-content: ${sortHoz};
+    align-items: ${sortVer};
   `;
 };
 

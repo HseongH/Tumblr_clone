@@ -11,7 +11,7 @@ const ConStyle = styled.div`
   line-height: 1.25;
   min-height: 100vh;
   width: 100%;
-  padding-top: 40px;
+  padding-top: 80px;
 
   div {
     max-width: 990px;

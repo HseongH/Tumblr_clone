@@ -3,10 +3,13 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createBrowserHistory } from 'history';
 import thunk from 'redux-thunk';
 
+// REDUCER
+import user from './modules/user';
+
 // HISTORY
 export const history = createBrowserHistory();
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({ user });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

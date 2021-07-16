@@ -1,17 +1,17 @@
 // axios
-import instance from "../../common/axios";
+import instance from '../../common/axios';
 
 // redux-actions & immer
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
 
 // function
 
 //actions
-const LOG_IN = "LOG_IN";
-const LOG_OUT = "LOG_OUT";
-const AUTH = "AUTH";
-const CHECK_EMAIL = "CHECK_EMAIL";
+const LOG_IN = 'LOG_IN';
+const LOG_OUT = 'LOG_OUT';
+const AUTH = 'AUTH';
+const CHECK_EMAIL = 'CHECK_EMAIL';
 
 // userId, nickname, profile
 // action creators
@@ -39,7 +39,7 @@ const initialState = {
 const authDB = () => {
   return function (dispatch) {
     instance
-      .post("api/user/me")
+      .post('api/user/me')
       .then((res) => {
         dispatch(auth(res.data));
       })
@@ -52,7 +52,7 @@ const authDB = () => {
 const loginAction = (user) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post("/api/login", user)
+      .post('/api/login', user)
       .then((res) => {
         const userInfo = {
           userId: res.data.userId,
@@ -65,11 +65,11 @@ const loginAction = (user) => {
 
         //   setCookie(res.data.cookie);
 
-        history.push("/");
+        history.push('/');
       })
       .catch((error) => {
         console.log(error);
-        window.alert("이메일 또는 패스워드가 올바르지 않습니다.");
+        window.alert('이메일 또는 패스워드가 올바르지 않습니다.');
       });
   };
 };
@@ -84,29 +84,31 @@ const logInCheck = (cookie) => {
 
 const checkEmail = (id) => {
   return function (dispatch) {
-    instance.post("/api/login/email").then((res) => {
-      dispatch(emailCheck(true));
-      window.alert('사용 가능한 이메일입니다.');
-    })
-    .catch((error) => {
+    instance
+      .post('/api/login/email')
+      .then((res) => {
+        dispatch(emailCheck(true));
+        window.alert('사용 가능한 이메일입니다.');
+      })
+      .catch((error) => {
         dispatch(emailCheck(false));
         window.alert('이미 존재하는 이메일입니다.');
-    })
+      });
   };
 };
 
 const signupDB = (email, pwd, bgName) => {
-    return function () {
-        instance
-        .post('/api/sign', {userId: email, password: pwd, blogName: bgName})
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.messge;
+  return function () {
+    instance
+      .post('/api/sign', { userId: email, password: pwd, blogName: bgName })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.messge;
 
-            console.log(errorCode, errorMessage);
-        })
-    }
-}
+        console.log(errorCode, errorMessage);
+      });
+  };
+};
 
 // reducer
 export default handleActions(
@@ -133,9 +135,9 @@ export default handleActions(
         draft.is_login = false;
       }),
 
-      [CHECK_EMAIL]: (state, action) =>
+    [CHECK_EMAIL]: (state, action) =>
       produce(state, (draft) => {
-          draft.is_check = action.payload.email;
+        draft.is_check = action.payload.email;
       }),
   },
   initialState

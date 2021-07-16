@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-export const flexBox = (sortVer = 'center', sortHoz = 'center') => {
+export const flexBox = (sortHoz = 'center', sortVer = 'center') => {
   return css`
     display: flex;
     justify-content: ${sortVer};

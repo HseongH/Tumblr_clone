@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Text } from "../elements";
-
 const InputBox = (props) => {
 
     return(
         <div>
-            <Text>Tumblr</Text>
+            <TitleStyle>tumblr</TitleStyle>
             <InputStyle placeholder="이메일" />
         </div>
     );
@@ -20,6 +18,13 @@ const InputStyle = styled.input`
     border: none;
     font-size: 16px;
     line-height: 1.4;
+`;
+
+const TitleStyle = styled.h1`
+    font-size: 64px;
+    font-weight: 800;
+    text-align: center;
+    color: white;
 `;
 
 InputBox.defaultProps = {};

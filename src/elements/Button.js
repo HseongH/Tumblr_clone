@@ -13,7 +13,7 @@ const ButtonStyle = styled.button`
   padding: ${(props) => props.padding};
   border: none;
   cursor: pointer;
-  ${borderBox()};
+  ${(props) => borderBox(props.radius, props.padding)};
 
   ${(props) => props.appendStyle()};
 `;

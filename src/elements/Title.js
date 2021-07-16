@@ -1,21 +1,24 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const TitleStyle = styled.h2`
-    font-size: ${(props) => props.fontSize};
-    margin: ${(props) => props.margin};
-    line-height: ${(props) => props.lineHeight};
-    text-align: ${(props) => props.textAlign};
-    font-weight: ${(props) => props.fontWeight};
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight};
+  line-height: ${(props) => props.lineHeight};
+  margin: ${(props) => props.margin};
+  text-align: ${(props) => props.textAlign};
+
+  ${(props) => props.appendStyle()};
 `;
 
 const Title = ({ children, ...props }) => {
-    return <TitleStyle {...props}>{children}</TitleStyle>
-}
+  return <TitleStyle {...props}>{children}</TitleStyle>;
+};
 
 Title.defaultProps = {
-    fontSize: '16px',
-    lineHeight: 1.5,
-}
+  lineHeight: 1.5,
+  fontWeight: 700,
+  appendStyle: () => {},
+};
 
 export default Title;

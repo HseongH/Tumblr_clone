@@ -17,6 +17,7 @@ const ConStyle = styled.div`
     padding: 0 8px;
     box-sizing: border-box;
     margin: 40px auto 0;
+    position: relative;
   }
 `;
 

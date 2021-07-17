@@ -33,6 +33,7 @@ export const borderBox = (radius = '3px', padding = 0) => {
 const theme = {
   palette: {
     black: '0, 0, 0',
+    gray: '157, 166, 175',
     white: '255, 255, 255',
     whiteOnDark: '255, 255, 255',
     navy: '0, 25, 53',

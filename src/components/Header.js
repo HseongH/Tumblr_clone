@@ -1,33 +1,38 @@
-import React from "react";
-import styled from "styled-components";
-import Logo from "./Logo";
+import React from 'react';
+import styled from 'styled-components';
 
-import { flexBox } from "../common/style";
-import { Input, Button } from "../elements/index";
-import ButtonContainer from "./ButtonContainer";
+import { flexBox, flexVer } from '../common/style';
+import { Input, Button, Grid, Image } from '../elements/index';
+import Logo from './Logo';
 
 import { Link } from "react-router-dom";
 
 const Header = (props) => {
   return (
-    <HeaderStyle>  
-      <HeaderWrap>  {/* flexBox함수 넣기 */}  
-        <Logo>  {/* Logo에 링크태그 */}
-          <Link to="/" />
+    <HeaderStyle>
+      {/* flexBox함수 들어가야됨 */}
+      <div>
+        {/* 로고에 링크 태그 들어가야됨 */}
+        <Logo>
+          <Image
+            src="https://seeklogo.com/images/T/tumblr-icon-logo-A42B4BE5C1-seeklogo.com.png"
+            alt="tumblr logo"
+          />
         </Logo>
-        <div> {/* div 크기 설정 */}
-          <span></span>  {/* span 태그로 검색 아이콘 넣기 */}
+        <div>
+          {/* div 크기 설정 */}
+          {/* span 태그로 검색 아이콘 넣기 */}
           <Input placeholder="Tumblr 검색" />
         </div>
-      </HeaderWrap>
+      </div>
 
-      <ButtonContainer>
+      <Grid appendStyle={flexVer}>
         {/* 버튼 안에 아이콘 넣고 마진값 설정, 작성 버튼 크기 지정해주고 background-color 지정, 링크 태그 들어가야됨 */}
         <Button></Button>
         <Button></Button>
         <Button></Button>
         <Button></Button>
-      </ButtonContainer>
+      </Grid>
     </HeaderStyle>
   );
 };

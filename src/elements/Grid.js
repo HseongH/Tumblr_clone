@@ -14,8 +14,8 @@ const GridStyle = styled.div`
   ${(props) => props.appendStyle()};
 `;
 
-const Grid = ({ chileren, ...props }) => {
-  return <GridStyle {...props}>{chileren}</GridStyle>;
+const Grid = ({ children, ...props }) => {
+  return <GridStyle {...props}>{children}</GridStyle>;
 };
 
 Grid.propTypes = {

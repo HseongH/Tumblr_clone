@@ -5,6 +5,8 @@ import { flexBox, flexVer } from '../common/style';
 import { Input, Button, Grid, Image } from '../elements/index';
 import Logo from './Logo';
 
+import { Link } from "react-router-dom";
+
 const Header = (props) => {
   return (
     <HeaderStyle>
@@ -35,8 +37,14 @@ const Header = (props) => {
   );
 };
 
+const HeaderWrap = styled.div`
+  ${flexBox()};
+  width: 100%; 
+  height: 54px;
+`;
+
 const HeaderStyle = styled.header`
-  ${flexBox('space-between')}
+  ${flexBox("space-between")};
   width: 100%;
   max-width: 1716px;
   padding: 0 20px 0 22px;

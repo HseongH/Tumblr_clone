@@ -7,6 +7,8 @@ import { borderBox } from '../common/style';
 
 const InputStyle = styled.input`
   width: ${(props) => props.width};
+  height: ${(props) => props.width};
+  padding: ${(props) => props.padding};
   background: ${(props) => `rgba(${props.theme.palette.white}), .5`};
   color: ${(props) => `rgb(${props.theme.palette[props.color]})`};
   margin: ${(props) => props.margin};

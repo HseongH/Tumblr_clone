@@ -35,8 +35,16 @@ const InputStyle = styled.input`
   ${(props) => props.appendStyle()};
 `;
 
-const Input = ({ placeholder, value, changeEvent, ...props }) => {
-  return <InputStyle placeholder={placeholder} value={value} onChange={changeEvent} {...props} />;
+const Input = ({ type, placeholder, value, changeEvent, ...props }) => {
+  return (
+    <InputStyle
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={changeEvent}
+      {...props}
+    />
+  );
 };
 
 Input.defaultProps = {

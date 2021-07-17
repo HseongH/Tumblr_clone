@@ -10,7 +10,6 @@ const ButtonStyle = styled.button`
   color: ${(props) => `rgb(${props.theme.palette[props.color]})`};
   font-size: ${(props) => props.fontSize};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding};
   border: none;
   cursor: pointer;
   ${(props) => borderBox(props.radius, props.padding)};

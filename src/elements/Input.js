@@ -1,4 +1,5 @@
 // LIBRARY
+import { rgba } from 'polished';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -7,7 +8,7 @@ import { borderBox } from '../common/style';
 
 const InputStyle = styled.input`
   width: ${(props) => props.width};
-  background: ${(props) => `rgba(${props.theme.palette.white}, 0.3)`};
+  background: ${(props) => props.bgColor};
   color: ${(props) => `rgb(${props.theme.palette[props.color]})`};
   margin: ${(props) => props.margin};
   font-size: ${(props) => props.fontSize};
@@ -61,6 +62,7 @@ const Input = ({ type, placeholder, value, changeEvent, ...props }) => {
 };
 
 Input.defaultProps = {
+  bgColor: 'none',
   type: 'text',
   color: 'white',
   width: '100%',

@@ -7,7 +7,7 @@ import { flexBox } from '../common/style';
 // ELEMETS
 import { Grid, Button, FixedBox } from '../elements/index';
 
-const Modal = ({ children, text, isVisible, color, bgColor, fontSize }) => {
+const Modal = ({ children, cancle, submit, isVisible, color, bgColor, fontSize }) => {
   const [visible, setVisible] = useState(isVisible);
 
   if (visible) {
@@ -29,10 +29,10 @@ const Modal = ({ children, text, isVisible, color, bgColor, fontSize }) => {
                 setVisible(false);
               }}
             >
-              닫기
+              {cancle}
             </Button>
             <Button color={color} fontSize={fontSize} bgColor="accent" padding="5px 7px">
-              {text}
+              {submit}
             </Button>
           </Grid>
         </Grid>

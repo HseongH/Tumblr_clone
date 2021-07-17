@@ -5,40 +5,44 @@ import React, { useState } from 'react';
 import { flexBox } from '../common/style';
 
 // ELEMETS
-import { Grid, Button } from '../elements/index';
+import { Grid, Button, FixedBox } from '../elements/index';
 
-const Modal = ({ children, text, isVisible, ...props }) => {
-  const [visible, setVisible] = useState(false);
+const Modal = ({ children, text, isVisible, color, bgColor, fontSize }) => {
+  const [visible, setVisible] = useState(isVisible);
 
   if (visible) {
     return (
-      <Grid>
-        {children}
-        <Grid
-          appendStyle={() => {
-            flexBox('space-between');
-          }}
-        >
-          <Button
-            bgColor="gray"
-            padding="5px 7px"
-            clickEvent={() => {
-              setVisible(false);
+      <FixedBox>
+        <Grid color={bgColor}>
+          {children}
+          <Grid
+            appendStyle={() => {
+              flexBox('space-between');
             }}
           >
-            닫기
-          </Button>
-          <Button bgColor="accent" padding="5px 7px">
-            {text}
-          </Button>
+            <Button
+              color={color}
+              fontSize={fontSize}
+              bgColor="gray"
+              padding="5px 7px"
+              clickEvent={() => {
+                setVisible(false);
+              }}
+            >
+              닫기
+            </Button>
+            <Button color={color} fontSize={fontSize} bgColor="accent" padding="5px 7px">
+              {text}
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      </FixedBox>
     );
   }
 
   return null;
 };
 
-Modal.propTypes = {};
+Modal.defaultProps = {};
 
 export default Modal;

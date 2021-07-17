@@ -7,7 +7,7 @@ import { borderBox } from '../common/style';
 
 const GridStyle = styled.div`
   width: ${(props) => (props.width ? props.width : props.theme.size.postWidth)};
-  background: ${(props) => `rgb(${props.theme.palette[props.color]})`};
+  background: ${(props) => `rgba(${props.theme.palette[props.color]}, ${props.opacity})`};
   margin: ${(props) => props.margin};
   ${(props) => borderBox(props.radius, props.padding)};
 
@@ -20,6 +20,7 @@ const Grid = ({ chileren, ...props }) => {
 
 Grid.propTypes = {
   color: 'white',
+  opacity: 1,
   appendStyle: () => {},
 };
 

@@ -18,7 +18,7 @@ const InputBox = ({ children, ...props }) => {
           fontWeight: "bold",
           fontSize: "60px",
           padding: "14px",
-          marginTop: "20%"
+          marginTop: "10%"
         }}
       >
         tumblr
@@ -34,10 +34,13 @@ const InputBoxStyle = styled.div`
   height: ${(props) => props.height};
   flex-direction: column;
   margin-top: 25%;
+  background-color: ${(props) => props.bgColor}
 `;
 
 InputBox.defaultProps = {
+  width: "100%",
   height: "100%",
+  bgColor: "none",
 };
 
 export default InputBox;

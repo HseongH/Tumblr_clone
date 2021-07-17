@@ -7,12 +7,17 @@ import { ThemeProvider } from 'styled-components';
 import theme from './common/style';
 import Post from './components/Post';
 
+// COMPONENTS
+import Header from './components/Header';
+
 // ELEMENTS
 import Container from './elements/Container';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <Header />
+      
       <Container>
         <Post></Post>
       </Container>

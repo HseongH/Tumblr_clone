@@ -28,13 +28,13 @@ const Header = (props) => {
             alt="tumblr logo"
           />
         </Logo>
-        <div style={{ backgroundColor: "rgba(255, 255, 255, 0.3)", display: "flex" }}>
+        <Grid appendStyle={flexVer} style={{ backgroundColor: "rgba(255, 255, 255, 0.3)", display: "flex" }}>
           <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>
             <SearchIcon fontSize="large" />
           </span>
 
-          <Input placeholder="Tumblr 검색" width="500px" />
-        </div>
+          <Input placeholder="Tumblr 검색" />
+        </Grid>
       </HeaderWrap>
 
       <Grid appendStyle={flexVer} margin="0 0 0 35%">
@@ -79,12 +79,10 @@ const HeaderStyle = styled.header`
 const ButtonBoxStyle = styled.div`
   display: flex;
   & button {
-    margin: 0 8px;
+    margin: 0 10px;
     color: rgba(255, 255, 255, 0.5);
   }
 `;
-
-const SearchIconStyle = styled.div``;
 
 Header.defaultProps = {};
 

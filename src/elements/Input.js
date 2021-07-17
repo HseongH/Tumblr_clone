@@ -61,6 +61,7 @@ const Input = ({ type, placeholder, value, changeEvent, ...props }) => {
 };
 
 Input.defaultProps = {
+  type: 'text',
   color: 'white',
   width: '100%',
   fontSize: '16px',

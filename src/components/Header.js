@@ -56,7 +56,7 @@ const Header = (props) => {
 };
 
 const HeaderWrap = styled.div`
-  ${flexBox()};
+  ${flexBox('left')};
   width: 100%;
   height: 54px;
 `;

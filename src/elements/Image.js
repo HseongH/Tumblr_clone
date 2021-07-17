@@ -4,6 +4,8 @@ import styled from 'styled-components';
 const ImageStyle = styled.img`
   display: block;
   cursor: pointer;
+  width: 54px;
+  height: 54px;
 `;
 
 const Image = (props) => {

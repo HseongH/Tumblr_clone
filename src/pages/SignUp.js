@@ -1,10 +1,12 @@
 // LIBRARY
 import React from "react";
 import { css } from "styled-components";
+
+// STYLE
 import { flexBox } from "../common/style";
 
 // ELEMENTS
-import { Button, Title, Input, Grid, Text } from "../elements";
+import { Button, Title, Input, Grid } from "../elements";
 
 const SignUp = (props) => {
   return (
@@ -27,27 +29,88 @@ const SignUp = (props) => {
           fontWeight="bold"
           textAlign="center"
           margin="10% 0 0 0"
+          appendStyle={() => {
+            return css`
+              display: block;
+              color: white;
+              width: 100%;
+              height: 100%;
+            `;
+          }}
         >
           tumblr
         </Title>
 
-        <Grid>
-          <Input placeholder="이메일" />
-          <Input placeholder="비밀번호" />
-          <Input placeholder="블로그 이름" />
+        <Grid
+          width="100%"
+          margin="0 auto"
+          appendStyle={() => {
+            return css`
+              display: flex;
+              flex-direction: column;
+            `;
+          }}
+        >
+          <Input
+            bgColor="white"
+            width="330px"
+            padding="11px 13px"
+            type="email"
+            placeholder="이메일"
+            margin="0 auto"
+          />
+          <Input
+            bgColor="white"
+            width="330px"
+            padding="11px 13px"
+            placeholder="비밀번호"
+            margin="1% auto 0 auto"
+          />
+          <Input
+            bgColor="white"
+            width="330px"
+            padding="11px 13px"
+            placeholder="블로그 이름"
+            margin="1% auto 0 auto"
+          />
+
+          <Button
+            color="black"
+            bgColor="blue"
+            padding="10px 15px"
+            margin="1% auto"
+            appendStyle={() => {
+              return css`
+                width: 330px;
+                font-weight: bold;
+              `;
+            }}
+          >
+            가입
+          </Button>
+
+          <Button // header에 적용해야됨
+            color="black"
+            bgColor="green"
+            padding="10px 15px"
+            margin="0 auto"
+            appendStyle={() => {
+              return css`
+                width: 72px;
+                font-weight: bold;
+              `;
+            }}
+          >
+            로그인
+          </Button>
         </Grid>
-
-        <Button>가입</Button>
       </Grid>
-
-      <Text color="red">
-        Header 로그인 Button / tumblr Title / 이메일 input / 비밀번호 input /
-        블로그 이름 input / 가입 Button /
-      </Text>
     </React.Fragment>
   );
 };
 
-SignUp.defaultProps = {};
+// const SignUpHeader = styled.header`
+
+// `;
 
 export default SignUp;

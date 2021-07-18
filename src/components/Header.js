@@ -28,31 +28,45 @@ const Header = (props) => {
             alt="tumblr logo"
           />
         </Logo>
-        <div style={{ backgroundColor: "rgba(255, 255, 255, 0.3)", display: "flex" }}>
-          <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>
+        <Grid
+          appendStyle={flexVer}
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            display: "flex",
+            width: "50%"
+          }}
+        >
+          <span style={{ color: "rgba(255, 255, 255, 0.5)", padding: "0 4px" }}>
             <SearchIcon fontSize="large" />
           </span>
 
-          <Input placeholder="Tumblr 검색" width="500px" />
-        </div>
+          <Input placeholder="Tumblr 검색" />
+        </Grid>
       </HeaderWrap>
 
-      <Grid appendStyle={flexVer} margin="0 0 0 35%">
-        {/* 버튼 안에 아이콘 넣고 마진값 설정, 작성 버튼 크기 지정해주고 background-color 지정, 링크 태그 들어가야됨 */}
-        <ButtonBoxStyle>
-          <Button>
+      <Grid appendStyle={flexVer}>
+        <Grid
+          appendStyle={() => {
+            flexBox();
+          }}
+          width="80%"
+          padding="0 2%"
+          margin="0 0 0 10%"
+        >
+          {/* 링크 태그 들어가야됨 */}
+          <Button margin="0 15% 0 0" >
             <HomeIcon fontSize="large" />
           </Button>
-          <Button>
-            <FaBolt fontSize="28px" />
-          </Button>
-          <Button>
+          <Button margin="0 15% 0 0">
+            <FaBolt fontSize="30px" />
+          </Button >
+          <Button margin="0 15% 0 0">
             <PersonIcon fontSize="large" />
           </Button>
-          <Button>
+          <Button margin="0 0 0 0" bgColor="blue" color="black">
             <CreateIcon fontSize="large" />
           </Button>
-        </ButtonBoxStyle>
+        </Grid>
       </Grid>
     </HeaderStyle>
   );
@@ -75,16 +89,6 @@ const HeaderStyle = styled.header`
   left: 0;
   z-index: 9;
 `;
-
-const ButtonBoxStyle = styled.div`
-  display: flex;
-  & button {
-    margin: 0 8px;
-    color: rgba(255, 255, 255, 0.5);
-  }
-`;
-
-const SearchIconStyle = styled.div``;
 
 Header.defaultProps = {};
 

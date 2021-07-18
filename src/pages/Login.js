@@ -16,54 +16,71 @@ const Login = (props) => {
       <Grid
         appendStyle={() => {
           flexBox();
+          return css`
+            /* background-image: url("https://i.pinimg.com/originals/60/f2/60/60f2607be0f2d6be805f831117a6f03d.jpg");
+            background-position: center;
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+            padding: 20px; */
+          `;
         }}
-        style={{ margin: "20% auto 0 auto" }}
       >
-        <Text
-          fontSize="70px"
-          fontWeight="bold"
-          color="whiteOnDark"
-          textAlign="center"
+        <Grid // tumblr
         >
-          tumblr
-        </Text>
-        <Grid
+          <Text
+            fontSize="70px"
+            fontWeight="bold"
+            color="whiteOnDark"
+            textAlign="center"
+            style={{ marginTop: "40%" }}
+          >
+            tumblr
+          </Text>
+        </Grid>
+
+        <Grid // 이메일 Input / 다음,가입 Button / Wrap
           appendStyle={() => {
-            flexBox();
             return css`
               width: 100%;
               height: 100%;
               text-align: center;
             `;
           }}
-          style={{ margin: "5% auto 0 auto" }}
+          style={{ margin: "4% auto", padding: "0" }}
         >
-          <Input
-            bgColor="whiteOnDark"
-            width="60%"
-            type="email"
-            placeholder="이메일"
-            padding="11px 13px"
-          />
-
-          <Button
-            appendStyle={() => {
-              return css`
-                font-weight: bold;
-                width: 60%;
-              `;
-            }}
-            color="black"
-            bgColor="blue"
-            margin="2% 0 0 0"
-            padding="10px 15px"
+          
+          <Grid // 이메일 Input
           >
-            다음
-          </Button>
-          <Grid
-            appendStyle={() => {
-              flexBox();
-            }}
+            <Input
+              bgColor="whiteOnDark"
+              width="60%"
+              type="email"
+              placeholder="이메일"
+              padding="11px 13px"
+            />
+          </Grid>
+
+          <Grid // 다음 Button
+          >
+            <Button
+              appendStyle={() => {
+                return css`
+                  font-weight: bold;
+                  width: 60%;
+                `;
+              }}
+              color="black"
+              bgColor="blue"
+              margin="2% 0 0 0"
+              padding="10px 15px"
+            >
+              다음
+            </Button>
+          </Grid>
+
+          {/* <Grid // 가입 Button
+            appendStyle={() => {}}
           >
             <Button
               color="black"
@@ -78,7 +95,7 @@ const Login = (props) => {
             >
               가입
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
     </React.Fragment>

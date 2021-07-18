@@ -7,7 +7,8 @@ import { borderBox } from '../common/style';
 
 const GridStyle = styled.div`
   width: ${(props) => (props.width ? props.width : props.theme.size.postWidth)};
-  background: ${(props) => `rgba(${props.theme.palette[props.color]}, ${props.opacity})`};
+  background: ${(props) =>
+    props.color ? `rgba(${props.theme.palette[props.color]}, ${props.opacity})` : 'none'};
   margin: ${(props) => props.margin};
   ${(props) => borderBox(props.radius, props.padding)};
 
@@ -18,9 +19,7 @@ const Grid = ({ children, ...props }) => {
   return <GridStyle {...props}>{children}</GridStyle>;
 };
 
-Grid.propTypes = {
-  color: 'white',
-  opacity: 1,
+Grid.defaultProps = {
   appendStyle: () => {},
 };
 

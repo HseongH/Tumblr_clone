@@ -26,10 +26,9 @@ function App() {
       <Container>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/mypage" exact component={MyPage} />
+          {/* <Route path="/mypage" exact component={MyPage} /> */}
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={SignUp} />
-          <Route exact />
         </Switch>
       </Container>
     </ThemeProvider>

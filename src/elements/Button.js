@@ -7,7 +7,7 @@ import { borderBox } from '../common/style';
 
 const ButtonStyle = styled.button`
   background: ${(props) => (props.bgColor ? `rgb(${props.theme.palette[props.bgColor]})` : 'none')};
-  color: ${(props) => `rgb(${props.theme.palette[props.color]})`};
+  color: ${(props) => `rgba(${props.theme.palette[props.color]}, ${props.opacity})`};
   font-size: ${(props) => props.fontSize};
   margin: ${(props) => props.margin};
   border: none;
@@ -27,6 +27,7 @@ const Button = ({ clickEvent, children, ...props }) => {
 
 Button.defaultProps = {
   color: 'secondaryAccent',
+  opacity: 1,
   fontSize: '16px',
   appendStyle: () => {},
   clickEvent: () => {},

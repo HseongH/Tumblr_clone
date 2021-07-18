@@ -3,10 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ImageStyle = styled.img`
+  width: 100%;
   display: block;
   cursor: pointer;
-  width: 54px;
-  height: 54px;
 `;
 
 const Image = (props) => {

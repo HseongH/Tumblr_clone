@@ -1,22 +1,22 @@
 // LIBRARY
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 // STYLE
-import { flexBox, flexVer } from "../common/style";
+import { flexBox, flexVer } from '../common/style';
 
 // COMPONENTS
-import Logo from "./Logo";
+import Logo from './Logo';
 
 // ELEMENTS
-import { Input, Button, Grid, Image } from "../elements/index";
+import { Input, Button, Grid, Image } from '../elements/index';
 
 // ICON
-import HomeIcon from "@material-ui/icons/Home";
-import { FaBolt } from "react-icons/fa";
-import PersonIcon from "@material-ui/icons/Person";
-import CreateIcon from "@material-ui/icons/Create";
-import SearchIcon from "@material-ui/icons/Search";
+import HomeIcon from '@material-ui/icons/Home';
+import { FaBolt } from 'react-icons/fa';
+import PersonIcon from '@material-ui/icons/Person';
+import CreateIcon from '@material-ui/icons/Create';
+import SearchIcon from '@material-ui/icons/Search';
 
 const Header = (props) => {
   return (
@@ -28,15 +28,8 @@ const Header = (props) => {
             alt="tumblr logo"
           />
         </Logo>
-        <Grid
-          appendStyle={flexVer}
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.3)",
-            display: "flex",
-            width: "50%"
-          }}
-        >
-          <span style={{ color: "rgba(255, 255, 255, 0.5)", padding: "0 4px" }}>
+        <Grid appendStyle={flexVer} width="50%" color="white" opacity="0.3">
+          <span style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 4px' }}>
             <SearchIcon fontSize="large" />
           </span>
 
@@ -54,16 +47,16 @@ const Header = (props) => {
           margin="0 0 0 10%"
         >
           {/* 링크 태그 들어가야됨 */}
-          <Button margin="0 15% 0 0" >
+          <Button margin="0 15% 0 0" opacity="0.5">
             <HomeIcon fontSize="large" />
           </Button>
-          <Button margin="0 15% 0 0">
+          <Button margin="0 15% 0 0" opacity="0.5">
             <FaBolt fontSize="30px" />
-          </Button >
-          <Button margin="0 15% 0 0">
+          </Button>
+          <Button margin="0 15% 0 0" opacity="0.5">
             <PersonIcon fontSize="large" />
           </Button>
-          <Button margin="0 0 0 0" bgColor="blue" color="black">
+          <Button padding="0 12px" bgColor="blue" color="black">
             <CreateIcon fontSize="large" />
           </Button>
         </Grid>
@@ -73,13 +66,13 @@ const Header = (props) => {
 };
 
 const HeaderWrap = styled.div`
-  ${flexBox("left")};
+  ${flexBox('left')};
   width: 100%;
   height: 54px;
 `;
 
 const HeaderStyle = styled.header`
-  ${flexBox("space-between")};
+  ${flexBox('space-between')};
   width: 100%;
   max-width: 1716px;
   padding: 0 20px 0 22px;

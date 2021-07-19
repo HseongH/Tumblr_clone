@@ -42,9 +42,9 @@ const Header = (props) => {
           />
         </Logo>
 
-        <Grid addstyle={flexVer} width="50%" bgColor="white" opacity={searchBar.alpha}>
+        <Grid addstyle={flexVer} width="480px" bgColor="white" opacity={searchBar.alpha}>
           <Grid color={searchBar.color} width="20px" margin="0 4px">
-            <SearchIcon fontSize="midium" />
+            <SearchIcon fontSize="medium" />
           </Grid>
 
           <Input

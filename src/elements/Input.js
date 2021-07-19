@@ -16,15 +16,15 @@ const InputStyle = styled.input`
   border: none;
 
   &::placeholder {
-    color: ${(props) => `rgb(${props.theme.palette.secondaryAccent})`};
+    color: ${(props) => `rgb(${props.theme.palette.gray})`};
   }
 
   &::-webkit-input-placeholder {
-    color: ${(props) => `rgb(${props.theme.palette.secondaryAccent})`};
+    color: ${(props) => `rgb(${props.theme.palette.gray})`};
   }
 
   &:-ms-input-placeholder {
-    color: ${(props) => `rgb(${props.theme.palette.secondaryAccent})`};
+    color: ${(props) => `rgb(${props.theme.palette.gray})`};
   }
 
   &:focus {
@@ -33,15 +33,15 @@ const InputStyle = styled.input`
     outline: none;
 
     &::placeholder {
-      color: ${(props) => `rgb(${props.theme.palette.gray})`};
+      color: ${(props) => `rgb(${props.theme.palette.black})`};
     }
 
     &::-webkit-input-placeholder {
-      color: ${(props) => `rgb(${props.theme.palette.gray})`};
+      color: ${(props) => `rgb(${props.theme.palette.black})`};
     }
 
     &:-ms-input-placeholder {
-      color: ${(props) => `rgb(${props.theme.palette.gray})`};
+      color: ${(props) => `rgb(${props.theme.palette.black})`};
     }
   }
 
@@ -66,7 +66,7 @@ const Input = ({ id, type, placeholder, value, changeEvent, focusEvent, blurEven
 Input.defaultProps = {
   bgColor: 'none',
   type: 'text',
-  color: 'white',
+  color: 'black',
   width: '100%',
   fontSize: '16px',
   padding: '5px',

@@ -11,7 +11,7 @@ const FixedBox = ({ children }) => {
   return (
     <Grid
       bgColor="navy"
-      opacity="0.5"
+      opacity="0.9"
       width="100%"
       addstyle={() => {
         return css`

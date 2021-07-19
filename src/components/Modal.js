@@ -1,5 +1,6 @@
 // LIBRARY
 import React, { useState } from 'react';
+import { css } from 'styled-components';
 
 // STYLE
 import { flexBox } from '../common/style';
@@ -7,22 +8,27 @@ import { flexBox } from '../common/style';
 // ELEMETS
 import { Grid, Button, FixedBox } from '../elements/index';
 
-const Modal = ({ children, cancle, submit, isVisible, color, bgColor, fontSize }) => {
+const Modal = ({ children, cancle, submit, isVisible, ...props }) => {
   const [visible, setVisible] = useState(isVisible);
+  console.log(visible);
 
   if (visible) {
     return (
       <FixedBox>
-        <Grid color={bgColor}>
+        <Grid bgColor={props.bgColor} padding={props.padding}>
           {children}
           <Grid
+            width="100%"
+            padding="15px 20px 0"
             addstyle={() => {
-              flexBox('space-between');
+              return css`
+                ${flexBox('space-between')};
+              `;
             }}
           >
             <Button
-              color={color}
-              fontSize={fontSize}
+              color={props.color}
+              fontSize={props.fontSize}
               bgColor="gray"
               padding="5px 7px"
               clickEvent={() => {
@@ -32,7 +38,12 @@ const Modal = ({ children, cancle, submit, isVisible, color, bgColor, fontSize }
               {cancle}
             </Button>
 
-            <Button color={color} fontSize={fontSize} bgColor="accent" padding="5px 7px">
+            <Button
+              color={props.color}
+              fontSize={props.fontSize}
+              bgColor="accent"
+              padding="5px 7px"
+            >
               {submit}
             </Button>
           </Grid>

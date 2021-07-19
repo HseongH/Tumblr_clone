@@ -27,13 +27,17 @@ const LabelStyle = styled.label`
   box-sizing: border-box;
   z-index: 3;
   ${PosAbs()};
+
   ${(props) => {
     const color = props.theme.palette.gray;
+    const bgColor = props.theme.palette.secondaryAccent;
 
     return css`
-      color: ${color};
-      border: dashed ${color};
-      padding: props.padding;
+      color: rgb(${color});
+      background: rgb(${bgColor});
+      border-top: dashed rgb(${color});
+      border-bottom: dashed rgb(${color});
+      padding: ${props.padding};
     `;
   }}
 `;
@@ -42,7 +46,7 @@ const InputImage = ({ children, ...props }) => {
   return (
     <Grid
       width="100%"
-      bgColor="follow"
+      height={props.height}
       addstyle={() => {
         return css`
           position: relative;
@@ -50,13 +54,13 @@ const InputImage = ({ children, ...props }) => {
       }}
     >
       <LabelStyle {...props} htmlFor="input--file">
-        <AddAPhotoIcon />
-        <br />
+        <AddAPhotoIcon style={{ marginRight: '8px' }} />
         {children}
       </LabelStyle>
 
       <Input
         id="input--file"
+        type="file"
         width="1px"
         addstyle={() => {
           return css`

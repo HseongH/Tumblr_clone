@@ -43,7 +43,7 @@ const InputImage = ({ children, ...props }) => {
     <Grid
       width="100%"
       color="follow"
-      addStyle={() => {
+      addstyle={() => {
         return css`
           position: relative;
         `;
@@ -58,7 +58,7 @@ const InputImage = ({ children, ...props }) => {
       <Input
         id="input--file"
         width="1px"
-        addStyle={() => {
+        addstyle={() => {
           return css`
             ${PosAbs()};
             height: 1px;

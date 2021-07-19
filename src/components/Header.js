@@ -28,7 +28,7 @@ const Header = (props) => {
             alt="tumblr logo"
           />
         </Logo>
-        <Grid addStyle={flexVer} width="50%" color="white" opacity="0.3">
+        <Grid addstyle={flexVer} width="50%" color="white" opacity="0.3">
           <span style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 4px' }}>
             <SearchIcon fontSize="large" />
           </span>
@@ -38,14 +38,7 @@ const Header = (props) => {
       </HeaderWrap>
 
       <Grid addStyle={flexVer}>
-        <Grid
-          addStyle={() => {
-            flexBox();
-          }}
-          width="80%"
-          padding="0 2%"
-          margin="0 0 0 10%"
-        >
+        <Grid addstyle={flexBox} width="80%" padding="0 2%" margin="0 0 0 10%">
           {/* 링크 태그 들어가야됨 */}
           <Button margin="0 15% 0 0" opacity="0.5">
             <HomeIcon fontSize="large" />

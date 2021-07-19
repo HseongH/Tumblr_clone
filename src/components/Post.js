@@ -19,7 +19,7 @@ const Post = ({ post }) => {
     <Grid
       padding="15px 20px"
       margin="0 0 20px 0"
-      addStyle={() => {
+      addstyle={() => {
         return css`
           position: relative;
         `;

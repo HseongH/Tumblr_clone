@@ -22,7 +22,7 @@ const InputBox = (props) => {
     <React.Fragment>
       <Grid
         width="100%"
-        addStyle={() => {
+        addstyle={() => {
           flexBox('space-between');
           return css`
             position: relative;

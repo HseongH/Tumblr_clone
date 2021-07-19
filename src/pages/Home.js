@@ -14,7 +14,7 @@ const Home = (props) => {
     <Grid color="white" padding="15px 20px">
       <Button
         color="black"
-        addStyle={() => {
+        addstyle={() => {
           return css`
             width: 50%;
           `;
@@ -26,7 +26,7 @@ const Home = (props) => {
       <Button color="red">
         <CameraAltIcon
           style={{ fontSize: '50px' }}
-          addStyle={() => {
+          addstyle={() => {
             return css`
               width: 50%;
             `;

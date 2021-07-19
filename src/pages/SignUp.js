@@ -1,19 +1,19 @@
 // LIBRARY
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox } from '../common/style';
 
 // ELEMENTS
-import { Button, Title, Input, Grid } from "../elements";
+import { Button, Title, Input, Grid } from '../elements';
 
 const SignUp = (props) => {
   return (
     <React.Fragment>
       <Grid
         width="100%"
-        appendStyle={() => {
+        addstyle={() => {
           flexBox();
           return css`
             align-items: center;
@@ -29,7 +29,7 @@ const SignUp = (props) => {
           fontWeight="bold"
           textAlign="center"
           margin="10% 0 0 0"
-          appendStyle={() => {
+          addstyle={() => {
             return css`
               display: block;
               color: white;
@@ -44,7 +44,7 @@ const SignUp = (props) => {
         <Grid
           width="100%"
           margin="0 auto"
-          appendStyle={() => {
+          addstyle={() => {
             return css`
               display: flex;
               flex-direction: column;
@@ -79,7 +79,7 @@ const SignUp = (props) => {
             bgColor="blue"
             padding="10px 15px"
             margin="1% auto"
-            appendStyle={() => {
+            addstyle={() => {
               return css`
                 width: 330px;
                 font-weight: bold;
@@ -94,7 +94,7 @@ const SignUp = (props) => {
             bgColor="green"
             padding="10px 15px"
             margin="0 auto"
-            appendStyle={() => {
+            addstyle={() => {
               return css`
                 width: 72px;
                 font-weight: bold;

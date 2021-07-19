@@ -1,24 +1,24 @@
 // LIBRARY
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox } from '../common/style';
 
 // ELEMENTS
-import { Image, Input, Text, Grid, Button } from "../elements";
+import { Image, Input, Text, Grid, Button } from '../elements';
 
 // COMPONENTS
-import InputBox from "../components/InputBox";
-import Logo from "../components/Logo";
-import Post from "../components/Post";
+import InputBox from '../components/InputBox';
+import Logo from '../components/Logo';
+import Post from '../components/Post';
 
 const MyPage = (props) => {
   return (
     <React.Fragment>
       <Grid
         width="100%"
-        appendStyle={() => {
+        addstyle={() => {
           flexBox();
           return css`
             display: flex;
@@ -27,7 +27,7 @@ const MyPage = (props) => {
       >
         <Grid
           width="100%"
-          appendStyle={() => {
+          addstyle={() => {
             return css`
               max-width: 625px;
               display: flex;
@@ -36,24 +36,23 @@ const MyPage = (props) => {
             `;
           }}
         >
-          <Grid appendStyle={() => {
+          <Grid
+            addstyle={() => {
               return css`
                 display: flex;
-                
               `;
-          }}>
+            }}
+          >
             <Logo width="64px" height="64px">
               <Image
                 src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
-                appendStyle={() => {
-                  return css`
-                  `;
+                addstyle={() => {
+                  return css``;
                 }}
               />
             </Logo>
-            
-            <InputBox />
 
+            <InputBox />
           </Grid>
         </Grid>
 

@@ -13,7 +13,7 @@ const Login = (props) => {
     <React.Fragment>
       <Grid
         width="100%"
-        addStyle={() => {
+        addstyle={() => {
           flexBox();
           return css`
             align-items: center;
@@ -29,7 +29,7 @@ const Login = (props) => {
           fontWeight="bold"
           textAlign="center"
           margin="15% 0 0 0"
-          addStyle={() => {
+          addstyle={() => {
             return css`
               display: block;
               color: white;
@@ -44,7 +44,7 @@ const Login = (props) => {
         <Grid
           width="100%"
           margin="0 auto"
-          addStyle={() => {
+          addstyle={() => {
             return css`
               display: flex;
               flex-direction: column;
@@ -65,7 +65,7 @@ const Login = (props) => {
             bgColor="blue"
             padding="10px 15px"
             margin="1% auto"
-            addStyle={() => {
+            addstyle={() => {
               return css`
                 width: 330px;
                 font-weight: bold;
@@ -80,7 +80,7 @@ const Login = (props) => {
             bgColor="blue"
             padding="10px 15px"
             margin="0 auto"
-            addStyle={() => {
+            addstyle={() => {
               return css`
                 width: 60px;
                 font-weight: bold;

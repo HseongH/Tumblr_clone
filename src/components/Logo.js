@@ -10,9 +10,6 @@ const Logo = ({ children, ...props }) => {
 };
 
 const LogoStyle = styled.h1`
-  /* background-image: url('https://seeklogo.com/images/T/tumblr-icon-logo-A42B4BE5C1-seeklogo.com.png');
-  background-size: cover;
-  background-position: center; */
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding: 3px;

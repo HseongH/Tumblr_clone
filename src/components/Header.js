@@ -66,6 +66,7 @@ const HeaderWrap = styled.div`
 
 const HeaderStyle = styled.header`
   ${flexBox('space-between')};
+  background: rgb(${(props) => props.theme.palette.navy});
   width: 100%;
   max-width: 1716px;
   padding: 0 20px 0 22px;

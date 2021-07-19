@@ -17,7 +17,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ShareIcon from '@material-ui/icons/Share';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const HeaderStyle = styled.article`
+const HeaderStyle = styled.header`
   ${flexBox('space-between')};
   font-size: 0.875rem;
   line-height: 1.5;
@@ -105,6 +105,21 @@ const Post = ({ post }) => {
           </Button>
         </Dropdown>
       </HeaderStyle>
+
+      <Grid
+        width="64px"
+        height="64px"
+        color="white"
+        addstyle={() => {
+          return css`
+            position: absolute;
+            top: 0;
+            left: -84px;
+          `;
+        }}
+      >
+        <Image />
+      </Grid>
 
       <Title fontSize="1.625rem" margin="15px 0"></Title>
 

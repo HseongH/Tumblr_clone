@@ -1,11 +1,31 @@
+// LIBRARY
 import React, { useState } from 'react';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // ELEMENTS
-import { Button, Grid } from '../elements/index';
+import { Button } from '../elements/index';
+
+// STYLE
+import { borderBox } from '../common/style';
 
 // ICON
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
+const DropdownStyle = styled.div`
+  ${(props) => {
+    return css`
+      width: ${props.width};
+      background: rgb(${props.theme.palette.white});
+      box-shadow: ${props.shadow};
+      font-size: ${props.fontSize};
+      ${borderBox(props.radius, props.padding)};
+      ${props.position()};
+    `;
+  }};
+
+  position: absolute;
+  z-index: 9;
+`;
 
 const Dropdown = (props) => {
   const [open, setOpen] = useState(false);
@@ -20,32 +40,13 @@ const Dropdown = (props) => {
 
   return (
     <>
-      <Button
-        clickEvent={handleToggle}
-        width={props.width}
-        height={props.height}
-        bg={props.bg}
-        color={props.color}
-        fontSize={props.fontSize}
-      >
+      <Button clickEvent={handleToggle} color={props.color}>
         {props.icon}
       </Button>
 
       {open && (
         <ClickAwayListener onClickAway={handleClose}>
-          <Grid
-            padding="15px 20px"
-            addstyle={() => {
-              return css`
-                position: absolute;
-                box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-                z-index: 9;
-                ${props.position()}
-              `;
-            }}
-          >
-            {props.children}
-          </Grid>
+          <DropdownStyle {...props}>{props.children}</DropdownStyle>
         </ClickAwayListener>
       )}
     </>
@@ -53,8 +54,7 @@ const Dropdown = (props) => {
 };
 
 Dropdown.defaultProps = {
-  top: '48px',
-  pos: '100%',
+  shadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
   position: () => {},
 };
 

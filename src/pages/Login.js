@@ -5,81 +5,94 @@ import { css } from 'styled-components';
 // STYLE
 import { flexBox } from '../common/style';
 
-// COMPONENTS
-
 // ELEMENTS
-import { Input, Button, Text, Grid } from '../elements';
+import { Input, Button, Title, Grid } from '../elements/index';
 
 const Login = (props) => {
   return (
     <React.Fragment>
       <Grid
+        width="100%"
         addStyle={() => {
           flexBox();
+          return css`
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            vertical-align: baseline;
+          `;
         }}
-        style={{ margin: '20% auto 0 auto' }}
       >
-        <Text fontSize="70px" fontWeight="bold" color="whiteOnDark" textAlign="center">
-          tumblr
-        </Text>
-        <Grid
+        <Title
+          fontSize="70px"
+          fontWeight="bold"
+          textAlign="center"
+          margin="15% 0 0 0"
           addStyle={() => {
-            flexBox();
             return css`
+              display: block;
+              color: white;
               width: 100%;
               height: 100%;
-              text-align: center;
             `;
           }}
-          style={{ margin: '5% auto 0 auto' }}
+        >
+          tumblr
+        </Title>
+
+        <Grid
+          width="100%"
+          margin="0 auto"
+          addStyle={() => {
+            return css`
+              display: flex;
+              flex-direction: column;
+            `;
+          }}
         >
           <Input
-            bgColor="whiteOnDark"
-            width="60%"
+            bgColor="white"
+            width="330px"
+            padding="11px 13px"
             type="email"
             placeholder="이메일"
-            padding="11px 13px"
+            margin="0 auto"
           />
 
           <Button
-            addStyle={() => {
-              return css`
-                font-weight: bold;
-                width: 60%;
-              `;
-            }}
             color="black"
             bgColor="blue"
-            margin="2% 0 0 0"
             padding="10px 15px"
+            margin="1% auto"
+            addStyle={() => {
+              return css`
+                width: 330px;
+                font-weight: bold;
+              `;
+            }}
           >
             다음
           </Button>
-          <Grid
+
+          <Button
+            color="black"
+            bgColor="blue"
+            padding="10px 15px"
+            margin="0 auto"
             addStyle={() => {
-              flexBox();
+              return css`
+                width: 60px;
+                font-weight: bold;
+              `;
             }}
           >
-            <Button
-              color="black"
-              bgColor="blue"
-              padding="10px 15px"
-              margin="10px"
-              addStyle={() => {
-                return css`
-                  font-weight: bold;
-                `;
-              }}
-            >
-              가입
-            </Button>
-          </Grid>
+            가입
+          </Button>
         </Grid>
       </Grid>
     </React.Fragment>
   );
 };
-
-Login.defaultProps = {};
 
 export default Login;

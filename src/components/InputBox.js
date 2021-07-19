@@ -1,46 +1,78 @@
 // LIBRARY
 import React from 'react';
-import styled from 'styled-components';
+import { css } from 'styled-components';
 
 // STYLE
 import { flexBox } from '../common/style';
 
-// ELEMENTS
-import Text from '../elements/Text';
+// COMPONENTS
 
-const InputBox = ({ children, ...props }) => {
+// ELEMENTS
+import { Button, Grid, Text } from '../elements';
+
+// ICON
+import TextFieldsIcon from '@material-ui/icons/TextFields';
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import FormatQuoteIcon from '@material-ui/icons/FormatQuote';
+import ChatIcon from '@material-ui/icons/Chat';
+import VideocamIcon from '@material-ui/icons/Videocam';
+
+const InputBox = (props) => {
   return (
-    <div>
-      <Text
-        addStyle={flexBox}
-        style={{
-          color: 'rgb(255, 255, 255)',
-          fontWeight: 'bold',
-          fontSize: '60px',
-          padding: '14px',
-          marginTop: '10%',
+    <React.Fragment>
+      <Grid
+        width="100%"
+        addStyle={() => {
+          flexBox('space-between');
+          return css`
+            position: relative;
+            justify-content: space-between;
+            box-sizing: border-box;
+            align-items: center;
+            min-height: 100px;
+            padding: 15px 5px;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            background-color: white;
+            line-height: 100px;
+          `;
         }}
       >
-        tumblr
-      </Text>
-      <InputBoxStyle {...props}></InputBoxStyle>
-    </div>
+        <Button>
+          <TextFieldsIcon style={{ fontSize: '48px', color: 'black', margin: '0 40px 0 15px' }} />
+          <Text margin="0 20px 0 0">텍스트</Text>
+        </Button>
+
+        <Button>
+          <CameraAltIcon
+            style={{ fontSize: '48px', color: 'rgb(255, 73, 47)', marginRight: '40px' }}
+          />
+          <Text margin="0 40px 0 0">사진</Text>
+        </Button>
+
+        <Button>
+          <FormatQuoteIcon
+            style={{ fontSize: '48px', color: 'rgb(255, 138, 0)', marginRight: '40px' }}
+          />
+          <Text margin="0 40px 0 0">인용구</Text>
+        </Button>
+
+        <Button>
+          <ChatIcon style={{ fontSize: '48px', color: 'rgb(0, 184, 255)', marginRight: '40px' }} />
+          <Text margin="0 40px 0 0">채팅</Text>
+        </Button>
+
+        <Button>
+          <VideocamIcon
+            style={{ fontSize: '48px', color: 'rgb(255, 98, 206)', marginRight: '20px' }}
+          />
+          <Text margin="0 20px 0 0">동영상</Text>
+        </Button>
+      </Grid>
+    </React.Fragment>
   );
 };
 
-const InputBoxStyle = styled.div`
-  ${flexBox};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  flex-direction: column;
-  margin-top: 25%;
-  background-color: ${(props) => props.bgColor};
-`;
-
-InputBox.defaultProps = {
-  width: '100%',
-  height: '100%',
-  bgColor: 'none',
-};
+InputBox.defaultProps = {};
 
 export default InputBox;

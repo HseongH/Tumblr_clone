@@ -4,26 +4,20 @@ import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 
 // STYLE
-import { flexBox, flexVer, borderBox } from '../common/style';
+import { flexBox, flexVer } from '../common/style';
 
 // COMPONENTS
 import Logo from './Logo';
-import Dropdown from './Dropdown';
-import Reaction from './Reaction';
+import Alarm from './Alarm';
+import User from './User';
 
 // ELEMENTS
-import { Input, Button, Grid, Image, Title, Text } from '../elements/index';
+import { Input, Button, Grid, Image } from '../elements/index';
 
 // ICON
 import HomeIcon from '@material-ui/icons/Home';
-import { FaBolt } from 'react-icons/fa';
-import PersonIcon from '@material-ui/icons/Person';
 import CreateIcon from '@material-ui/icons/Create';
 import SearchIcon from '@material-ui/icons/Search';
-import FindInPageIcon from '@material-ui/icons/FindInPage';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
 
 const Header = (props) => {
   const path = useLocation().pathname;
@@ -95,152 +89,9 @@ const Header = (props) => {
             </Link>
           </Button>
 
-          <Dropdown
-            width="380px"
-            icon={<FaBolt fontSize="30px" />}
-            opacity="0.5"
-            position={() => {
-              return css`
-                top: 54px;
-                right: 0;
-              `;
-            }}
-          >
-            <Title
-              fontSize="14px"
-              addstyle={() => {
-                return css`
-                  ${borderBox('3px', '15px 20px 10px')};
-                `;
-              }}
-            >
-              hh4518
-            </Title>
+          <Alarm />
 
-            <Grid
-              width="100%"
-              addstyle={() => {
-                return css`
-                  & > button {
-                    width: 25%;
-                    border-radius: 0;
-                    padding: 10px 0;
-                    ${({ theme }) => {
-                      return css`
-                        color: rgb(${theme.palette.black});
-                        border-top: 1px solid rgb(${theme.palette.secondaryAccent});
-                        border-bottom: 1px solid rgb(${theme.palette.secondaryAccent});
-                      `;
-                    }};
-                  }
-                `;
-              }}
-            >
-              <Button>전체</Button>
-
-              <Button>팔로우</Button>
-
-              <Button>리블로그</Button>
-
-              <Button>좋아요</Button>
-            </Grid>
-
-            <Grid
-              width="100%"
-              bgColor="secondaryAccent"
-              padding="15px 20px"
-              addstyle={() => {
-                return css`
-                  text-align: center;
-                `;
-              }}
-            >
-              <FaBolt />
-
-              <Text fontSize="14px" lineHeight="1.5" margin="8px 0 0">
-                팔로우, 리블로그, 좋아요를 보려면 포스팅할 때 이 탭을 확인하세요.
-              </Text>
-            </Grid>
-          </Dropdown>
-
-          <Dropdown
-            width="240px"
-            icon={<PersonIcon fontSize="large" />}
-            opacity={path === '/mypage' ? '1' : '0.5'}
-            position={() => {
-              return css`
-                top: 54px;
-                right: 0;
-              `;
-            }}
-          >
-            <Grid width="100%">
-              <Button
-                width="100%"
-                color="gray"
-                fontSize="14px"
-                bgColor="secondaryAccent"
-                padding="10px 20px"
-                addstyle={() => {
-                  return css`
-                    text-align: right;
-                  `;
-                }}
-              >
-                로그아웃
-              </Button>
-
-              <Reaction />
-
-              <Grid
-                width="100%"
-                addstyle={() => {
-                  return css`
-                    & button {
-                      width: 100%;
-                      text-align: left;
-                      padding: 10px 20px;
-                      ${flexVer()};
-
-                      ${({ theme }) => {
-                        return css`
-                          color: rgb(${theme.palette.black});
-
-                          &:hover {
-                            background: rgb(${theme.palette.secondaryAccent});
-                          }
-                        `;
-                      }}
-
-                      & svg {
-                        margin-right: 7px;
-                      }
-                    }
-                  `;
-                }}
-              >
-                <Button>
-                  <FindInPageIcon />
-                  포스트
-                </Button>
-
-                <Button>
-                  <PersonPinIcon />
-                  팔로워
-                </Button>
-
-                <Button>
-                  <PersonAddIcon />
-                  팔로잉
-                </Button>
-
-                <Button>
-                  <FavoriteIcon />
-                  좋아요
-                </Button>
-              </Grid>
-            </Grid>
-          </Dropdown>
+          <User opacity={path === '/mypage' ? '1' : '0.5'} />
 
           <Button padding="0 12px" bgColor="blue" color="black">
             <CreateIcon fontSize="large" />

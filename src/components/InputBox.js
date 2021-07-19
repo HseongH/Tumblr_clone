@@ -6,6 +6,7 @@ import styled, { css } from 'styled-components';
 import { flexBox } from '../common/style';
 
 // COMPONENTS
+import PostHeader from './PostHeader';
 import Modal from './Modal';
 import InputFile from './InputFile';
 
@@ -61,7 +62,7 @@ const InputBox = (props) => {
   const [inputType, setInputType] = useState('');
 
   return (
-    <React.Fragment>
+    <>
       <Grid
         width="540px"
         padding="15px 5px"
@@ -82,28 +83,12 @@ const InputBox = (props) => {
           color="black"
           clickEvent={() => {
             setInputType('text');
-            console.log(inputType);
           }}
         >
           <TextFieldsIcon style={{ fontSize: '48px' }} />
 
           <Text>텍스트</Text>
         </Button>
-
-        <Modal
-          isVisible={inputType === 'text'}
-          bgColor="white"
-          cancle="닫기"
-          submit="포스팅"
-          color="white"
-          padding="15px 0"
-        >
-          <Grid width="100%" padding="0 20px">
-            <Input fontSize="30px" placeholder="제목" />
-
-            <TextAreaStyle placeholder="여기에 내용을 쓰세요."></TextAreaStyle>
-          </Grid>
-        </Modal>
 
         <Button
           color="red"
@@ -115,19 +100,6 @@ const InputBox = (props) => {
 
           <Text>사진</Text>
         </Button>
-
-        <Modal
-          isVisible={inputType === 'image'}
-          bgColor="white"
-          cancle="닫기"
-          submit="포스팅"
-          color="white"
-          padding="15px 0"
-        >
-          <InputFile height="150px" margin="0 0 20px">
-            사진 업로드
-          </InputFile>
-        </Modal>
 
         {/* <Button color="orange">
           <FormatQuoteIcon style={{ fontSize: '48px' }} />
@@ -147,7 +119,44 @@ const InputBox = (props) => {
           <Text>동영상</Text>
         </Button> */}
       </Grid>
-    </React.Fragment>
+
+      {inputType && (
+        <Modal
+          bgColor="white"
+          cancle="닫기"
+          submit="포스팅"
+          color="white"
+          padding="15px 0"
+          modalClose={() => {
+            setInputType('');
+          }}
+        >
+          <PostHeader
+            addstyle={() => {
+              return css`
+                padding: 0 20px;
+              `;
+            }}
+          >
+            hh4518
+          </PostHeader>
+
+          {inputType === 'text' && (
+            <Grid width="100%" padding="0 20px">
+              <Input fontSize="30px" placeholder="제목" />
+
+              <TextAreaStyle placeholder="여기에 내용을 쓰세요."></TextAreaStyle>
+            </Grid>
+          )}
+
+          {inputType === 'image' && (
+            <InputFile height="150px" margin="0 0 20px">
+              사진 업로드
+            </InputFile>
+          )}
+        </Modal>
+      )}
+    </>
   );
 };
 

@@ -1,0 +1,78 @@
+// AXIOS
+import instance from '../../common/axios';
+
+// ACTIONS
+const GET_ALARM = 'GET_ALARM';
+const GET_MORE_ALARM = 'GET_MORE_ALARM';
+
+// ACTION CREATOR
+const getAlarm = (alarmList) => ({ type: GET_ALARM, alarmList });
+const getMoreAlarm = (alarmList) => ({ type: GET_MORE_ALARM, alarmList });
+
+// INITIALSTATE
+const initialState = {
+  list: [],
+  start: 0,
+};
+
+const getAlarmDB = (type, limit = 5) => {
+  return function (dispatch) {
+    instance
+      .get(`/api/alarm?alarmType=${type}&start=0&limit=${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getAlarm(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getAlarm(res.data.result, limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getMoreAlarmDB = (type, limit = 5) => {
+  return function (dispatch, getState) {
+    const start = getState().alarm.start;
+
+    if (start === null) return;
+
+    instance
+      .get(`/api/alarm?alarmType=${type}&start=${start}&limit=${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getMoreAlarm(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getMoreAlarm(res.data.result, limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+export default function alarm(state = initialState, action) {
+  switch (action.type) {
+    case GET_ALARM:
+      return { list: action.alarmList, start: action.start };
+
+    case GET_MORE_ALARM:
+      return { list: [...state.list, ...action.alarmList], start: action.start };
+
+    default:
+      return state;
+  }
+}
+
+export const alarmActions = {
+  getAlarm,
+  getMoreAlarm,
+  getAlarmDB,
+  getMoreAlarmDB,
+};

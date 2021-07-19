@@ -1,6 +1,6 @@
 // LIBRARY
 import React from 'react';
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 
 // STYLE
 import { flexBox } from '../common/style';
@@ -10,6 +10,7 @@ import { Text, Title, Image, Grid, Button } from '../elements/index';
 
 // COMPONENTS
 import Dropdown from '../components/Dropdown';
+import PostHeader from './PostHeader';
 
 // ICON
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -18,13 +19,6 @@ import ShareIcon from '@material-ui/icons/Share';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
-
-const HeaderStyle = styled.header`
-  ${flexBox('space-between')};
-  font-size: 0.875rem;
-  line-height: 1.5;
-  font-weight: 700;
-`;
 
 const Post = ({ post }) => {
   return (
@@ -38,7 +32,7 @@ const Post = ({ post }) => {
         `;
       }}
     >
-      <HeaderStyle>
+      <PostHeader>
         hh4518{' '}
         <Dropdown
           width="250px"
@@ -104,7 +98,7 @@ const Post = ({ post }) => {
             언팔로우
           </Button>
         </Dropdown>
-      </HeaderStyle>
+      </PostHeader>
 
       <Grid
         width="64px"

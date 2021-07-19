@@ -28,7 +28,7 @@ const initialState = {
 };
 
 // MIDDLEWARE
-const getPostListDB = (limit = 6) => {
+const getPostListDB = (limit = 10) => {
   return function (dispatch) {
     instance
       .get(`/api/post/posts?start=0&limit=${limit + 1}`)
@@ -38,8 +38,7 @@ const getPostListDB = (limit = 6) => {
           return;
         }
 
-        if (res.data.result.length >= limit + 1) res.data.result.pop();
-
+        res.data.result.pop();
         dispatch(getPostList(res.data.result, limit));
       })
       .catch((error) => {
@@ -48,7 +47,7 @@ const getPostListDB = (limit = 6) => {
   };
 };
 
-const getMorePostListDB = (limit = 6) => {
+const getMorePostListDB = (limit = 10) => {
   return function (dispatch, getState) {
     const start = getState().post.start;
 
@@ -62,8 +61,7 @@ const getMorePostListDB = (limit = 6) => {
           return;
         }
 
-        if (res.data.result.length >= limit + 1) res.data.result.pop();
-
+        res.data.result.pop();
         dispatch(getMorePostList(res.data.result, start + limit));
       })
       .catch((error) => {
@@ -173,7 +171,7 @@ const deletePostDB = (postId) => {
 };
 
 // REDUCER
-function post(state = initialState, action) {
+export default function post(state = initialState, action) {
   switch (action.type) {
     case GET_POST:
       return { ...state, list: action.postList, start: action.start };
@@ -210,8 +208,6 @@ function post(state = initialState, action) {
       return state;
   }
 }
-
-export default post;
 
 export const postActions = {
   getPostList,

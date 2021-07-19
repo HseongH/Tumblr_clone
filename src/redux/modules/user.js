@@ -1,47 +1,45 @@
 // axios
-import instance from '../../common/axios';
+import instance from "../../common/axios";
 
 // redux-actions & immer
-import { createAction, handleActions } from 'redux-actions';
-import { produce } from 'immer';
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
 
 // function
 
 //actions
-const LOG_IN = 'LOG_IN';
-const LOG_OUT = 'LOG_OUT';
-const AUTH = 'AUTH';
-const CHECK_EMAIL = 'CHECK_EMAIL';
+const LOG_IN = "LOG_IN";
+const LOG_OUT = "LOG_OUT";
+const AUTH_USER = "AUTH_USER";
+const CHECK_EMAIL = "CHECK_EMAIL";
 
-// userId, nickname, profile
+// userId, nickname, profileImg
 // action creators
-const logIn = createAction(LOG_IN, (session) => ({ session }));
-const logOut = createAction(LOG_OUT);
-const auth = createAction(AUTH, (userId, nickname, profile) => ({
-  userId,
-  nickname,
-  profile,
-}));
-const emailCheck = createAction(CHECK_EMAIL, (email) => ({ email }));
+const logIn = createAction(LOG_IN, (user) => user);
+const logOut = createAction(LOG_OUT, (user) => ({ user }));
+const authUser = createAction(AUTH_USER, (userInfo) => ({ userInfo }));
+const checkEmail = createAction(CHECK_EMAIL, (email) => ({ email }));
 
 // initialState
 const initialState = {
-  session: null,
+  cookie: null,
+  user: null,
   is_login: false,
   is_check: false,
   userId: null,
   nickname: null,
-  profile: null,
+  profileImg: null,
   email: null,
 };
 
 // middleware actions
-const authDB = () => {
+const authUserDB = () => {
   return function (dispatch) {
     instance
-      .post('api/user/me')
+      .post("/api/user/me")
       .then((res) => {
-        dispatch(auth(res.data));
+        console.log(res);
+        dispatch(authUser(res.data));
       })
       .catch((error) => {
         console.log(error);
@@ -52,29 +50,28 @@ const authDB = () => {
 const loginAction = (user) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post('/api/login', user)
+      .post("/api/login", user)
       .then((res) => {
         const userInfo = {
-          userId: res.data.userId,
-          nickname: res.data.nickname,
-          profile: res.data.profile,
+          email: res.data.userId,
+          nickname: user.nickname,
         };
 
-        dispatch(auth(userInfo));
-        dispatch(logIn(res.data.session));
+        dispatch(checkEmail(userInfo));
+        dispatch(logIn(res.data.cookie));
 
-        //   setCookie(res.data.cookie);
+        // setCookie(res.data.cookie);
 
-        history.push('/');
+        history.push("/");
       })
       .catch((error) => {
         console.log(error);
-        window.alert('이메일 또는 패스워드가 올바르지 않습니다.');
+        window.alert("아이디 또는 패스워드가 올바르지 않습니다.");
       });
   };
 };
 
-const logInCheck = (cookie) => {
+const loginCheck = (cookie) => {
   return function (dispatch) {
     if (cookie) {
       dispatch(logIn(cookie));
@@ -82,28 +79,32 @@ const logInCheck = (cookie) => {
   };
 };
 
-const checkEmail = (id) => {
+const emailCheck = (email) => {
   return function (dispatch) {
     instance
-      .post('/api/login/email')
+      .post("/api/login/email", { email: email })
       .then((res) => {
-        dispatch(emailCheck(true));
-        window.alert('사용 가능한 이메일입니다.');
+        dispatch(checkEmail(true));
+        window.alert("사용 가능한 이메일입니다.");
       })
       .catch((error) => {
-        dispatch(emailCheck(false));
-        window.alert('이미 존재하는 이메일입니다.');
+        dispatch(checkEmail(false));
+        window.alert("이미 사용중인 이메일입니다.");
       });
   };
 };
 
-const signupDB = (email, pwd, bgName) => {
+const signupDB = (email, password, nickname) => {
   return function () {
     instance
-      .post('/api/sign', { userId: email, password: pwd, blogName: bgName })
+      .post("/api/sign", {
+        email: email,
+        password: password,
+        nickname: nickname,
+      })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.messge;
+        const errorMessage = error.message;
 
         console.log(errorCode, errorMessage);
       });
@@ -113,25 +114,26 @@ const signupDB = (email, pwd, bgName) => {
 // reducer
 export default handleActions(
   {
-    [AUTH]: (state, action) =>
+    [AUTH_USER]: (state, action) =>
       produce(state, (draft) => {
         draft.userId = action.payload.userInfo.userId;
         draft.nickname = action.payload.userInfo.nickname;
-        draft.profile = action.payload.userInfo.profile;
+        draft.profileImg = action.patload.userInfo.profileImg;
       }),
 
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        draft.session = action.payload.session;
+        draft.cookie = action.payload.cookie;
         draft.is_login = true;
       }),
 
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        // removeCookie();
+        // removeAuthorization();
         draft.userId = null;
+        draft.email = null;
         draft.nickname = null;
-        draft.session = null;
+        draft.cookie = null;
         draft.is_login = false;
       }),
 
@@ -144,9 +146,13 @@ export default handleActions(
 );
 
 const userActions = {
-  authDB,
-  loginAction,
-  logInCheck,
+  logOut,
   checkEmail,
   signupDB,
+  authUserDB,
+  loginAction,
+  loginCheck,
+  emailCheck,
 };
+
+export { userActions };

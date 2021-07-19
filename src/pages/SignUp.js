@@ -1,14 +1,40 @@
 // LIBRARY
-import React from 'react';
-import { css } from 'styled-components';
+import React from "react";
+import { css } from "styled-components";
 
 // STYLE
-import { flexBox } from '../common/style';
+import { flexBox } from "../common/style";
 
 // ELEMENTS
-import { Button, Title, Input, Grid } from '../elements';
+import { Button, Title, Input, Grid } from "../elements";
+
+// HISTORY
+import { history } from "../redux/configStore";
+
+//REDUX-ACTION & REACT-HOOK
+import { userActions } from "../redux/modules/user";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const SignUp = (props) => {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [nickname, setNickname] = React.useState("");
+
+  const signup = () => {
+    if (email === "" || password === "" || nickname === "") {
+      window.alert("입력하지 않은 항목이 있습니다.");
+      return;
+    }
+
+    dispatch(userActions.signupDB(email, password, nickname));
+
+    window.alert("회원가입이 완료되었습니다. 로그인을 해주세요.");
+    history.push("/login");
+  };
+
   return (
     <React.Fragment>
       <Grid
@@ -58,23 +84,37 @@ const SignUp = (props) => {
             type="email"
             placeholder="이메일"
             margin="0 auto"
+            changeEvent={(e) => {
+              setEmail(e.target.value);
+              // console.log(e.target.value)
+            }}
           />
           <Input
+            type="password"
             bgColor="white"
             width="330px"
             padding="11px 13px"
             placeholder="비밀번호"
             margin="1% auto 0 auto"
+            changeEvent={(e) => {
+              setPassword(e.target.value);
+              // console.log(e.target.value)
+            }}
           />
           <Input
+            type="text"
             bgColor="white"
             width="330px"
             padding="11px 13px"
             placeholder="블로그 이름"
             margin="1% auto 0 auto"
+            changeEvent={(e) => {
+              setNickname(e.target.value);
+            }}
           />
 
           <Button
+            clickEvent={signup}
             color="black"
             bgColor="blue"
             padding="10px 15px"
@@ -90,6 +130,7 @@ const SignUp = (props) => {
           </Button>
 
           <Button // header에 적용해야됨
+            // onClick={history.push('/login')}
             color="black"
             bgColor="green"
             padding="10px 15px"
@@ -108,9 +149,5 @@ const SignUp = (props) => {
     </React.Fragment>
   );
 };
-
-// const SignUpHeader = styled.header`
-
-// `;
 
 export default SignUp;

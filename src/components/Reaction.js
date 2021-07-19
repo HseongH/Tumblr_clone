@@ -1,5 +1,6 @@
 // LIBRARY
 import React from 'react';
+import { css } from 'styled-components';
 
 // ELEMENTS
 import { Button, Grid } from '../elements/index';
@@ -7,17 +8,19 @@ import { Button, Grid } from '../elements/index';
 // STYLE
 import { flexBox } from '../common/style';
 
-const Reaction = ({ children, ...props }) => {
+const Reaction = ({ children, isFollowed, ...props }) => {
   return (
     <Grid
       {...props}
       addstyle={() => {
-        flexBox('space-between');
+        return css`
+          ${flexBox('space-between')};
+        `;
       }}
     >
-      <div>{children}</div>
+      {children}
 
-      <Button color="accent">팔로우</Button>
+      {isFollowed || <Button color="accent">팔로우</Button>}
     </Grid>
   );
 };

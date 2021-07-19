@@ -1,15 +1,16 @@
 import React from 'react';
 import { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // ELEMENTS
-import { Grid, Button } from '../elements/index';
+import { Grid, Button, Image } from '../elements/index';
 
 // COMPONENTS
 import Dropdown from './Dropdown';
 import Reaction from './Reaction';
 
 // STYLE
-import { flexVer } from '../common/style';
+import { flexVer, flexBox } from '../common/style';
 
 // ICON
 import PersonIcon from '@material-ui/icons/Person';
@@ -47,7 +48,28 @@ const User = ({ opacity }) => {
           로그아웃
         </Button>
 
-        <Reaction />
+        <Reaction padding="8px 10px" width="100%" isFollowed={true} hoverColor="secondaryAccent">
+          <Link to="/mypage">
+            <Grid
+              color="black"
+              addstyle={() => {
+                return css`
+                  ${flexBox('left')};
+                  flex: 1;
+                `;
+              }}
+            >
+              <Grid width="37px" height="37px" oveflow="hidden" margin="0 8px 0 0">
+                <Image
+                  src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
+                  alt="default image"
+                />
+              </Grid>
+
+              <strong>hh4518</strong>
+            </Grid>
+          </Link>
+        </Reaction>
 
         <Grid
           width="100%"

@@ -119,6 +119,11 @@ const HeaderStyle = styled.header`
   top: 0;
   left: 0;
   z-index: 9;
+
+  a {
+    text-decoration: none;
+    color: rgb(${(props) => props.theme.palette.black});
+  }
 `;
 
 Header.defaultProps = {};

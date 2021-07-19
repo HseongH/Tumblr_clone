@@ -40,7 +40,7 @@ const Dropdown = (props) => {
 
   return (
     <>
-      <Button clickEvent={handleToggle} color={props.color}>
+      <Button clickEvent={handleToggle} color={props.color} opacity={props.opacity}>
         {props.icon}
       </Button>
 

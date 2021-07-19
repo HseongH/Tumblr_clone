@@ -30,6 +30,7 @@ const Button = ({ clickEvent, children, ...props }) => {
 Button.defaultProps = {
   color: 'secondaryAccent',
   opacity: 1,
+  fontSize: '16px',
   addstyle: () => {},
   clickEvent: () => {},
 };

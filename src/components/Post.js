@@ -16,6 +16,8 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ShareIcon from '@material-ui/icons/Share';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 
 const HeaderStyle = styled.header`
   ${flexBox('space-between')};
@@ -75,7 +77,6 @@ const Post = ({ post }) => {
             color="black"
             padding="10px 0"
             fontWeight="700"
-            fontSize="16px"
             addstyle={() => {
               return css`
                 &:hover {
@@ -92,7 +93,6 @@ const Post = ({ post }) => {
             color="black"
             padding="10px 0 15px"
             fontWeight="700"
-            fontSize="16px"
             addstyle={() => {
               return css`
                 &:hover {
@@ -146,17 +146,38 @@ const Post = ({ post }) => {
           반응 0개
         </Button>
 
-        <Grid width="auto">
-          <Button color="black" margin="0 15px 0 0">
+        <Grid
+          width="auto"
+          addstyle={() => {
+            return css`
+              & button {
+                margin-right: 15px;
+
+                &:last-child {
+                  margin-right: 0;
+                }
+              }
+            `;
+          }}
+        >
+          <Button color="black">
             <FileCopyIcon />
           </Button>
 
-          <Button color="black" margin="0 15px 0 0">
+          <Button color="black">
             <ShareIcon />
           </Button>
 
           <Button color="black">
             <FavoriteIcon />
+          </Button>
+
+          <Button color="black">
+            <DeleteIcon />
+          </Button>
+
+          <Button color="black">
+            <CreateIcon />
           </Button>
         </Grid>
       </Grid>

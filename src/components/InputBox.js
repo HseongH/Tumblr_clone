@@ -21,54 +21,51 @@ const InputBox = (props) => {
   return (
     <React.Fragment>
       <Grid
-        width="100%"
+        width="540px"
+        padding="15px 5px"
+        margin="0 0 20px"
+        color="white"
         addstyle={() => {
           flexBox('space-between');
           return css`
             position: relative;
-            justify-content: space-between;
-            box-sizing: border-box;
-            align-items: center;
             min-height: 100px;
-            padding: 15px 5px;
-            border-radius: 3px;
-            margin-bottom: 20px;
-            margin-left: 3%;
-            margin-top: 1.3%;
-            background-color: white;
+
+            & button {
+              width: 50%;
+            }
           `;
         }}
       >
-        <Button>
-          <TextFieldsIcon style={{ fontSize: '48px', color: 'black', margin: '0 40px 0 25px' }} />
-          <Text margin="0 20px 0 0">텍스트</Text>
+        <Button color="black">
+          <TextFieldsIcon style={{ fontSize: '48px' }} />
+
+          <Text>텍스트</Text>
         </Button>
 
-        <Button>
-          <CameraAltIcon
-            style={{ fontSize: '48px', color: 'rgb(255, 73, 47)', marginRight: '40px' }}
-          />
-          <Text margin="0 45px 0 0">사진</Text>
+        <Button color="red">
+          <CameraAltIcon style={{ fontSize: '48px' }} />
+
+          <Text>사진</Text>
         </Button>
 
-        <Button>
-          <FormatQuoteIcon
-            style={{ fontSize: '48px', color: 'rgb(255, 138, 0)', marginRight: '40px' }}
-          />
-          <Text margin="0 45px 0 0">인용구</Text>
+        {/* <Button color="orange">
+          <FormatQuoteIcon style={{ fontSize: '48px' }} />
+
+          <Text>인용구</Text>
         </Button>
 
-        <Button>
-          <ChatIcon style={{ fontSize: '48px', color: 'rgb(0, 184, 255)', marginRight: '40px' }} />
-          <Text margin="0 45px 0 0">채팅</Text>
+        <Button color="blue">
+          <ChatIcon style={{ fontSize: '48px' }} />
+
+          <Text>채팅</Text>
         </Button>
 
-        <Button>
-          <VideocamIcon
-            style={{ fontSize: '48px', color: 'rgb(255, 98, 206)', marginRight: '25px' }}
-          />
-          <Text margin="0 30px 0 0">동영상</Text>
-        </Button>
+        <Button color="pink">
+          <VideocamIcon style={{ fontSize: '48px' }} />
+
+          <Text>동영상</Text>
+        </Button> */}
       </Grid>
     </React.Fragment>
   );

@@ -1,7 +1,7 @@
 // LIBRARY
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // STYLE
 import { flexBox, flexVer, borderBox } from '../common/style';
@@ -26,6 +26,12 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 
 const Header = (props) => {
+  const path = useLocation().pathname;
+  const [searchBar, setSearchBar] = useState({
+    alpha: 0.3,
+    color: 'white',
+  });
+
   return (
     <HeaderStyle>
       <HeaderWrap>
@@ -35,12 +41,27 @@ const Header = (props) => {
             alt="tumblr logo"
           />
         </Logo>
-        <Grid addstyle={flexVer} width="50%" color="white" opacity="0.3">
-          <span style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 4px' }}>
-            <SearchIcon fontSize="large" />
-          </span>
 
-          <Input placeholder="Tumblr 검색" />
+        <Grid addstyle={flexVer} width="50%" bgColor="white" opacity={searchBar.alpha}>
+          <Grid color={searchBar.color} width="20px" margin="0 4px">
+            <SearchIcon fontSize="midium" />
+          </Grid>
+
+          <Input
+            placeholder="Tumblr 검색"
+            focusEvent={() => {
+              setSearchBar({
+                alpha: 1,
+                color: 'black',
+              });
+            }}
+            blurEvent={() => {
+              setSearchBar({
+                alpha: 0.3,
+                color: 'white',
+              });
+            }}
+          />
         </Grid>
       </HeaderWrap>
 
@@ -59,7 +80,7 @@ const Header = (props) => {
                 }
 
                 & a {
-                  color: rgba(${(props) => props.theme.palette.white}, 0.5);
+                  color: rgba(${(props) => props.theme.palette.white}, ${path === '/' ? 1 : 0.5});
                 }
               }
             `;
@@ -68,7 +89,7 @@ const Header = (props) => {
           padding="0 2%"
           margin="0 0 0 10%"
         >
-          <Button opacity="0.5">
+          <Button>
             <Link to="/">
               <HomeIcon fontSize="large" />
             </Link>
@@ -126,7 +147,7 @@ const Header = (props) => {
 
             <Grid
               width="100%"
-              color="secondaryAccent"
+              bgColor="secondaryAccent"
               padding="15px 20px"
               addstyle={() => {
                 return css`
@@ -145,7 +166,7 @@ const Header = (props) => {
           <Dropdown
             width="240px"
             icon={<PersonIcon fontSize="large" />}
-            opacity="0.5"
+            opacity={path === '/mypage' ? '1' : '0.5'}
             position={() => {
               return css`
                 top: 54px;
@@ -190,27 +211,31 @@ const Header = (props) => {
                           }
                         `;
                       }}
+
+                      & svg {
+                        margin-right: 7px;
+                      }
                     }
                   `;
                 }}
               >
                 <Button>
-                  <FindInPageIcon style={{ marginRight: '7px' }} />
+                  <FindInPageIcon />
                   포스트
                 </Button>
 
                 <Button>
-                  <PersonPinIcon style={{ marginRight: '7px' }} />
+                  <PersonPinIcon />
                   팔로워
                 </Button>
 
                 <Button>
-                  <PersonAddIcon style={{ marginRight: '7px' }} />
+                  <PersonAddIcon />
                   팔로잉
                 </Button>
 
                 <Button>
-                  <FavoriteIcon style={{ marginRight: '7px' }} />
+                  <FavoriteIcon />
                   좋아요
                 </Button>
               </Grid>

@@ -3,7 +3,7 @@ import React from 'react';
 import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from '../common/style';
+import { flexBox, flexVer } from '../common/style';
 
 // ELEMENTS
 import { Input, Button, Title, Grid } from '../elements/index';
@@ -16,9 +16,6 @@ const Login = (props) => {
         addstyle={() => {
           flexBox();
           return css`
-            align-items: center;
-            justify-content: center;
-            display: flex;
             flex-direction: column;
             vertical-align: baseline;
           `;

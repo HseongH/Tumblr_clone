@@ -12,10 +12,6 @@ const ConStyle = styled.div`
   min-height: 100vh;
   width: 100%;
   padding-top: 80px;
-
-  a {
-    color: inherit;
-  }
 `;
 
 const GridStyle = styled.div`

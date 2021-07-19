@@ -29,7 +29,7 @@ const HeaderStyle = styled.header`
 const Post = ({ post }) => {
   return (
     <Grid
-      color="white"
+      bgColor="white"
       padding="15px 20px"
       margin="0 0 20px 0"
       addstyle={() => {
@@ -109,7 +109,7 @@ const Post = ({ post }) => {
       <Grid
         width="64px"
         height="64px"
-        color="white"
+        bgColor="white"
         addstyle={() => {
           return css`
             position: absolute;

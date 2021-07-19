@@ -29,18 +29,21 @@ const DropdownStyle = styled.div`
 
 const Dropdown = (props) => {
   const [open, setOpen] = useState(false);
+  const [alpha, setAlpha] = useState(props.opacity);
 
   const handleToggle = () => {
     setOpen((preOpen) => !preOpen);
+    setAlpha(open ? props.opacity : 1);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setAlpha(props.opacity);
   };
 
   return (
     <>
-      <Button clickEvent={handleToggle} color={props.color} opacity={props.opacity}>
+      <Button clickEvent={handleToggle} color={props.color} opacity={alpha}>
         {props.icon}
       </Button>
 

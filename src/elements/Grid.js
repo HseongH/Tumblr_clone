@@ -9,7 +9,8 @@ const GridStyle = styled.div`
   width: ${(props) => (props.width ? props.width : props.theme.size.postWidth)};
   height: ${(props) => props.height};
   background: ${(props) =>
-    props.color ? `rgba(${props.theme.palette[props.color]}, ${props.opacity})` : 'none'};
+    props.bgColor ? `rgba(${props.theme.palette[props.bgColor]}, ${props.opacity})` : 'none'};
+  color: ${(props) => `rgba(${props.theme.palette[props.color]}, ${props.opacity})`};
   margin: ${(props) => props.margin};
   ${(props) => borderBox(props.radius, props.padding)};
 

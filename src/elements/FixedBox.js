@@ -10,7 +10,7 @@ import { flexBox } from '../common/style';
 const FixedBox = ({ children }) => {
   return (
     <Grid
-      color="navy"
+      bgColor="navy"
       opacity="0.5"
       width="100%"
       addstyle={() => {

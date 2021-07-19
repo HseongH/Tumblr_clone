@@ -48,7 +48,7 @@ const InputStyle = styled.input`
   ${(props) => props.addstyle()};
 `;
 
-const Input = ({ id, type, placeholder, value, changeEvent, ...props }) => {
+const Input = ({ id, type, placeholder, value, changeEvent, focusEvent, blurEvent, ...props }) => {
   return (
     <InputStyle
       id={id}
@@ -56,6 +56,8 @@ const Input = ({ id, type, placeholder, value, changeEvent, ...props }) => {
       placeholder={placeholder}
       value={value}
       onChange={changeEvent}
+      onFocus={focusEvent}
+      onBlur={blurEvent}
       {...props}
     />
   );
@@ -70,6 +72,8 @@ Input.defaultProps = {
   padding: '5px',
   addstyle: () => {},
   changeEvent: () => {},
+  focusEvent: () => {},
+  blurEvent: () => {},
 };
 
 export default Input;

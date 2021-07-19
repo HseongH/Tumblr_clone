@@ -31,6 +31,7 @@ const Modal = ({ children, cancle, submit, isVisible, color, bgColor, fontSize }
             >
               {cancle}
             </Button>
+
             <Button color={color} fontSize={fontSize} bgColor="accent" padding="5px 7px">
               {submit}
             </Button>

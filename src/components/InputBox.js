@@ -24,7 +24,7 @@ const InputBox = (props) => {
         width="540px"
         padding="15px 5px"
         margin="0 0 20px"
-        color="white"
+        bgColor="white"
         addstyle={() => {
           flexBox('space-between');
           return css`

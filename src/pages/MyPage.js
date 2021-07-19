@@ -1,17 +1,17 @@
 // LIBRARY
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox, flexVer } from '../common/style';
 
 // ELEMENTS
-import { Image, Input, Text, Grid, Button } from "../elements";
+import { Image, Input, Text, Grid, Button } from '../elements';
 
 // COMPONENTS
-import InputBox from "../components/InputBox";
-import Logo from "../components/Logo";
-import Post from "../components/Post";
+import InputBox from '../components/InputBox';
+import Logo from '../components/Logo';
+import Post from '../components/Post';
 
 const MyPage = (props) => {
   return (
@@ -29,10 +29,9 @@ const MyPage = (props) => {
           width="100%"
           addstyle={() => {
             return css`
+              ${flexVer('flex-end')}
               max-width: 580px;
-              display: flex;
               flex-direction: column;
-              align-items: flex-end;
               margin-right: 5%;
             `;
           }}
@@ -62,7 +61,9 @@ const MyPage = (props) => {
               <Image src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png" />
             </Logo>
 
-            <Text color="white" fontSize="40px" margin="0 auto">포스트 넣을 자리</Text>
+            <Text color="white" fontSize="40px" margin="0 auto">
+              포스트 넣을 자리
+            </Text>
           </Grid>
         </Grid>
 

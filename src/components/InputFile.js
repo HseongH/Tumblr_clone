@@ -42,7 +42,7 @@ const InputImage = ({ children, ...props }) => {
   return (
     <Grid
       width="100%"
-      color="follow"
+      bgColor="follow"
       addstyle={() => {
         return css`
           position: relative;

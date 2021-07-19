@@ -33,13 +33,14 @@ const InputBox = (props) => {
             padding: 15px 5px;
             border-radius: 3px;
             margin-bottom: 20px;
+            margin-left: 3%;
+            margin-top: 1.3%;
             background-color: white;
-            line-height: 100px;
           `;
         }}
       >
         <Button>
-          <TextFieldsIcon style={{ fontSize: '48px', color: 'black', margin: '0 40px 0 15px' }} />
+          <TextFieldsIcon style={{ fontSize: '48px', color: 'black', margin: '0 40px 0 25px' }} />
           <Text margin="0 20px 0 0">텍스트</Text>
         </Button>
 
@@ -47,26 +48,26 @@ const InputBox = (props) => {
           <CameraAltIcon
             style={{ fontSize: '48px', color: 'rgb(255, 73, 47)', marginRight: '40px' }}
           />
-          <Text margin="0 40px 0 0">사진</Text>
+          <Text margin="0 45px 0 0">사진</Text>
         </Button>
 
         <Button>
           <FormatQuoteIcon
             style={{ fontSize: '48px', color: 'rgb(255, 138, 0)', marginRight: '40px' }}
           />
-          <Text margin="0 40px 0 0">인용구</Text>
+          <Text margin="0 45px 0 0">인용구</Text>
         </Button>
 
         <Button>
           <ChatIcon style={{ fontSize: '48px', color: 'rgb(0, 184, 255)', marginRight: '40px' }} />
-          <Text margin="0 40px 0 0">채팅</Text>
+          <Text margin="0 45px 0 0">채팅</Text>
         </Button>
 
         <Button>
           <VideocamIcon
-            style={{ fontSize: '48px', color: 'rgb(255, 98, 206)', marginRight: '20px' }}
+            style={{ fontSize: '48px', color: 'rgb(255, 98, 206)', marginRight: '25px' }}
           />
-          <Text margin="0 20px 0 0">동영상</Text>
+          <Text margin="0 30px 0 0">동영상</Text>
         </Button>
       </Grid>
     </React.Fragment>

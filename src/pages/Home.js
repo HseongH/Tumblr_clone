@@ -3,7 +3,7 @@ import React from 'react';
 import { css } from 'styled-components';
 
 // ELEMENTS
-import { Grid, Button } from '../elements/index';
+import { Grid, Button, Text } from '../elements/index';
 
 // ICON
 import TextFieldsIcon from '@material-ui/icons/TextFields';
@@ -20,18 +20,22 @@ const Home = (props) => {
           `;
         }}
       >
-        <TextFieldsIcon style={{ fontSize: '50px' }} />
+        <TextFieldsIcon style={{ fontSize: '48px' }} />
+
+        <Text>텍스트</Text>
       </Button>
 
-      <Button color="red">
-        <CameraAltIcon
-          style={{ fontSize: '50px' }}
-          addstyle={() => {
-            return css`
-              width: 50%;
-            `;
-          }}
-        />
+      <Button
+        color="red"
+        addstyle={() => {
+          return css`
+            width: 50%;
+          `;
+        }}
+      >
+        <CameraAltIcon style={{ fontSize: '48px' }} />
+
+        <Text>사진</Text>
       </Button>
     </Grid>
   );

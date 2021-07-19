@@ -12,7 +12,7 @@ const TextStyle = styled.p`
   word-break: break-all;
   white-space: pre-line;
 
-  ${(props) => props.appendStyle()};
+  ${(props) => props.addStyle()};
 `;
 
 const Text = ({ children, ...props }) => {
@@ -21,7 +21,7 @@ const Text = ({ children, ...props }) => {
 
 Text.defaultProps = {
   color: 'black',
-  appendStyle: () => {},
+  addStyle: () => {},
 };
 
 export default Text;

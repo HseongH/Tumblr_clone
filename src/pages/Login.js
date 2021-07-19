@@ -1,34 +1,29 @@
 // LIBRARY
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox } from '../common/style';
 
 // COMPONENTS
 
 // ELEMENTS
-import { Input, Button, Text, Grid } from "../elements";
+import { Input, Button, Text, Grid } from '../elements';
 
 const Login = (props) => {
   return (
     <React.Fragment>
       <Grid
-        appendStyle={() => {
+        addStyle={() => {
           flexBox();
         }}
-        style={{ margin: "20% auto 0 auto" }}
+        style={{ margin: '20% auto 0 auto' }}
       >
-        <Text
-          fontSize="70px"
-          fontWeight="bold"
-          color="whiteOnDark"
-          textAlign="center"
-        >
+        <Text fontSize="70px" fontWeight="bold" color="whiteOnDark" textAlign="center">
           tumblr
         </Text>
         <Grid
-          appendStyle={() => {
+          addStyle={() => {
             flexBox();
             return css`
               width: 100%;
@@ -36,7 +31,7 @@ const Login = (props) => {
               text-align: center;
             `;
           }}
-          style={{ margin: "5% auto 0 auto" }}
+          style={{ margin: '5% auto 0 auto' }}
         >
           <Input
             bgColor="whiteOnDark"
@@ -47,7 +42,7 @@ const Login = (props) => {
           />
 
           <Button
-            appendStyle={() => {
+            addStyle={() => {
               return css`
                 font-weight: bold;
                 width: 60%;
@@ -61,7 +56,7 @@ const Login = (props) => {
             다음
           </Button>
           <Grid
-            appendStyle={() => {
+            addStyle={() => {
               flexBox();
             }}
           >
@@ -70,7 +65,7 @@ const Login = (props) => {
               bgColor="blue"
               padding="10px 15px"
               margin="10px"
-              appendStyle={() => {
+              addStyle={() => {
                 return css`
                   font-weight: bold;
                 `;

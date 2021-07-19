@@ -11,7 +11,7 @@ const Reaction = ({ children, ...props }) => {
   return (
     <Grid
       {...props}
-      appendStyle={() => {
+      addStyle={() => {
         flexBox('space-between');
       }}
     >

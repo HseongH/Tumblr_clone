@@ -13,7 +13,7 @@ const FixedBox = ({ children }) => {
       color="navy"
       opacity="0.5"
       width="100%"
-      appendStyle={() => {
+      addStyle={() => {
         return css`
           height: 100%;
           position: fixed;

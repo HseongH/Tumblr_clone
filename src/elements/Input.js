@@ -45,12 +45,13 @@ const InputStyle = styled.input`
     }
   }
 
-  ${(props) => props.appendStyle()};
+  ${(props) => props.addStyle()};
 `;
 
-const Input = ({ type, placeholder, value, changeEvent, ...props }) => {
+const Input = ({ id, type, placeholder, value, changeEvent, ...props }) => {
   return (
     <InputStyle
+      id={id}
       type={type}
       placeholder={placeholder}
       value={value}
@@ -67,7 +68,7 @@ Input.defaultProps = {
   width: '100%',
   fontSize: '16px',
   padding: '5px',
-  appendStyle: () => {},
+  addStyle: () => {},
   changeEvent: () => {},
 };
 

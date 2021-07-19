@@ -16,7 +16,7 @@ const Modal = ({ children, cancle, submit, isVisible, color, bgColor, fontSize }
         <Grid color={bgColor}>
           {children}
           <Grid
-            appendStyle={() => {
+            addStyle={() => {
               flexBox('space-between');
             }}
           >

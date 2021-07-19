@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp';
 
 // COMPONENTS
 import Header from './components/Header';
+import InputFile from './components/InputFile';
 
 // ELEMENTS
 import Container from './elements/Container';
@@ -30,6 +31,8 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={SignUp} />
         </Switch>
+
+        <InputFile />
       </Container>
     </ThemeProvider>
   );

@@ -14,7 +14,7 @@ const ButtonStyle = styled.button`
   cursor: pointer;
   ${(props) => borderBox(props.radius, props.padding)};
 
-  ${(props) => props.appendStyle()};
+  ${(props) => props.addStyle()};
 `;
 
 const Button = ({ clickEvent, children, ...props }) => {
@@ -29,7 +29,7 @@ Button.defaultProps = {
   color: 'secondaryAccent',
   opacity: 1,
   fontSize: '16px',
-  appendStyle: () => {},
+  addStyle: () => {},
   clickEvent: () => {},
 };
 

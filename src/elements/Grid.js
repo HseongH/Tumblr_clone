@@ -12,7 +12,7 @@ const GridStyle = styled.div`
   margin: ${(props) => props.margin};
   ${(props) => borderBox(props.radius, props.padding)};
 
-  ${(props) => props.appendStyle()};
+  ${(props) => props.addStyle()};
 `;
 
 const Grid = ({ children, ...props }) => {
@@ -20,7 +20,8 @@ const Grid = ({ children, ...props }) => {
 };
 
 Grid.defaultProps = {
-  appendStyle: () => {},
+  opacity: 1,
+  addStyle: () => {},
 };
 
 export default Grid;

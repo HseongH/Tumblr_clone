@@ -1,7 +1,73 @@
+// LIBRARY
 import React from 'react';
+import styled, { css } from 'styled-components';
 
-const InputFile = (props) => {
-  return <div></div>;
+// ELEMENTS
+import { Input, Grid } from '../elements/index';
+
+// ICON
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+
+const PosAbs = () => {
+  return css`
+    position: absolute;
+    top: 0;
+    left: 0;
+  `;
 };
 
-export default InputFile;
+const LabelStyle = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  font-size: 20px;
+  box-sizing: border-box;
+  z-index: 3;
+  ${PosAbs()};
+  ${(props) => {
+    const color = props.theme.palette.gray;
+
+    return css`
+      color: ${color};
+      border: dashed ${color};
+      padding: props.padding;
+    `;
+  }}
+`;
+
+const InputImage = ({ children, ...props }) => {
+  return (
+    <Grid
+      width="100%"
+      color="follow"
+      addStyle={() => {
+        return css`
+          position: relative;
+        `;
+      }}
+    >
+      <LabelStyle {...props} htmlFor="input--file">
+        <AddAPhotoIcon />
+        <br />
+        {children}
+      </LabelStyle>
+
+      <Input
+        id="input--file"
+        width="1px"
+        addStyle={() => {
+          return css`
+            ${PosAbs()};
+            height: 1px;
+            overflow: hidden;
+          `;
+        }}
+      />
+    </Grid>
+  );
+};
+
+export default InputImage;

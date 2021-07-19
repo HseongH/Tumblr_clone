@@ -12,20 +12,20 @@ const ConStyle = styled.div`
   min-height: 100vh;
   width: 100%;
   padding-top: 80px;
+`;
 
-  div {
-    max-width: 990px;
-    padding: 0 8px;
-    box-sizing: border-box;
-    margin: 0 auto;
-    position: relative;
-  }
+const GridStyle = styled.div`
+  max-width: 990px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  position: relative;
 `;
 
 const Container = ({ children, ...props }) => {
   return (
     <ConStyle {...props}>
-      <div>{children}</div>
+      <GridStyle>{children}</GridStyle>
     </ConStyle>
   );
 };

@@ -8,7 +8,7 @@ const TitleStyle = styled.h2`
   margin: ${(props) => props.margin};
   text-align: ${(props) => props.textAlign};
 
-  ${(props) => props.appendStyle()};
+  ${(props) => props.addStyle()};
 `;
 
 const Title = ({ children, ...props }) => {
@@ -18,7 +18,7 @@ const Title = ({ children, ...props }) => {
 Title.defaultProps = {
   lineHeight: 1.5,
   fontWeight: 700,
-  appendStyle: () => {},
+  addStyle: () => {},
 };
 
 export default Title;

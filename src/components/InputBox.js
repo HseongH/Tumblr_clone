@@ -29,7 +29,6 @@ const InputBox = (props) => {
           flexBox('space-between');
           return css`
             position: relative;
-            min-height: 100px;
 
             & button {
               width: 50%;

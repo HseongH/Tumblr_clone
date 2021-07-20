@@ -1,19 +1,30 @@
 // LIBRARY
-import React from 'react';
-import { css } from 'styled-components';
+import React, { useEffect } from "react";
+import { css } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
 // STYLE
-import { flexBox, flexVer } from '../common/style';
+import { flexBox, flexVer } from "../common/style";
 
 // ELEMENTS
-import { Image, Input, Text, Grid, Button } from '../elements';
+import { Image, Text, Grid } from "../elements";
 
 // COMPONENTS
-import InputBox from '../components/InputBox';
-import Logo from '../components/Logo';
-import Post from '../components/Post';
+import InputBox from "../components/InputBox";
+import Post from "../components/Post";
+import { postActions } from "../redux/modules/post";
 
-const MyPage = (props) => {
+const MyPage = (post) => {
+  const dispatch = useDispatch();
+
+  const postList = useSelector((state) => state.post.list);
+
+  useEffect(() => {
+    dispatch(postActions.getPostListDB());
+
+    return () => dispatch(postActions.getPostList([], 0));
+  }, []);
+
   return (
     <React.Fragment>
       <Grid
@@ -29,10 +40,10 @@ const MyPage = (props) => {
           width="100%"
           addstyle={() => {
             return css`
-              ${flexVer('flex-end')}
+              ${flexVer("flex-end")}
               max-width: 580px;
               flex-direction: column;
-              margin-right: 5%;
+              margin-right: 10%;
             `;
           }}
         >
@@ -43,27 +54,58 @@ const MyPage = (props) => {
               `;
             }}
           >
-            <Logo width="64px" height="64px">
-              <Image src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png" />
-            </Logo>
-
-            <InputBox />
+            {/* <InputBox /> */}
           </Grid>
 
           <Grid
             addstyle={() => {
               return css`
                 display: flex;
+                flex-direction: column;
               `;
             }}
           >
-            <Logo width="64px" height="64px">
-              <Image src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png" />
-            </Logo>
+            <Grid
+              addstyle={() => {
+                return css`
+                  display: flex;
+                `;
+              }}
+            >
+              <Grid
+                addstyle={() => {
+                  return css`
+                    width: 64px;
+                    height: 64px;
+                    position: absolute;
+                    top: 0;
+                    left: -76px;
+                  `;
+                }}
+              >
+                <Image
+                  addstyle={() => {
+                    return css`
+                      border-radius: 3px;
+                    `;
+                  }}
+                  src={
+                    post.profileImg
+                      ? post.profileImg
+                      : "https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
+                  }
+                  margin="0 0 20px"
+                />
+              </Grid>
+              <InputBox />
+            </Grid>
 
-            <Text color="white" fontSize="40px" margin="0 auto">
-              포스트 넣을 자리
-            </Text>
+            {postList.map((post) => (
+              <Post
+                post={post}
+                key={(Date.now() + Math.random()).toString(36)}
+              />
+            ))}
           </Grid>
         </Grid>
 

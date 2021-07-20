@@ -1,79 +1,75 @@
 // LIBRARY
-import React, { useState } from "react";
-import styled, { css } from "styled-components";
-import { Link, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { userActions } from "../redux/modules/user";
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { userActions } from '../redux/modules/user';
 
 // HISTORY
-import { history } from "../redux/configstore";
+import { history } from '../redux/configstore';
 
 // STYLE
-import { flexBox, flexVer } from "../common/style";
+import { flexBox, flexVer } from '../common/style';
 
 // COMPONENTS
-import Logo from "./Logo";
-import Alarm from "./Alarm";
-import User from "./User";
+import Logo from './Logo';
+import Alarm from './Alarm';
+import User from './User';
 
 // ELEMENTS
-import { Input, Button, Grid, Image } from "../elements/index";
+import { Input, Button, Grid, Image } from '../elements/index';
 
 // ICON
-import HomeIcon from "@material-ui/icons/Home";
-import CreateIcon from "@material-ui/icons/Create";
-import SearchIcon from "@material-ui/icons/Search";
+import HomeIcon from '@material-ui/icons/Home';
+import CreateIcon from '@material-ui/icons/Create';
+import SearchIcon from '@material-ui/icons/Search';
 
 const Header = (props) => {
   const path = useLocation().pathname;
+  console.log(path);
   const [searchBar, setSearchBar] = useState({
     alpha: 0.3,
-    color: "white",
+    color: 'white',
   });
 
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
 
-  if (is_login) {
-    return (
-      <HeaderStyle>
-        <HeaderWrap>
-          <Logo>
-            <Image
-              src="https://seeklogo.com/images/T/tumblr-icon-logo-A42B4BE5C1-seeklogo.com.png"
-              alt="tumblr logo"
-            />
-          </Logo>
+  return (
+    <HeaderStyle>
+      <HeaderWrap>
+        <Logo>
+          <Image
+            src="https://seeklogo.com/images/T/tumblr-icon-logo-A42B4BE5C1-seeklogo.com.png"
+            alt="tumblr logo"
+          />
+        </Logo>
 
-          <Grid
-            addstyle={flexVer}
-            width="480px"
-            bgColor="white"
-            opacity={searchBar.alpha}
-          >
-            <Grid color={searchBar.color} width="20px" margin="0 4px">
-              <SearchIcon fontSize="medium" />
-            </Grid>
-
-            <Input
-              placeholder="Tumblr 검색"
-              focusEvent={() => {
-                setSearchBar({
-                  alpha: 1,
-                  color: "black",
-                });
-              }}
-              blurEvent={() => {
-                setSearchBar({
-                  alpha: 0.3,
-                  color: "white",
-                });
-              }}
-            />
+        <Grid addstyle={flexVer} width="480px" bgColor="white" opacity={searchBar.alpha}>
+          <Grid color={searchBar.color} width="20px" margin="0 4px">
+            <SearchIcon fontSize="medium" />
           </Grid>
-        </HeaderWrap>
 
-        <Grid addStyle={flexVer}>
+          <Input
+            placeholder="Tumblr 검색"
+            focusEvent={() => {
+              setSearchBar({
+                alpha: 1,
+                color: 'black',
+              });
+            }}
+            blurEvent={() => {
+              setSearchBar({
+                alpha: 0.3,
+                color: 'white',
+              });
+            }}
+          />
+        </Grid>
+      </HeaderWrap>
+
+      <Grid addStyle={flexVer}>
+        {is_login ? (
           <Grid
             addstyle={() => {
               return css`
@@ -88,10 +84,7 @@ const Header = (props) => {
                   }
 
                   & a {
-                    color: rgba(
-                      ${(props) => props.theme.palette.white},
-                      ${path === "/" ? 1 : 0.5}
-                    );
+                    color: rgba(${(props) => props.theme.palette.white}, ${path === '/' ? 1 : 0.5});
                   }
                 }
               `;
@@ -108,114 +101,42 @@ const Header = (props) => {
 
             <Alarm />
 
-            <User opacity={path === "/mypage" ? "1" : "0.5"} />
+            <User opacity={path === '/mypage' ? '1' : '0.5'} />
 
             <Button padding="0 12px" bgColor="blue" color="black">
               <CreateIcon fontSize="large" />
             </Button>
           </Grid>
-        </Grid>
-      </HeaderStyle>
-    );
-  }
-
-  return (
-    <HeaderStyle>
-      <HeaderWrap>
-        <Logo>
-          <Image
-            src="https://seeklogo.com/images/T/tumblr-icon-logo-A42B4BE5C1-seeklogo.com.png"
-            alt="tumblr logo"
-          />
-        </Logo>
-
-        <Grid
-          addstyle={flexVer}
-          width="480px"
-          bgColor="white"
-          opacity={searchBar.alpha}
-        >
-          <Grid color={searchBar.color} width="20px" margin="0 4px">
-            <SearchIcon fontSize="medium" />
-          </Grid>
-
-          <Input
-            placeholder="Tumblr 검색"
-            focusEvent={() => {
-              setSearchBar({
-                alpha: 1,
-                color: "black",
-              });
-            }}
-            blurEvent={() => {
-              setSearchBar({
-                alpha: 0.3,
-                color: "white",
-              });
-            }}
-          />
-        </Grid>
-      </HeaderWrap>
-      <Grid addStyle={flexVer}>
-        <Link to="/signup">
-          <Grid
-            addstyle={() => {
-              return css`
-                position: relative;
-                ${flexBox()};
-
-                & > button {
-                  margin-right: 15%;
-
-                  &:last-child {
-                    margin-right: 0;
-                  }
-
-                  & a {
-                    color: rgba(
-                      ${(props) => props.theme.palette.white},
-                      ${path === "/" ? 1 : 0.5}
-                    );
-                  }
-                }
-              `;
-            }}
-            width="80%"
-            padding="0 2%"
-            margin="0 0 0 10%"
-          >
+        ) : (
+          <Link to={path === '/signup' ? '/login' : 'signup'}>
             <Button
-              clickEvent={() => {
-                history.push("/signup");
-              }}
-              color="black"
-              bgColor="blue"
+              bgColor={path === '/signup' ? 'green' : 'blue'}
               padding="10px 15px"
+              color="black"
               margin="0 auto"
               addstyle={() => {
                 return css`
-                  width: 60px;
                   font-weight: bold;
                 `;
               }}
             >
-              가입
+              {path === '/signup' ? '로그인' : '가입'}
             </Button>
-          </Grid>
-        </Link>
+          </Link>
+        )}
       </Grid>
     </HeaderStyle>
   );
 };
 
 const HeaderWrap = styled.div`
-  ${flexBox("left")};
+  ${flexBox('left')};
   width: 100%;
   height: 54px;
 `;
 
 const HeaderStyle = styled.header`
-  ${flexBox("space-between")};
+  ${flexBox('space-between')};
   background: rgb(${(props) => props.theme.palette.navy});
   width: 100%;
   max-width: 1716px;

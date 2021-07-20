@@ -5,7 +5,7 @@ import instance from '../../common/axios';
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 
-import { getCookie, setCookie, deleteCookie } from '../../common/cookie';
+// import { getCookie, setCookie, deleteCookie } from '../../common/cookie';
 
 // function
 
@@ -24,7 +24,6 @@ const checkEmail = createAction(CHECK_EMAIL, (email) => ({ email }));
 
 // initialState
 const initialState = {
-  cookie: null,
   user: null,
   is_login: false,
   is_check: false,
@@ -60,9 +59,9 @@ const loginAction = (user) => {
         };
 
         dispatch(checkEmail(userInfo));
-        dispatch(logIn(res.data.cookie));
+        // dispatch(logIn(res.data.cookie));
 
-        setCookie(res.data.cookie);
+        // setCookie(res.data.cookie);
 
         history.push('/');
       })
@@ -132,7 +131,7 @@ export default handleActions(
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         // removeAuthorization();
-        deleteCookie('Authorization');
+        // deleteCookie('Authorization');
         draft.userId = null;
         draft.email = null;
         draft.nickname = null;

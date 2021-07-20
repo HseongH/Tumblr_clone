@@ -1,17 +1,15 @@
 // LIBRARY
 import React, { useState } from "react";
 import { css } from "styled-components";
+import { Link } from "react-router-dom";
 
-import { getCookie, setCookie, deleteCookie } from "../common/cookie";
+// import { getCookie, setCookie, deleteCookie } from "../common/cookie";
 
 // STYLE
-import { flexBox, flexVer } from "../common/style";
+import { flexBox } from "../common/style";
 
 // ELEMENTS
 import { Input, Button, Title, Grid } from "../elements/index";
-
-// HISTORY
-import history from "../redux/modules/user";
 
 //REDUX-ACTION & REACT-HOOK
 import { userActions } from "../redux/modules/user";
@@ -28,10 +26,10 @@ const Login = (props) => {
       return;
     }
 
-    // if (!userInfo.password) {
-    //   window.alert("비밀번호를 입력해주세요.");
-    //   return;
-    // }
+    if (!userInfo.password) {
+      window.alert("비밀번호를 입력해주세요.");
+      return;
+    }
 
     dispatch(userActions.loginAction(userInfo));
   };
@@ -87,21 +85,35 @@ const Login = (props) => {
             }}
           />
 
-          <Button
-            clickEvent={login}
-            color="black"
-            bgColor="blue"
-            padding="10px 15px"
-            margin="1% auto"
-            addstyle={() => {
-              return css`
-                width: 330px;
-                font-weight: bold;
-              `;
+          <Input
+            bgColor="white"
+            width="330px"
+            padding="11px 13px"
+            type="password"
+            placeholder="비밀번호"
+            margin="1% auto 0 auto"
+            changeEvent={(event) => {
+              setUserInfo({ ...userInfo, password: event.target.value });
             }}
-          >
-            다음
-          </Button>
+          />
+
+          <Link to="/" style={{ margin: "1% auto" }}>
+            <Button
+              clickEvent={login}
+              color="black"
+              bgColor="blue"
+              padding="10px 15px"
+              margin="1% auto"
+              addstyle={() => {
+                return css`
+                  width: 330px;
+                  font-weight: bold;
+                `;
+              }}
+            >
+              다음
+            </Button>
+          </Link>
 
           {/* <Button
             color="black"
@@ -114,6 +126,8 @@ const Login = (props) => {
                 font-weight: bold;
               `;
             }}
+            
+            
           >
             가입
           </Button> */}

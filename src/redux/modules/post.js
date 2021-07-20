@@ -72,7 +72,9 @@ const getMorePostListDB = (limit = 10) => {
 
 const createPostDB = (post) => {
   return function (dispatch, getState) {
-    if (post.img) {
+    const imgFile = getState().image.file;
+
+    if (imgFile.img.length) {
       dispatch(
         imgActions.uploadImageDB(() => {
           const imgUrl = getState().image.imageUrl;

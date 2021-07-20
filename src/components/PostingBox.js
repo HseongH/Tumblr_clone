@@ -60,14 +60,14 @@ const TextAreaStyle = styled.textarea`
   }
 `;
 
-const PostingBox = ({ type, modalClose }) => {
+const PostingBox = ({ type, modalClose, post }) => {
   const dispatch = useDispatch();
 
   const preview = useSelector((state) => state.image.preview);
 
   const [contents, setContents] = useState({
-    title: '',
-    content: '',
+    title: post ? post.title : '',
+    content: post ? post.contents : '',
   });
 
   const createPost = () => {
@@ -78,6 +78,21 @@ const PostingBox = ({ type, modalClose }) => {
     };
 
     dispatch(postActions.createPostDB(postContents));
+    dispatch(imgActions.setPreview([]));
+    dispatch(imgActions.setFile([]));
+    setContents({ title: '', content: '' });
+  };
+
+  const updatePost = () => {
+    const postContents = {
+      ...post,
+      ...contents,
+    };
+
+    dispatch(postActions.updatePostDB(post.postId, postContents));
+    dispatch(imgActions.setPreview([]));
+    dispatch(imgActions.setFile([]));
+    setContents({ title: '', content: '' });
   };
 
   const deletePreview = (idx) => {
@@ -103,11 +118,11 @@ const PostingBox = ({ type, modalClose }) => {
     <Modal
       bgColor="white"
       cancle="닫기"
-      submit="포스팅"
+      submit={post ? '저장' : '포스팅'}
       color="white"
       padding="15px 0"
       modalClose={modalClose}
-      submitEvent={createPost}
+      submitEvent={post ? updatePost : createPost}
     >
       <PostHeader
         addstyle={() => {
@@ -127,13 +142,14 @@ const PostingBox = ({ type, modalClose }) => {
             value={contents.title}
             changeEvent={(event) => {
               setContents({ ...contents, title: event.target.value });
+              console.log(contents);
             }}
           />
 
           <TextAreaStyle
             placeholder="여기에 내용을 쓰세요."
             value={contents.content}
-            changeEvent={(event) => {
+            onChange={(event) => {
               setContents({ ...contents, content: event.target.value });
             }}
           ></TextAreaStyle>
@@ -192,7 +208,7 @@ const PostingBox = ({ type, modalClose }) => {
                 padding="8px"
                 placeholder="여기에 내용을 쓰세요."
                 value={contents.content}
-                changeEvent={(event) => {
+                onChange={(event) => {
                   setContents({ ...contents, content: event.target.value });
                 }}
               ></TextAreaStyle>

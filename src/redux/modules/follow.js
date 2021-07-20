@@ -13,7 +13,7 @@ const removeFollowDB = (userId) => {
   });
 };
 
-export const likeActions = {
+export const followActions = {
   addFollowDB,
   removeFollowDB,
 };

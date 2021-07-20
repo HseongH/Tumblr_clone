@@ -7,6 +7,7 @@ import moment from 'moment';
 // REDUX
 import { postActions } from '../redux/modules/post';
 import { imgActions } from '../redux/modules/image';
+import { followActions } from '../redux/modules/follow';
 
 // STYLE
 import { flexBox } from '../common/style';
@@ -15,6 +16,8 @@ import { flexBox } from '../common/style';
 import { Text, Title, Image, Grid, Button } from '../elements/index';
 
 // COMPONENTS
+import Like from './Like';
+import Follow from './Follow';
 import Dropdown from '../components/Dropdown';
 import PostHeader from './PostHeader';
 import PostingBox from './PostingBox';
@@ -24,7 +27,6 @@ import Auth from './Auth';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ShareIcon from '@material-ui/icons/Share';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
 
@@ -32,6 +34,15 @@ const Post = ({ post }) => {
   const dispatch = useDispatch();
 
   const [inputType, setInputType] = useState('');
+  const [follow, setFollow] = useState(post.follow !== 'N');
+
+  const addFollow = () => {
+    followActions.addFollowDB(post.userId);
+  };
+
+  const removeFollow = () => {
+    followActions.removeFollowDB(post.userId);
+  };
 
   const updatePost = () => {
     setInputType(post.img.length ? 'image' : 'text');
@@ -57,29 +68,34 @@ const Post = ({ post }) => {
         }}
       >
         <PostHeader>
-          <Grid
-            width="64px"
-            height="64px"
-            bgColor="white"
-            addstyle={() => {
-              return css`
-                position: absolute;
-                top: 0;
-                left: -84px;
-                overflow: hidden;
-              `;
-            }}
-          >
-            <Image
-              src={
-                post.profileImg
-                  ? post.profileImg
-                  : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
-              }
-              margin="0 0 20px"
-            />
+          <Grid width="auto">
+            <Grid
+              width="64px"
+              height="64px"
+              bgColor="white"
+              addstyle={() => {
+                return css`
+                  position: absolute;
+                  top: 0;
+                  left: -84px;
+                  overflow: hidden;
+                `;
+              }}
+            >
+              <Image
+                src={
+                  post.profileImg
+                    ? post.profileImg
+                    : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
+                }
+                margin="0 0 20px"
+              />
+            </Grid>
+            {post.nickname}
+
+            <Follow useId={post.userId} margin="0 0 0 8px" isFollow={!follow} />
           </Grid>
-          {post.nickname}{' '}
+
           <Dropdown
             width="250px"
             icon={<MoreHorizIcon />}
@@ -133,6 +149,10 @@ const Post = ({ post }) => {
               color="black"
               padding="10px 0 15px"
               fontWeight="700"
+              clickEvent={() => {
+                setFollow((follow) => !follow);
+                follow ? removeFollow() : addFollow();
+              }}
               addstyle={() => {
                 return css`
                   &:hover {
@@ -141,7 +161,7 @@ const Post = ({ post }) => {
                 `;
               }}
             >
-              {post.follow === 'Y' ? '언팔로우' : '팔로우'}
+              {follow ? '언팔로우' : '팔로우'}
             </Button>
           </Dropdown>
         </PostHeader>
@@ -154,7 +174,7 @@ const Post = ({ post }) => {
           <Image src={img} key={(Date.now() + Math.random()).toString(36)} />
         ))}
 
-        <Text margin="15px 0"></Text>
+        <Text margin="15px 0">{post.content}</Text>
 
         <Grid
           width="100%"
@@ -197,9 +217,7 @@ const Post = ({ post }) => {
               <ShareIcon />
             </Button>
 
-            <Button color="black">
-              <FavoriteIcon />
-            </Button>
+            <Like active={post.favorite === 'N' ? false : true} postId={post.postId} />
 
             <Auth userId={post.userId}>
               <Button color="black" clickEvent={deletePost}>

@@ -5,6 +5,9 @@ import { css } from 'styled-components';
 // ELEMENTS
 import { Button, Grid } from '../elements/index';
 
+// COMPONENTS
+import Follow from './Follow';
+
 // STYLE
 import { flexBox } from '../common/style';
 
@@ -20,7 +23,7 @@ const Reaction = ({ children, isFollowed, ...props }) => {
     >
       {children}
 
-      {isFollowed || <Button color="accent">팔로우</Button>}
+      <Follow />
     </Grid>
   );
 };

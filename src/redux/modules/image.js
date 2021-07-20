@@ -38,6 +38,8 @@ const uploadImageDB = (callNext) => {
     const imgList = getState().image.file;
 
     await imgList.forEach((img) => {
+      if (typeof img !== 'object') return;
+
       const upload = new AWS.S3.ManagedUpload({
         params: {
           Bucket: 'tumblr-image',

@@ -33,8 +33,6 @@ const getPostListDB = (limit = 10) => {
     instance
       .get(`/api/post/posts?start=0&limit=${limit + 1}`)
       .then((res) => {
-        console.log(res);
-
         if (res.data.result.length < limit + 1) {
           dispatch(getPostList(res.data.result, null));
           return;
@@ -76,7 +74,7 @@ const createPostDB = (post) => {
   return function (dispatch, getState) {
     const imgFile = getState().image.file;
 
-    if (imgFile.img.length) {
+    if (imgFile.length) {
       dispatch(
         imgActions.uploadImageDB(() => {
           const imgUrl = getState().image.imageUrl;
@@ -129,42 +127,42 @@ const createPostDB = (post) => {
 
 const updatePostDB = (postId, post) => {
   return function (dispatch, getState) {
-    const file = getState().image.file;
+    const imgFile = getState().image.file;
 
-    if (!file.length) {
-      const { title, reBlog, tag, content, img } = post;
+    if (imgFile.length) {
+      dispatch(
+        imgActions.uploadImageDB(() => {
+          const imgUrl = getState().image.imageUrl;
+          const postInfo = {
+            ...post,
+            img: imgUrl,
+          };
+          const { title, reBlog, tag, content, img } = postInfo;
 
-      instance
-        .put('/api/post', { postId, title, reBlog, tag, content, img })
-        .then((res) => {
-          dispatch(updatePost(postId, post));
+          instance
+            .put('/api/post', { postId, title, reBlog, tag, content, img })
+            .then((res) => {
+              dispatch(updatePost(postId, postInfo));
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         })
-        .catch((error) => {
-          console.error(error);
-        });
-
-      return;
+      );
     }
 
-    dispatch(
-      imgActions.uploadImageDB(() => {
-        const imgUrl = getState().image.imageUrl;
-        const postInfo = {
-          ...post,
-          img: imgUrl,
-        };
-        const { title, reBlog, tag, content, img } = postInfo;
+    const { title, reBlog, tag, content, img } = post;
 
-        instance
-          .put('/api/post', { postId, title, reBlog, tag, content, img })
-          .then((res) => {
-            dispatch(updatePost(postId, postInfo));
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+    instance
+      .put('/api/post', { postId, title, reBlog, tag, content, img })
+      .then((res) => {
+        dispatch(updatePost(postId, post));
       })
-    );
+      .catch((error) => {
+        console.error(error);
+      });
+
+    return;
   };
 };
 

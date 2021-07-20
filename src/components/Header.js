@@ -26,7 +26,6 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const Header = (props) => {
   const path = useLocation().pathname;
-  console.log(path);
   const [searchBar, setSearchBar] = useState({
     alpha: 0.3,
     color: 'white',

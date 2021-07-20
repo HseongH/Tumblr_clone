@@ -112,7 +112,7 @@ const Header = (props) => {
               bgColor={path === '/signup' ? 'green' : 'blue'}
               padding="10px 15px"
               color="black"
-              margin="0 auto"
+              margin="1% auto 0 68%"
               addstyle={() => {
                 return css`
                   font-weight: bold;

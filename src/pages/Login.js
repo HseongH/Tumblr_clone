@@ -28,10 +28,10 @@ const Login = (props) => {
       return;
     }
 
-    if (!userInfo.password) {
-      window.alert("비밀번호를 입력해주세요.");
-      return;
-    }
+    // if (!userInfo.password) {
+    //   window.alert("비밀번호를 입력해주세요.");
+    //   return;
+    // }
 
     dispatch(userActions.loginAction(userInfo));
   };
@@ -103,7 +103,7 @@ const Login = (props) => {
             다음
           </Button>
 
-          <Button
+          {/* <Button
             color="black"
             bgColor="blue"
             padding="10px 15px"
@@ -116,7 +116,7 @@ const Login = (props) => {
             }}
           >
             가입
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
     </React.Fragment>

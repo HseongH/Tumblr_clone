@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { css } from 'styled-components';
+import moment from 'moment';
 
 // REDUX
 import { postActions } from '../redux/modules/post';
@@ -17,6 +18,7 @@ import { Text, Title, Image, Grid, Button } from '../elements/index';
 import Dropdown from '../components/Dropdown';
 import PostHeader from './PostHeader';
 import PostingBox from './PostingBox';
+import Auth from './Auth';
 
 // ICON
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -40,6 +42,8 @@ const Post = ({ post }) => {
     dispatch(postActions.deletePostDB(post.postId));
   };
 
+  const date = moment.utc(post.createdAt).format('YY년 M월 D일, H시 M분');
+
   return (
     <>
       <Grid
@@ -62,10 +66,18 @@ const Post = ({ post }) => {
                 position: absolute;
                 top: 0;
                 left: -84px;
+                overflow: hidden;
               `;
             }}
           >
-            <Image src={post.profileImg} margin="0 0 20px" />
+            <Image
+              src={
+                post.profileImg
+                  ? post.profileImg
+                  : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
+              }
+              margin="0 0 20px"
+            />
           </Grid>
           {post.nickname}{' '}
           <Dropdown
@@ -97,7 +109,7 @@ const Post = ({ post }) => {
                 `;
               }}
             >
-              포스팅함 - <span>7월 15일, 오전 10:22</span>
+              {date}
             </Button>
 
             <Button
@@ -129,7 +141,7 @@ const Post = ({ post }) => {
                 `;
               }}
             >
-              언팔로우
+              {post.follow === 'Y' ? '언팔로우' : '팔로우'}
             </Button>
           </Dropdown>
         </PostHeader>
@@ -139,7 +151,7 @@ const Post = ({ post }) => {
         </Title>
 
         {post.img.map((img, idx) => (
-          <Image src={img} key={post.postId} />
+          <Image src={img} key={(Date.now() + Math.random()).toString(36)} />
         ))}
 
         <Text margin="15px 0"></Text>
@@ -160,7 +172,7 @@ const Post = ({ post }) => {
               `;
             }}
           >
-            반응 0개
+            반응 {post.reactionCount}개
           </Button>
 
           <Grid
@@ -189,13 +201,15 @@ const Post = ({ post }) => {
               <FavoriteIcon />
             </Button>
 
-            <Button color="black" clickEvent={deletePost}>
-              <DeleteIcon />
-            </Button>
+            <Auth userId={post.userId}>
+              <Button color="black" clickEvent={deletePost}>
+                <DeleteIcon />
+              </Button>
 
-            <Button color="black" clickEvent={updatePost}>
-              <CreateIcon />
-            </Button>
+              <Button color="black" clickEvent={updatePost}>
+                <CreateIcon />
+              </Button>
+            </Auth>
           </Grid>
         </Grid>
       </Grid>

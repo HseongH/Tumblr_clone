@@ -33,6 +33,8 @@ const getPostListDB = (limit = 10) => {
     instance
       .get(`/api/post/posts?start=0&limit=${limit + 1}`)
       .then((res) => {
+        console.log(res);
+
         if (res.data.result.length < limit + 1) {
           dispatch(getPostList(res.data.result, null));
           return;

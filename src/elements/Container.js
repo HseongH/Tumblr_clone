@@ -12,6 +12,7 @@ const ConStyle = styled.div`
   min-height: 100vh;
   width: 100%;
   padding-top: 80px;
+  overflow: hidden;
 `;
 
 const GridStyle = styled.div`

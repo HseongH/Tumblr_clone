@@ -1,6 +1,6 @@
 // LIBRARY
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import styled, { css } from 'styled-components';
 
 // REDUX
@@ -63,12 +63,24 @@ const TextAreaStyle = styled.textarea`
 const PostingBox = ({ type, modalClose, post }) => {
   const dispatch = useDispatch();
 
-  const preview = useSelector((state) => state.image.preview);
+  const { nickname, preview } = useSelector(
+    (state) => ({
+      preview: state.image.preview,
+      nickname: state.user.nickname,
+    }),
+    shallowEqual
+  );
 
   const [contents, setContents] = useState({
     title: post ? post.title : '',
     content: post ? post.contents : '',
   });
+
+  const setInitialState = () => {
+    dispatch(imgActions.setPreview([]));
+    dispatch(imgActions.setFile([]));
+    setContents({ title: '', content: '' });
+  };
 
   const createPost = () => {
     const postContents = {
@@ -78,9 +90,7 @@ const PostingBox = ({ type, modalClose, post }) => {
     };
 
     dispatch(postActions.createPostDB(postContents));
-    dispatch(imgActions.setPreview([]));
-    dispatch(imgActions.setFile([]));
-    setContents({ title: '', content: '' });
+    setInitialState();
   };
 
   const updatePost = () => {
@@ -90,9 +100,7 @@ const PostingBox = ({ type, modalClose, post }) => {
     };
 
     dispatch(postActions.updatePostDB(post.postId, postContents));
-    dispatch(imgActions.setPreview([]));
-    dispatch(imgActions.setFile([]));
-    setContents({ title: '', content: '' });
+    setInitialState();
   };
 
   const deletePreview = (idx) => {
@@ -131,7 +139,7 @@ const PostingBox = ({ type, modalClose, post }) => {
           `;
         }}
       >
-        hh4518
+        {nickname}
       </PostHeader>
 
       {type === 'text' && (

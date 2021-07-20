@@ -1,6 +1,10 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+
+// REDUX
+import { userActions } from '../redux/modules/user';
 
 // ELEMENTS
 import { Grid, Button, Image } from '../elements/index';
@@ -19,7 +23,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 
-const User = ({ opacity }) => {
+const User = ({ opacity, nickname, profile }) => {
+  const dispatch = useDispatch();
+
   return (
     <Dropdown
       width="240px"
@@ -44,6 +50,9 @@ const User = ({ opacity }) => {
               text-align: right;
             `;
           }}
+          clickEvent={() => {
+            dispatch(userActions.logOut());
+          }}
         >
           로그아웃
         </Button>
@@ -60,13 +69,10 @@ const User = ({ opacity }) => {
               }}
             >
               <Grid width="37px" height="37px" oveflow="hidden" margin="0 12px 0 0">
-                <Image
-                  src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
-                  alt="default image"
-                />
+                <Image src={profile} alt="default image" />
               </Grid>
 
-              <strong>hh4518</strong>
+              <strong>{nickname}</strong>
             </Grid>
           </Link>
         </Reaction>

@@ -3,13 +3,13 @@ import React from 'react';
 import { css } from 'styled-components';
 
 // ELEMENTS
-import { Button, Grid } from '../elements/index';
+import { Grid } from '../elements/index';
 
 // COMPONENTS
 import Follow from './Follow';
 
 // STYLE
-import { flexBox } from '../common/style';
+import { flexVer } from '../common/style';
 
 const Reaction = ({ children, isFollowed, ...props }) => {
   return (
@@ -17,13 +17,13 @@ const Reaction = ({ children, isFollowed, ...props }) => {
       {...props}
       addstyle={() => {
         return css`
-          ${flexBox('space-between')};
+          ${flexVer()};
         `;
       }}
     >
       {children}
 
-      <Follow />
+      {isFollowed || <Follow />}
     </Grid>
   );
 };

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 // STYLE
 import { flexBox, flexVer, borderBox } from '../common/style';
@@ -27,8 +27,14 @@ const Header = (props) => {
     color: 'white',
   });
 
-  const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
+  const { is_login, nickname, profile } = useSelector(
+    (state) => ({
+      is_login: state.user.is_login,
+      nickname: state.user.nickname,
+      profile: state.user.profileImg,
+    }),
+    shallowEqual
+  );
 
   return (
     <HeaderStyle>
@@ -70,15 +76,51 @@ const Header = (props) => {
         </Grid>
       </Grid>
 
-      {is_login ? (
+      <Grid
+        addstyle={() => {
+          return css`
+            position: relative;
+            ${flexVer()};
+
+            & > button {
+              margin-right: 30px;
+
+              &:last-child {
+                margin-right: 0;
+              }
+
+              & a {
+                color: rgba(${(props) => props.theme.palette.white}, ${path === '/' ? 1 : 0.5});
+              }
+            }
+          `;
+        }}
+        width="auto"
+      >
+        <Button>
+          <Link to="/">
+            <HomeIcon fontSize="large" />
+          </Link>
+        </Button>
+
+        <Alarm nickname={nickname} />
+
+        <User opacity={path === '/mypage' ? '1' : '0.5'} nickname={nickname} profile={profile} />
+
+        <Button padding="0 12px" bgColor="blue" color="black">
+          <CreateIcon fontSize="large" />
+        </Button>
+      </Grid>
+
+      {/* {is_login ? (
         <Grid
           addstyle={() => {
             return css`
               position: relative;
-              ${flexBox()};
+              ${flexVer()};
 
               & > button {
-                margin-right: 15%;
+                margin-right: 30px;
 
                 &:last-child {
                   margin-right: 0;
@@ -100,28 +142,28 @@ const Header = (props) => {
 
           <Alarm />
 
-          <User opacity={path === '/mypage' ? '1' : '0.5'} />
+          <User opacity={path === '/mypage' ? '1' : '0.5'} nickname={nickname} profile={profile} />
 
           <Button padding="0 12px" bgColor="blue" color="black">
             <CreateIcon fontSize="large" />
           </Button>
         </Grid>
       ) : (
-        <Button
-          bgColor={path === '/signup' ? 'green' : 'blue'}
-          padding="10px 15px"
-          color="black"
-          addstyle={() => {
-            return css`
-              font-weight: bold;
-            `;
-          }}
-        >
-          <Link to={path === '/signup' ? '/login' : 'signup'}>
+        <Link to={path === '/signup' ? '/login' : 'signup'}>
+          <Button
+            bgColor={path === '/signup' ? 'green' : 'blue'}
+            padding="10px 15px"
+            color="black"
+            addstyle={() => {
+              return css`
+                font-weight: bold;
+              `;
+            }}
+          >
             {path === '/signup' ? '로그인' : '가입'}
-          </Link>
-        </Button>
-      )}
+          </Button>
+        </Link>
+      )} */}
     </HeaderStyle>
   );
 };

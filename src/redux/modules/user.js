@@ -5,7 +5,7 @@ import instance from '../../common/axios';
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 
-// import { getCookie, setCookie, deleteCookie } from '../../common/cookie';
+import { setCookie, delCookie } from '../../common/cookie';
 
 // function
 
@@ -17,7 +17,7 @@ const CHECK_EMAIL = 'CHECK_EMAIL';
 
 // userId, nickname, profileImg
 // action creators
-const logIn = createAction(LOG_IN, (user) => user);
+const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const authUser = createAction(AUTH_USER, (userInfo) => ({ userInfo }));
 const checkEmail = createAction(CHECK_EMAIL, (email) => ({ email }));
@@ -27,7 +27,7 @@ const initialState = {
   is_login: false,
   userId: null,
   nickname: null,
-  profileImg: null,
+  profileImg: 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png',
 };
 
 // middleware actions
@@ -50,12 +50,11 @@ const loginAction = (user) => {
     instance
       .post('/api/login', user)
       .then((res) => {
-        console.log(res);
         const userInfo = {
           ...res.data,
-          nickname: user.nickname,
         };
 
+        setCookie(res.data.token);
         dispatch(logIn(userInfo));
 
         history.push('/');
@@ -66,29 +65,6 @@ const loginAction = (user) => {
       });
   };
 };
-
-// const loginCheck = (cookie) => {
-//   return function (dispatch) {
-//     if (cookie) {
-//       dispatch(logIn(cookie));
-//     }
-//   };
-// };
-
-// const emailCheck = (email) => {
-//   return function (dispatch) {
-//     instance
-//       .post('/api/login/email', { email: email })
-//       .then((res) => {
-//         dispatch(checkEmail(true));
-//         window.alert('사용 가능한 이메일입니다.');
-//       })
-//       .catch((error) => {
-//         dispatch(checkEmail(false));
-//         window.alert('이미 사용중인 이메일입니다.');
-//       });
-//   };
-// };
 
 const signupDB = (email, password, nickname) => {
   return function () {
@@ -127,24 +103,18 @@ export default handleActions(
 
         draft.userId = userInfo.userId;
         draft.nickname = userInfo.nickname;
-        draft.profileImg = userInfo.profileImg;
+        if (userInfo.profileImg) draft.profileImg = userInfo.profileImg;
         draft.is_login = true;
       }),
 
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        // removeAuthorization();
-        // deleteCookie('Authorization');
+        delCookie();
         draft.userId = null;
         draft.nickname = null;
         draft.profileImg = null;
         draft.is_login = false;
       }),
-
-    // [CHECK_EMAIL]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.is_check = action.payload.email;
-    //   }),
   },
   initialState
 );

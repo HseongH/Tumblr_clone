@@ -7,7 +7,7 @@ import { css } from 'styled-components';
 import { alarmActions } from '../redux/modules/alarm';
 
 // ELEMENTS
-import { Grid, Button, Text } from '../elements/index';
+import { Grid, Button, Text, Image } from '../elements/index';
 
 // COMPONENTS
 import Dropdown from './Dropdown';
@@ -42,7 +42,7 @@ const Selected = () => {
   `;
 };
 
-const Alarm = (props) => {
+const Alarm = ({ nickname }) => {
   const dispatch = useDispatch();
   const alarmList = useSelector((state) => state.alarm.list);
 
@@ -77,7 +77,7 @@ const Alarm = (props) => {
           `;
         }}
       >
-        hh4518
+        {nickname}
       </PostHeader>
 
       <Grid
@@ -119,7 +119,7 @@ const Alarm = (props) => {
 
       <Grid
         width="100%"
-        bgColor="secondaryAccent"
+        bgColor={alarmList.length ? 'white' : 'secondaryAccent'}
         padding="15px 20px"
         addstyle={() => {
           return css`
@@ -127,16 +127,52 @@ const Alarm = (props) => {
           `;
         }}
       >
-        <FaBolt />
-
         {alarmList.length ? (
           alarmList.map((alarm) => {
-            return <Reaction />;
+            const actionText = [
+              `${alarm.nickname} 님이 ${nickname} 님을 팔로우 합니다.`,
+              `${alarm.nickname} 님이 ${nickname} 님을 리블로그 합니다.`,
+              `${alarm.nickname} 님이 좋아요를 눌렀습니다.`,
+            ];
+
+            return (
+              <Reaction width="100%" padding="0" isFollow={true}>
+                <Grid
+                  width="36px"
+                  height="36px"
+                  addstyle={() => {
+                    return css`
+                      overflow: hidden;
+                      margin-right: 8px;
+                    `;
+                  }}
+                >
+                  <Image src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png" />
+                </Grid>
+
+                <Text
+                  addstyle={() => {
+                    return css`
+                      width: calc(100% - 44px);
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      text-align: left;
+                    `;
+                  }}
+                >
+                  {actionText[alarm.type - 1]}
+                </Text>
+              </Reaction>
+            );
           })
         ) : (
-          <Text fontSize="14px" lineHeight="1.5" margin="8px 0 0">
-            {comment[type]}
-          </Text>
+          <>
+            <FaBolt />
+            <Text fontSize="14px" lineHeight="1.5" margin="8px 0 0">
+              {comment[type]}
+            </Text>
+          </>
         )}
       </Grid>
     </Dropdown>

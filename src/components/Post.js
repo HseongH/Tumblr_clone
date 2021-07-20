@@ -93,7 +93,16 @@ const Post = ({ post }) => {
             </Grid>
             {post.nickname}
 
-            <Follow useId={post.userId} margin="0 0 0 8px" isFollow={!follow} />
+            {follow || (
+              <Follow
+                useId={post.userId}
+                margin="0 0 0 8px"
+                isFollow={!follow}
+                clickEvent={() => {
+                  setFollow(true);
+                }}
+              />
+            )}
           </Grid>
 
           <Dropdown

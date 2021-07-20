@@ -20,7 +20,7 @@ import { likeActions } from "../redux/modules/like";
 const Likes = (props) => {
   const dispatch = useDispatch();
 
-  const likeList = useSelector((state) => state.like.list);
+  // const likeList = useSelector((state) => state.like.list);
   const postList = useSelector((state) => state.post.list);
 
   React.useEffect(() => {

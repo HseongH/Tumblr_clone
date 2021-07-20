@@ -10,41 +10,56 @@ AWS.config.update({
 // ACTION
 const UPLOAD_IMAGE = 'IMAGE';
 const SET_PREVIEW = 'SET_PREVIEW';
+const DEL_PREVIEW = 'DEL_PREVIEW';
+const SET_FILE = 'SET_FILE';
+const DEL_FILE = 'DEL_FILE';
 
 // ACTION CREATER
 const uploadImage = (imgUrl) => ({ type: UPLOAD_IMAGE, imgUrl });
 const setPreview = (preview) => ({ type: SET_PREVIEW, preview });
+const delPreview = (index) => ({ type: DEL_PREVIEW, index });
+const setFile = (file) => ({ type: SET_FILE, file });
+const delFile = (index) => ({ type: DEL_FILE, index });
 
 // INITIAL STATE
 const initialState = {
   imageUrl: [],
   preview: [],
+  file: [],
 };
 
+// .then((res) => {
+//   callNext();
+// })
+
 // MIDDLEWARE
-const uploadImageDB = (image, callNext) => {
-  return function (dispatch) {
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        Bucket: 'tumblr-image',
-        Key: image.name,
-        Body: image,
-      },
+const uploadImageDB = (callNext) => {
+  return async function (dispatch, getState) {
+    const imgList = getState().image.file;
+
+    await imgList.forEach((img) => {
+      const upload = new AWS.S3.ManagedUpload({
+        params: {
+          Bucket: 'tumblr-image',
+          Key: img.name,
+          Body: img,
+        },
+      });
+
+      const promise = upload.promise();
+
+      promise
+        .then((data) => {
+          dispatch(uploadImage(data.Location));
+          console.log('대기');
+        })
+        .catch((error) => {
+          console.error(error);
+          return alert('오류가 발생했습니다: ', error.message);
+        });
     });
 
-    const promise = upload.promise();
-
-    promise
-      .then((data) => {
-        dispatch(uploadImage(data.Location));
-      })
-      .then((res) => {
-        callNext();
-      })
-      .catch((error) => {
-        console.error(error);
-        return alert('오류가 발생했습니다: ', error.message);
-      });
+    callNext();
   };
 };
 
@@ -52,10 +67,23 @@ const uploadImageDB = (image, callNext) => {
 function image(state = initialState, action) {
   switch (action.type) {
     case UPLOAD_IMAGE:
-      return { ...state, imageUrl: action.imgUrl };
+      return { ...state, imageUrl: [...state.imageUrl, action.imgUrl] };
 
     case SET_PREVIEW:
       return { ...state, preview: [...state.preview, action.preview] };
+
+    case DEL_PREVIEW:
+      const previewList = state.preview.filter((img, idx) => action.index !== idx);
+
+      return { ...state, preview: previewList };
+
+    case SET_FILE:
+      return { ...state, file: [...state.file, action.file] };
+
+    case DEL_FILE:
+      const fileList = state.file.filter((img, idx) => action.index !== idx);
+
+      return { ...state, file: fileList };
 
     default:
       return state;
@@ -67,5 +95,8 @@ export default image;
 export const imgActions = {
   uploadImage,
   setPreview,
+  delPreview,
+  setFile,
+  delFile,
   uploadImageDB,
 };

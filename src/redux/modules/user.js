@@ -1,19 +1,19 @@
 // axios
-import instance from "../../common/axios";
+import instance from '../../common/axios';
 
 // redux-actions & immer
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
 
-import { getCookie, setCookie, deleteCookie } from "../../common/cookie";
+import { getCookie, setCookie, deleteCookie } from '../../common/cookie';
 
 // function
 
 //actions
-const LOG_IN = "LOG_IN";
-const LOG_OUT = "LOG_OUT";
-const AUTH_USER = "AUTH_USER";
-const CHECK_EMAIL = "CHECK_EMAIL";
+const LOG_IN = 'LOG_IN';
+const LOG_OUT = 'LOG_OUT';
+const AUTH_USER = 'AUTH_USER';
+const CHECK_EMAIL = 'CHECK_EMAIL';
 
 // userId, nickname, profileImg
 // action creators
@@ -38,7 +38,7 @@ const initialState = {
 const authUserDB = () => {
   return function (dispatch) {
     instance
-      .post("/api/user/me")
+      .post('/api/user/me')
       .then((res) => {
         console.log(res);
         dispatch(authUser(res.data));
@@ -52,7 +52,7 @@ const authUserDB = () => {
 const loginAction = (user) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post("/api/login", user)
+      .post('/api/login', user)
       .then((res) => {
         const userInfo = {
           email: res.data.userId,
@@ -64,11 +64,11 @@ const loginAction = (user) => {
 
         setCookie(res.data.cookie);
 
-        history.push("/");
+        history.push('/');
       })
       .catch((error) => {
         console.log(error);
-        window.alert("아이디 또는 패스워드가 올바르지 않습니다.");
+        window.alert('아이디 또는 패스워드가 올바르지 않습니다.');
       });
   };
 };
@@ -84,14 +84,14 @@ const loginCheck = (cookie) => {
 const emailCheck = (email) => {
   return function (dispatch) {
     instance
-      .post("/api/login/email", { email: email })
+      .post('/api/login/email', { email: email })
       .then((res) => {
         dispatch(checkEmail(true));
-        window.alert("사용 가능한 이메일입니다.");
+        window.alert('사용 가능한 이메일입니다.');
       })
       .catch((error) => {
         dispatch(checkEmail(false));
-        window.alert("이미 사용중인 이메일입니다.");
+        window.alert('이미 사용중인 이메일입니다.');
       });
   };
 };
@@ -99,7 +99,7 @@ const emailCheck = (email) => {
 const signupDB = (email, password, nickname) => {
   return function () {
     instance
-      .post("/api/sign", {
+      .post('/api/sign', {
         email: email,
         password: password,
         nickname: nickname,
@@ -132,7 +132,7 @@ export default handleActions(
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         // removeAuthorization();
-        deleteCookie("Authorization");
+        deleteCookie('Authorization');
         draft.userId = null;
         draft.email = null;
         draft.nickname = null;

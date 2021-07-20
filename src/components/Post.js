@@ -33,6 +33,20 @@ const Post = ({ post }) => {
       }}
     >
       <PostHeader>
+        <Grid
+          width="64px"
+          height="64px"
+          bgColor="white"
+          addstyle={() => {
+            return css`
+              position: absolute;
+              top: 0;
+              left: -84px;
+            `;
+          }}
+        >
+          <Image />
+        </Grid>
         hh4518{' '}
         <Dropdown
           width="250px"
@@ -99,21 +113,6 @@ const Post = ({ post }) => {
           </Button>
         </Dropdown>
       </PostHeader>
-
-      <Grid
-        width="64px"
-        height="64px"
-        bgColor="white"
-        addstyle={() => {
-          return css`
-            position: absolute;
-            top: 0;
-            left: -84px;
-          `;
-        }}
-      >
-        <Image />
-      </Grid>
 
       <Title fontSize="1.625rem" margin="15px 0"></Title>
 

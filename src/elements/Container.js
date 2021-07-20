@@ -6,7 +6,7 @@ const ConStyle = styled.div`
   font-size: 16px;
   font-weight: 400;
   font-family: 'Helvetica Neue', 'Roboto', sans-serif;
-  color: ${(props) => `rgb${props.theme.palette.black}`};
+  color: ${(props) => `rgb(${props.theme.palette.black})`};
   background: ${(props) => `rgb(${props.theme.palette.navy})`};
   line-height: 1.25;
   min-height: 100vh;

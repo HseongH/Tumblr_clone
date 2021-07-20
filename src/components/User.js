@@ -59,7 +59,7 @@ const User = ({ opacity }) => {
                 `;
               }}
             >
-              <Grid width="37px" height="37px" oveflow="hidden" margin="0 8px 0 0">
+              <Grid width="37px" height="37px" oveflow="hidden" margin="0 12px 0 0">
                 <Image
                   src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
                   alt="default image"

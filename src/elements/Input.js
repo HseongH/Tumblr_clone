@@ -48,9 +48,20 @@ const InputStyle = styled.input`
   ${(props) => props.addstyle()};
 `;
 
-const Input = ({ id, type, placeholder, value, changeEvent, focusEvent, blurEvent, ...props }) => {
+const Input = ({
+  id,
+  type,
+  placeholder,
+  value,
+  accept,
+  changeEvent,
+  focusEvent,
+  blurEvent,
+  ...props
+}) => {
   return (
     <InputStyle
+      accept={accept}
       id={id}
       type={type}
       placeholder={placeholder}

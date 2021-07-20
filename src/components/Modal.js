@@ -1,40 +1,87 @@
 // LIBRARY
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from '../common/style';
+import { flexBox, flexVer } from '../common/style';
 
 // ELEMETS
 import { Grid, Button, FixedBox } from '../elements/index';
 
-const Modal = ({ children, cancle, submit, modalClose, ...props }) => {
+const Modal = ({ children, cancle, submit, modalClose, submitEvent, ...props }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  });
+
   return (
     <FixedBox>
-      <Grid bgColor={props.bgColor} padding={props.padding}>
-        {children}
+      <Grid
+        width="100%"
+        height="100%"
+        addstyle={() => {
+          return css`
+            display: flex;
+            overflow: auto;
+          `;
+        }}
+      >
         <Grid
-          width="100%"
-          padding="15px 20px 0"
           addstyle={() => {
             return css`
-              ${flexBox('space-between')};
+              position: relative;
+              ${flexVer('flex-start')};
+              margin: auto;
             `;
           }}
         >
-          <Button
-            color={props.color}
-            fontSize={props.fontSize}
-            bgColor="gray"
-            padding="5px 7px"
-            clickEvent={modalClose}
+          <Grid
+            width="100%"
+            bgColor={props.bgColor}
+            padding={props.padding}
+            margin="50px 0"
+            addstyle={() => {
+              return css`
+                position: relative;
+                ${flexVer('flex-start')};
+                flex-direction: column;
+              `;
+            }}
           >
-            {cancle}
-          </Button>
+            {children}
+            <Grid
+              width="100%"
+              padding="15px 20px 0"
+              addstyle={() => {
+                return css`
+                  ${flexBox('space-between')};
+                `;
+              }}
+            >
+              <Button
+                color={props.color}
+                fontSize={props.fontSize}
+                bgColor="gray"
+                padding="5px 7px"
+                clickEvent={modalClose}
+              >
+                {cancle}
+              </Button>
 
-          <Button color={props.color} fontSize={props.fontSize} bgColor="accent" padding="5px 7px">
-            {submit}
-          </Button>
+              <Button
+                color={props.color}
+                fontSize={props.fontSize}
+                bgColor="accent"
+                padding="5px 7px"
+                clickEvent={submitEvent}
+              >
+                {submit}
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </FixedBox>

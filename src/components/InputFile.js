@@ -42,7 +42,7 @@ const LabelStyle = styled.label`
   }}
 `;
 
-const InputImage = ({ children, ...props }) => {
+const InputImage = ({ children, changeEvent, ...props }) => {
   return (
     <Grid
       width="100%"
@@ -61,12 +61,11 @@ const InputImage = ({ children, ...props }) => {
       <Input
         id="input--file"
         type="file"
-        width="1px"
+        accept="image/png, image/jpeg"
+        changeEvent={changeEvent}
         addstyle={() => {
           return css`
-            ${PosAbs()};
-            height: 1px;
-            overflow: hidden;
+            display: none;
           `;
         }}
       />

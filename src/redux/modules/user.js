@@ -24,13 +24,10 @@ const checkEmail = createAction(CHECK_EMAIL, (email) => ({ email }));
 
 // initialState
 const initialState = {
-  user: null,
   is_login: false,
-  is_check: false,
   userId: null,
   nickname: null,
   profileImg: null,
-  email: null,
 };
 
 // middleware actions
@@ -53,15 +50,13 @@ const loginAction = (user) => {
     instance
       .post('/api/login', user)
       .then((res) => {
+        console.log(res);
         const userInfo = {
-          email: res.data.userId,
+          ...res.data,
           nickname: user.nickname,
         };
 
-        dispatch(checkEmail(userInfo));
-        // dispatch(logIn(res.data.cookie));
-
-        // setCookie(res.data.cookie);
+        dispatch(logIn(userInfo));
 
         history.push('/');
       })
@@ -72,36 +67,39 @@ const loginAction = (user) => {
   };
 };
 
-const loginCheck = (cookie) => {
-  return function (dispatch) {
-    if (cookie) {
-      dispatch(logIn(cookie));
-    }
-  };
-};
+// const loginCheck = (cookie) => {
+//   return function (dispatch) {
+//     if (cookie) {
+//       dispatch(logIn(cookie));
+//     }
+//   };
+// };
 
-const emailCheck = (email) => {
-  return function (dispatch) {
-    instance
-      .post('/api/login/email', { email: email })
-      .then((res) => {
-        dispatch(checkEmail(true));
-        window.alert('사용 가능한 이메일입니다.');
-      })
-      .catch((error) => {
-        dispatch(checkEmail(false));
-        window.alert('이미 사용중인 이메일입니다.');
-      });
-  };
-};
+// const emailCheck = (email) => {
+//   return function (dispatch) {
+//     instance
+//       .post('/api/login/email', { email: email })
+//       .then((res) => {
+//         dispatch(checkEmail(true));
+//         window.alert('사용 가능한 이메일입니다.');
+//       })
+//       .catch((error) => {
+//         dispatch(checkEmail(false));
+//         window.alert('이미 사용중인 이메일입니다.');
+//       });
+//   };
+// };
 
 const signupDB = (email, password, nickname) => {
   return function () {
     instance
       .post('/api/sign', {
-        email: email,
-        password: password,
-        nickname: nickname,
+        email,
+        password,
+        nickname,
+      })
+      .then((res) => {
+        console.log(res);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -120,11 +118,16 @@ export default handleActions(
         draft.userId = action.payload.userInfo.userId;
         draft.nickname = action.payload.userInfo.nickname;
         draft.profileImg = action.patload.userInfo.profileImg;
+        draft.is_login = true;
       }),
 
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        draft.cookie = action.payload.cookie;
+        const userInfo = action.payload.user;
+
+        draft.userId = userInfo.userId;
+        draft.nickname = userInfo.nickname;
+        draft.profileImg = userInfo.profileImg;
         draft.is_login = true;
       }),
 
@@ -133,16 +136,15 @@ export default handleActions(
         // removeAuthorization();
         // deleteCookie('Authorization');
         draft.userId = null;
-        draft.email = null;
         draft.nickname = null;
-        draft.cookie = null;
+        draft.profileImg = null;
         draft.is_login = false;
       }),
 
-    [CHECK_EMAIL]: (state, action) =>
-      produce(state, (draft) => {
-        draft.is_check = action.payload.email;
-      }),
+    // [CHECK_EMAIL]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.is_check = action.payload.email;
+    //   }),
   },
   initialState
 );
@@ -153,8 +155,8 @@ const userActions = {
   signupDB,
   authUserDB,
   loginAction,
-  loginCheck,
-  emailCheck,
+  // loginCheck,
+  // emailCheck,
 };
 
 export { userActions };

@@ -3,13 +3,9 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { userActions } from '../redux/modules/user';
-
-// HISTORY
-import { history } from '../redux/configstore';
 
 // STYLE
-import { flexBox, flexVer } from '../common/style';
+import { flexBox, flexVer, borderBox } from '../common/style';
 
 // COMPONENTS
 import Logo from './Logo';
@@ -36,7 +32,14 @@ const Header = (props) => {
 
   return (
     <HeaderStyle>
-      <HeaderWrap>
+      <Grid
+        width="auto"
+        addstyle={() => {
+          return css`
+            ${flexVer()};
+          `;
+        }}
+      >
         <Logo>
           <Image
             src="https://seeklogo.com/images/T/tumblr-icon-logo-A42B4BE5C1-seeklogo.com.png"
@@ -65,81 +68,70 @@ const Header = (props) => {
             }}
           />
         </Grid>
-      </HeaderWrap>
-
-      <Grid addStyle={flexVer}>
-        {is_login ? (
-          <Grid
-            addstyle={() => {
-              return css`
-                position: relative;
-                ${flexBox()};
-
-                & > button {
-                  margin-right: 15%;
-
-                  &:last-child {
-                    margin-right: 0;
-                  }
-
-                  & a {
-                    color: rgba(${(props) => props.theme.palette.white}, ${path === '/' ? 1 : 0.5});
-                  }
-                }
-              `;
-            }}
-            width="80%"
-            padding="0 2%"
-            margin="0 0 0 10%"
-          >
-            <Button>
-              <Link to="/">
-                <HomeIcon fontSize="large" />
-              </Link>
-            </Button>
-
-            <Alarm />
-
-            <User opacity={path === '/mypage' ? '1' : '0.5'} />
-
-            <Button padding="0 12px" bgColor="blue" color="black">
-              <CreateIcon fontSize="large" />
-            </Button>
-          </Grid>
-        ) : (
-          <Link to={path === '/signup' ? '/login' : 'signup'}>
-            <Button
-              bgColor={path === '/signup' ? 'green' : 'blue'}
-              padding="10px 15px"
-              color="black"
-              margin="1% auto 0 68%"
-              addstyle={() => {
-                return css`
-                  font-weight: bold;
-                `;
-              }}
-            >
-              {path === '/signup' ? '로그인' : '가입'}
-            </Button>
-          </Link>
-        )}
       </Grid>
+
+      {is_login ? (
+        <Grid
+          addstyle={() => {
+            return css`
+              position: relative;
+              ${flexBox()};
+
+              & > button {
+                margin-right: 15%;
+
+                &:last-child {
+                  margin-right: 0;
+                }
+
+                & a {
+                  color: rgba(${(props) => props.theme.palette.white}, ${path === '/' ? 1 : 0.5});
+                }
+              }
+            `;
+          }}
+          width="auto"
+        >
+          <Button>
+            <Link to="/">
+              <HomeIcon fontSize="large" />
+            </Link>
+          </Button>
+
+          <Alarm />
+
+          <User opacity={path === '/mypage' ? '1' : '0.5'} />
+
+          <Button padding="0 12px" bgColor="blue" color="black">
+            <CreateIcon fontSize="large" />
+          </Button>
+        </Grid>
+      ) : (
+        <Button
+          bgColor={path === '/signup' ? 'green' : 'blue'}
+          padding="10px 15px"
+          color="black"
+          addstyle={() => {
+            return css`
+              font-weight: bold;
+            `;
+          }}
+        >
+          <Link to={path === '/signup' ? '/login' : 'signup'}>
+            {path === '/signup' ? '로그인' : '가입'}
+          </Link>
+        </Button>
+      )}
     </HeaderStyle>
   );
 };
-
-const HeaderWrap = styled.div`
-  ${flexBox('left')};
-  width: 100%;
-  height: 54px;
-`;
 
 const HeaderStyle = styled.header`
   ${flexBox('space-between')};
   background: rgb(${(props) => props.theme.palette.navy});
   width: 100%;
   max-width: 1716px;
-  padding: 0 20px 0 22px;
+  ${borderBox(0, '0 20px 0 22px')};
   height: 54px;
   position: fixed;
   top: 0;

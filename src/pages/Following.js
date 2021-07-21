@@ -17,7 +17,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 const Following = (props) => {
   return (
     <React.Fragment>
-      <Grid
+      <Grid margin="6% 0 0 18%"
         addstyle={() => {
           flexBox();
           return css`
@@ -25,7 +25,7 @@ const Following = (props) => {
             max-width: 990px;
             padding: 0 8px;
             box-sizing: border-box;
-            margin: 8% auto 0 auto;
+            /* margin: 8% auto 0 auto; */
           `;
         }}
       >

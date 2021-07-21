@@ -16,15 +16,15 @@ import { postActions } from '../redux/modules/post';
 import Permit from '../components/Permit';
 
 const MyPage = (post) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const postList = useSelector((state) => state.post.list);
+  // const postList = useSelector((state) => state.post.list);
 
-  useEffect(() => {
-    dispatch(postActions.getPostListDB());
+  // useEffect(() => {
+  //   dispatch(postActions.getPostListDB());
 
-    return () => dispatch(postActions.getPostList([], 0));
-  }, []);
+  //   return () => dispatch(postActions.getPostList([], 0));
+  // }, []);
 
   return (
     <Permit>
@@ -101,9 +101,12 @@ const MyPage = (post) => {
               <InputBox />
             </Grid>
 
-            {postList.map((post) => (
-              <Post post={post} key={(Date.now() + Math.random()).toString(36)} />
-            ))}
+            {/* {postList.map((post) => (
+              <Post
+                post={post}
+                key={(Date.now() + Math.random()).toString(36)}
+              />
+            ))} */}
           </Grid>
         </Grid>
 

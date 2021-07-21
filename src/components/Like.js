@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // REDUX
 import { likeActions } from '../redux/modules/like';
@@ -9,15 +10,17 @@ import { Button } from '../elements/index';
 // ICON
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const Like = ({ isFavorite, postId }) => {
+const Like = ({ isFavorite, post }) => {
+  const dispatch = useDispatch();
+
   const [active, setActive] = useState(isFavorite);
 
   const addLike = () => {
-    likeActions.addLikeDB(postId);
+    dispatch(likeActions.addLikeDB(post.postId, post));
   };
 
   const removeLike = () => {
-    likeActions.removeLikeDB(postId);
+    dispatch(likeActions.removeLikeDB(post.postId, post));
   };
 
   return (

@@ -223,7 +223,7 @@ const Post = ({ post }) => {
               <ShareIcon />
             </Button>
 
-            <Like isFavorite={post.favorite === 'N' ? false : true} postId={post.postId} />
+            <Like isFavorite={post.favorite === 'N' ? false : true} post={post} />
 
             <Auth userId={post.userId}>
               <Button color="black" clickEvent={deletePost}>

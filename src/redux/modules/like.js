@@ -1,11 +1,14 @@
 // AXIOS
 import instance from '../../common/axios';
 
+// REDUX
+import { postActions } from './post';
+
 // ACTION
 const GET_LIKE_POST = 'GET_LIKE_POST';
 
 // ACTION CREATOR
-const getLikePost = (likeList, start) => ({type: GET_LIKE_POST, likeList, start});
+const getLikePost = (likeList, start) => ({ type: GET_LIKE_POST, likeList, start });
 
 // INITIAL STATE
 const initialState = {
@@ -14,20 +17,38 @@ const initialState = {
 };
 
 // MIDDLEWARE
-const addLikeDB = (postId) => {
-  instance.post('/api/like', { postId }).catch((error) => {
-    console.error(error);
-  });
+const addLikeDB = (postId, post) => {
+  return function (dispatch) {
+    instance
+      .post('/api/like', { postId })
+      .then((res) => {
+        const newPost = { ...post, reactionCount: post.reactionCount + 1, favorite: 'Y' };
+
+        dispatch(postActions.updatePost(postId, newPost));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 };
 
-const removeLikeDB = (postId) => {
-  instance.delete('/api/like', { data: { postId } }).catch((error) => {
-    console.error(error);
-  });
+const removeLikeDB = (postId, post) => {
+  return function (dispatch) {
+    instance
+      .delete('/api/like', { data: { postId } })
+      .then((res) => {
+        const newPost = { ...post, reactionCount: post.reactionCount - 1, favorite: 'N' };
+
+        dispatch(postActions.updatePost(postId, newPost));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 };
 
 const getLikeDB = (limit = 5) => {
-  return function (dispatch) {  
+  return function (dispatch) {
     instance
       .get(`/api/post/like?start=0&limit=${limit + 1}`)
       .then((res) => {
@@ -61,7 +82,7 @@ export const likeActions = {
   addLikeDB,
   removeLikeDB,
   getLikeDB,
-  getLikePost
+  getLikePost,
 };
 
 export default like;

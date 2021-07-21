@@ -111,10 +111,12 @@ const User = ({ opacity, nickname, profile }) => {
             `;
           }}
         >
-          <Button>
-            <FindInPageIcon />
-            포스트
-          </Button>
+          <Link to="/mypage">
+            <Button>
+              <FindInPageIcon />
+              포스트
+            </Button>
+          </Link>
 
           <Link to="/followers">
             <Button>

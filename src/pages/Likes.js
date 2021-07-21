@@ -10,32 +10,32 @@ import { flexBox } from "../common/style";
 import { Grid } from "../elements";
 
 // COMPONENTS
-import Post from "../components/Post";
-import { postActions } from "../redux/modules/post";
+// import Post from "../components/Post";
+// import { postActions } from "../redux/modules/post";
 import BlogUser from "../components/BlogUser";
 
 // MODULES
-import { likeActions } from "../redux/modules/mypage";
+// import { likeActions } from "../redux/modules/mypage";
 
 const Likes = (props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const likeList = useSelector((state) => state.like.list);
-  const postList = useSelector((state) => state.post.list);
+  // const postList = useSelector((state) => state.post.list);
 
-  React.useEffect(() => {
-    dispatch(likeActions.getLikeDB());
+  // React.useEffect(() => {
+  //   dispatch(likeActions.getLikeDB());
 
-    return () => {
-      dispatch(likeActions.getLikePost([], 0));
-    };
-  }, []);
+  //   return () => {
+  //     dispatch(likeActions.getLikePost([], 0));
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    dispatch(postActions.getPostListDB());
+  // useEffect(() => {
+  //   dispatch(postActions.getPostListDB());
 
-    return () => dispatch(postActions.getPostList([], 0));
-  }, []);
+  //   return () => dispatch(postActions.getPostList([], 0));
+  // }, []);
 
   return (
     <React.Fragment>
@@ -62,12 +62,12 @@ const Likes = (props) => {
               `;
             }}
           >
-            {postList.map((post) => (
+            {/* {postList.map((post) => (
               <Post
                 post={post}
                 key={(Date.now() + Math.random()).toString(36)}
               />
-            ))}
+            ))} */}
           </Grid>
         </Grid>
 

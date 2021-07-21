@@ -9,6 +9,7 @@ import { postActions } from '../redux/modules/post';
 
 const Home = (props) => {
   const dispatch = useDispatch();
+  const query = window.location.search;
 
   const { postList, userId } = useSelector(
     (state) => ({
@@ -19,10 +20,10 @@ const Home = (props) => {
   );
 
   useEffect(() => {
-    dispatch(postActions.getPostListDB());
+    dispatch(postActions.getPostListDB(query));
 
     return () => dispatch(postActions.getPostList([], 0));
-  }, [userId]);
+  }, [userId, query]);
 
   return (
     <>

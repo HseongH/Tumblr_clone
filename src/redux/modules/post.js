@@ -36,8 +36,27 @@ const initialState = {
 };
 
 // MIDDLEWARE
-const getPostListDB = (limit = 10) => {
+const getPostListDB = (query, limit = 10) => {
   return function (dispatch) {
+    if (query) {
+      instance
+        .get(`/api/post${query}`)
+        .then((res) => {
+          if (res.data.result.length < limit + 1) {
+            dispatch(getPostList(res.data.result, null));
+            return;
+          }
+
+          res.data.result.pop();
+          dispatch(getPostList(res.data.result, limit));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      return;
+    }
+
     instance
       .get(`/api/post/posts?start=0&limit=${limit + 1}`)
       .then((res) => {
@@ -83,40 +102,37 @@ const createPostDB = (post) => {
     const imgFile = getState().image.file;
 
     if (imgFile.length) {
-      dispatch(
-        imgActions.uploadImageDB(() => {
-          const imgUrl = getState().image.imageUrl;
-          console.log('완료');
-          const postInfo = {
-            ...post,
-            img: imgUrl,
+      dispatch(imgActions.uploadImageDB());
+
+      const imgUrl = getState().image.imageUrl;
+      const postInfo = {
+        ...post,
+        img: imgUrl,
+      };
+
+      instance
+        .post('/api/post', { ...postInfo })
+        .then((res) => {
+          const userInfo = getState().user;
+
+          const newPost = {
+            ...postInfo,
+            ...userInfo,
+            postId: res.data.postId,
+            reactionCount: 0,
+            favorite: 'N',
+            follow: 'N',
+            createdAt: moment(),
           };
 
-          instance
-            .post('/api/post', { ...postInfo })
-            .then((res) => {
-              const userInfo = getState().user;
-
-              const newPost = {
-                ...postInfo,
-                ...userInfo,
-                postId: res.data.postId,
-                reactionCount: 0,
-                favorite: 'N',
-                follow: 'N',
-                createdAt: moment(),
-              };
-
-              dispatch(createPost(newPost));
-              dispatch(imgActions.delImage());
-              dispatch(imgActions.setPreview([]));
-              dispatch(imgActions.setFile([]));
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+          dispatch(createPost(newPost));
+          dispatch(imgActions.delImage());
+          dispatch(imgActions.setPreview([]));
+          dispatch(imgActions.setFile([]));
         })
-      );
+        .catch((error) => {
+          console.error(error);
+        });
 
       return;
     }

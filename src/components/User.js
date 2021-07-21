@@ -116,15 +116,19 @@ const User = ({ opacity, nickname, profile }) => {
             포스트
           </Button>
 
-          <Button>
-            <PersonPinIcon />
-            팔로워
-          </Button>
+          <Link to="/followers">
+            <Button>
+              <PersonPinIcon />
+              팔로워
+            </Button>
+          </Link>
 
-          <Button>
-            <PersonAddIcon />
-            팔로잉
-          </Button>
+          <Link to="/following">
+            <Button>
+              <PersonAddIcon />
+              팔로잉
+            </Button>
+          </Link>
 
           <Link to="/likes">
             <Button>

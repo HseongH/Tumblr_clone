@@ -1,21 +1,22 @@
 // LIBRARY
-import React, { useEffect } from "react";
-import { css } from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { css } from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox } from '../common/style';
 
 // ELEMENTS
-import { Grid } from "../elements";
+import { Grid } from '../elements';
 
 // COMPONENTS
-import Post from "../components/Post";
-import { postActions } from "../redux/modules/post";
-import BlogUser from "../components/BlogUser";
+import Post from '../components/Post';
+import { postActions } from '../redux/modules/post';
+import BlogUser from '../components/BlogUser';
+import Permit from '../components/Permit';
 
 // MODULES
-import { likeActions } from "../redux/modules/mypage";
+import { likeActions } from '../redux/modules/mypage';
 
 const Likes = (props) => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Likes = (props) => {
   }, []);
 
   return (
-    <React.Fragment>
+    <Permit>
       <Grid
         width="100%"
         addstyle={() => {
@@ -63,10 +64,7 @@ const Likes = (props) => {
             }}
           >
             {postList.map((post) => (
-              <Post
-                post={post}
-                key={(Date.now() + Math.random()).toString(36)}
-              />
+              <Post post={post} key={(Date.now() + Math.random()).toString(36)} />
             ))}
           </Grid>
         </Grid>
@@ -84,7 +82,7 @@ const Likes = (props) => {
           <BlogUser />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </Permit>
   );
 };
 

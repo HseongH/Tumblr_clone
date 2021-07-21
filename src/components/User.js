@@ -25,6 +25,7 @@ import PersonPinIcon from '@material-ui/icons/PersonPin';
 
 const User = ({ opacity, nickname, profile }) => {
   const dispatch = useDispatch();
+  const url = window.location.origin;
 
   return (
     <Dropdown
@@ -52,6 +53,7 @@ const User = ({ opacity, nickname, profile }) => {
           }}
           clickEvent={() => {
             dispatch(userActions.logOut());
+            window.location.replace(`${url}/login`);
           }}
         >
           로그아웃

@@ -1,18 +1,19 @@
 // LIBRARY
-import React, { useEffect } from "react";
-import { css } from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { css } from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 
 // STYLE
-import { flexBox, flexVer } from "../common/style";
+import { flexBox, flexVer } from '../common/style';
 
 // ELEMENTS
-import { Image, Text, Grid } from "../elements";
+import { Image, Text, Grid } from '../elements';
 
 // COMPONENTS
-import InputBox from "../components/InputBox";
-import Post from "../components/Post";
-import { postActions } from "../redux/modules/post";
+import InputBox from '../components/InputBox';
+import Post from '../components/Post';
+import { postActions } from '../redux/modules/post';
+import Permit from '../components/Permit';
 
 const MyPage = (post) => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const MyPage = (post) => {
   }, []);
 
   return (
-    <React.Fragment>
+    <Permit>
       <Grid
         width="100%"
         addstyle={() => {
@@ -40,7 +41,7 @@ const MyPage = (post) => {
           width="100%"
           addstyle={() => {
             return css`
-              ${flexVer("flex-end")}
+              ${flexVer('flex-end')}
               max-width: 580px;
               flex-direction: column;
               margin-right: 10%;
@@ -92,7 +93,7 @@ const MyPage = (post) => {
                   src={
                     post.profileImg
                       ? post.profileImg
-                      : "https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
+                      : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
                   }
                   margin="0 0 20px"
                 />
@@ -101,10 +102,7 @@ const MyPage = (post) => {
             </Grid>
 
             {postList.map((post) => (
-              <Post
-                post={post}
-                key={(Date.now() + Math.random()).toString(36)}
-              />
+              <Post post={post} key={(Date.now() + Math.random()).toString(36)} />
             ))}
           </Grid>
         </Grid>
@@ -151,7 +149,7 @@ const MyPage = (post) => {
           </Text>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </Permit>
   );
 };
 

@@ -7,12 +7,6 @@ import { useDispatch } from 'react-redux';
 // REDUX
 import { userActions } from './redux/modules/user';
 
-// HISTORY
-import { history } from './redux/configstore';
-
-// FUNCTION
-import { getCookie } from './common/cookie';
-
 // STYLE
 import theme from './common/style';
 
@@ -36,10 +30,7 @@ function App() {
   const path = useLocation().pathname;
 
   useEffect(() => {
-    const token = getCookie();
-
-    if (token) dispatch(userActions.authUserDB());
-    if (!token && !(path === '/login' || path === '/signup')) history.replace('/login');
+    if (!(path === '/login' || path === '/signup')) dispatch(userActions.authUserDB());
   }, []);
 
   return (

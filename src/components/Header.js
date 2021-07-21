@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 // STYLE
 import { flexBox, flexVer, borderBox } from '../common/style';

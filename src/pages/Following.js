@@ -1,23 +1,25 @@
 // LIBRARY
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox } from '../common/style';
 
 // ELEMENTS
-import { Grid, Text, Input, Button, Image } from "../elements";
+import { Grid, Text, Input, Button, Image } from '../elements';
 
 // COMPONENTS
-import BlogUser from "../components/BlogUser";
+import BlogUser from '../components/BlogUser';
+import Permit from '../components/Permit';
 
 // ICON
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const Following = (props) => {
   return (
-    <React.Fragment>
-      <Grid margin="6% 0 0 18%"
+    <Permit>
+      <Grid
+        margin="6% 0 0 18%"
         addstyle={() => {
           flexBox();
           return css`
@@ -241,7 +243,7 @@ const Following = (props) => {
           <BlogUser />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </Permit>
   );
 };
 

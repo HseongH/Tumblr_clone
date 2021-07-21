@@ -5,9 +5,8 @@ import instance from '../../common/axios';
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 
+// COOKIE
 import { setCookie, delCookie } from '../../common/cookie';
-
-// function
 
 //actions
 const LOG_OUT = 'LOG_OUT';
@@ -37,7 +36,9 @@ const authUserDB = () => {
         dispatch(authUser(res.data));
       })
       .catch((error) => {
-        console.log(error);
+        const url = window.location.origin;
+
+        window.location.replace(`${url}/login`);
       });
   };
 };

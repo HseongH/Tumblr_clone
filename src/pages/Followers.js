@@ -1,21 +1,22 @@
 // LIBRARY
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox } from '../common/style';
 
 // ELEMENTS
-import { Grid, Text, Input, Image } from "../elements";
+import { Grid, Text, Input, Image } from '../elements';
 
 // COMPONENTS
+import Permit from '../components/Permit';
 
 // ICON
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const Followers = (props) => {
   return (
-    <React.Fragment>
+    <Permit>
       <Grid
         width="100%"
         margin="5% 0 0 0"
@@ -27,15 +28,25 @@ const Followers = (props) => {
         }}
       >
         <Grid width="100%" margin="0 10% 0 0">
-          <Grid width="100%" addstyle={() => {
+          <Grid
+            width="100%"
+            addstyle={() => {
               return css`
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
               `;
-          }} >
-            <Text fontSize="18px" color="white" >팔로워 1명</Text>
-            <Input width="40%" placeholder="내 팔로워 검색" bgColor="rgba(255, 255, 255, 0.25)" padding="6px" />
+            }}
+          >
+            <Text fontSize="18px" color="white">
+              팔로워 1명
+            </Text>
+            <Input
+              width="40%"
+              placeholder="내 팔로워 검색"
+              bgColor="rgba(255, 255, 255, 0.25)"
+              padding="6px"
+            />
           </Grid>
 
           <Grid width="100%" margin="3% 0 0 0">
@@ -157,7 +168,7 @@ const Followers = (props) => {
           </Text>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </Permit>
   );
 };
 

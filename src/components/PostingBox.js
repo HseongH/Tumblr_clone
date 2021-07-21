@@ -28,6 +28,7 @@ const TextAreaStyle = styled.textarea`
   resize: none;
   border: none;
   ${(props) => borderBox(props.radius, props.padding)};
+  margin-bottom: 15px;
 
   &::placeholder {
     color: ${(props) => `rgb(${props.theme.palette.gray})`};
@@ -75,7 +76,7 @@ const PostingBox = ({ type, modalClose, post }) => {
     title: post ? post.title : '',
     content: post ? post.content : '',
   });
-  const [tagList, setTagList] = useState([]);
+  const [tagList, setTagList] = useState(post ? post.tag : []);
 
   const removeTag = (idx) => {
     const newTagList = tagList.filter((tag, index) => idx !== index);
@@ -159,84 +160,6 @@ const PostingBox = ({ type, modalClose, post }) => {
         {nickname}
       </PostHeader>
 
-      {type === 'text' && (
-        <Grid width="100%" padding="0 20px">
-          <Input
-            fontSize="30px"
-            placeholder="제목"
-            value={contents.title}
-            changeEvent={(event) => {
-              setContents({ ...contents, title: event.target.value });
-            }}
-          />
-
-          <TextAreaStyle
-            placeholder="여기에 내용을 쓰세요."
-            value={contents.content}
-            onChange={(event) => {
-              setContents({ ...contents, content: event.target.value });
-            }}
-          ></TextAreaStyle>
-
-          {tagList.map((tag, idx) => {
-            return (
-              <Button
-                key={(Date.now() + Math.random()).toString(36)}
-                color="gray"
-                padding="8px"
-                radius="10px"
-                addstyle={() => {
-                  return css`
-                    position: relative;
-
-                    &:hover {
-                      background: rgb(${(props) => props.theme.palette.follow});
-
-                      svg {
-                        display: inline-block;
-                      }
-                    }
-
-                    & svg {
-                      color: white;
-                      font-size: 10px;
-                      padding: 3px;
-                      border-radius: 50%;
-                      position: absolute;
-                      top: -4px;
-                      right: -4px;
-                      background: rgb(${(props) => props.theme.palette.accent});
-                      display: none;
-                    }
-                  `;
-                }}
-                clickEvent={() => {
-                  removeTag(idx);
-                }}
-              >
-                #{tag}
-                <CloseIcon />
-              </Button>
-            );
-          })}
-
-          <Input
-            placeholder="#태그"
-            keyPress={(event) => {
-              if (event.key === 'Enter' && event.target.value) {
-                addTag(event);
-              }
-            }}
-            addstyle={() => {
-              return css`
-                margin-top: 15px;
-                width: 80px;
-              `;
-            }}
-          />
-        </Grid>
-      )}
-
       {type === 'image' && (
         <>
           {preview.length || contents.content ? (
@@ -285,72 +208,78 @@ const PostingBox = ({ type, modalClose, post }) => {
                 </InputFile>
               )}
 
-              <TextAreaStyle
-                padding="8px"
-                placeholder="여기에 내용을 쓰세요."
-                value={contents.content}
-                onChange={(event) => {
-                  setContents({ ...contents, content: event.target.value });
-                }}
-              ></TextAreaStyle>
+              <Grid width="100%" padding="0 20px">
+                {type === 'text' && (
+                  <Input
+                    fontSize="30px"
+                    placeholder="제목"
+                    value={contents.title}
+                    changeEvent={(event) => {
+                      setContents({ ...contents, title: event.target.value });
+                    }}
+                  />
+                )}
 
-              {tagList.map((tag, idx) => {
-                return (
-                  <Button
-                    key={(Date.now() + Math.random()).toString(36)}
-                    color="gray"
-                    padding="8px"
-                    radius="10px"
-                    addstyle={() => {
-                      return css`
-                        position: relative;
+                <TextAreaStyle
+                  placeholder="여기에 내용을 쓰세요."
+                  value={contents.content}
+                  onChange={(event) => {
+                    setContents({ ...contents, content: event.target.value });
+                  }}
+                ></TextAreaStyle>
 
-                        &:hover {
-                          background: rgb(${(props) => props.theme.palette.follow});
+                {tagList.map((tag, idx) => {
+                  return (
+                    <Button
+                      key={(Date.now() + Math.random()).toString(36)}
+                      color="gray"
+                      padding="8px"
+                      radius="10px"
+                      addstyle={() => {
+                        return css`
+                          position: relative;
 
-                          svg {
-                            display: inline-block;
+                          &:hover {
+                            background: rgb(${(props) => props.theme.palette.follow});
+
+                            svg {
+                              display: inline-block;
+                            }
                           }
-                        }
 
-                        & svg {
-                          color: white;
-                          font-size: 10px;
-                          padding: 3px;
-                          border-radius: 50%;
-                          position: absolute;
-                          top: -4px;
-                          right: -4px;
-                          background: rgb(${(props) => props.theme.palette.accent});
-                          display: none;
-                        }
-                      `;
-                    }}
-                    clickEvent={() => {
-                      removeTag(idx);
-                    }}
-                  >
-                    #{tag}
-                    <CloseIcon />
-                  </Button>
-                );
-              })}
+                          & svg {
+                            color: white;
+                            font-size: 10px;
+                            padding: 3px;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: -4px;
+                            right: -4px;
+                            background: rgb(${(props) => props.theme.palette.accent});
+                            display: none;
+                          }
+                        `;
+                      }}
+                      clickEvent={() => {
+                        removeTag(idx);
+                      }}
+                    >
+                      #{tag}
+                      <CloseIcon />
+                    </Button>
+                  );
+                })}
 
-              <Input
-                placeholder="#태그"
-                keyPress={(event) => {
-                  if (event.key === 'Enter' && event.target.value) {
-                    addTag(event);
-                  }
-                }}
-                addstyle={() => {
-                  return css`
-                    margin-top: 15px;
-                    width: 80px;
-                    padding: 0 20px;
-                  `;
-                }}
-              />
+                <Input
+                  width="80px"
+                  placeholder="#태그"
+                  keyPress={(event) => {
+                    if (event.key === 'Enter' && event.target.value) {
+                      addTag(event);
+                    }
+                  }}
+                />
+              </Grid>
             </>
           ) : (
             <InputFile changeEvent={selectFile} height="150px">

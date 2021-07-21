@@ -10,7 +10,6 @@ import { Grid, Text, Input, Button, Image } from "../elements";
 
 // COMPONENTS
 import BlogUser from "../components/BlogUser";
-import Logo from "../components/Logo";
 
 // ICON
 import MoreVertIcon from "@material-ui/icons/MoreVert";

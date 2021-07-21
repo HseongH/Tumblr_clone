@@ -6,8 +6,8 @@ const GET_ALARM = 'GET_ALARM';
 const GET_MORE_ALARM = 'GET_MORE_ALARM';
 
 // ACTION CREATOR
-const getAlarm = (alarmList) => ({ type: GET_ALARM, alarmList });
-const getMoreAlarm = (alarmList) => ({ type: GET_MORE_ALARM, alarmList });
+const getAlarm = (alarmList, start) => ({ type: GET_ALARM, alarmList, start });
+const getMoreAlarm = (alarmList, start) => ({ type: GET_MORE_ALARM, alarmList, start });
 
 // INITIALSTATE
 const initialState = {
@@ -15,12 +15,11 @@ const initialState = {
   start: 0,
 };
 
-const getAlarmDB = (type, limit = 5) => {
+const getAlarmDB = (type, limit = 10) => {
   return function (dispatch) {
     instance
       .get(`/api/alarm?alarmType=${type}&start=0&limit=${limit + 1}`)
       .then((res) => {
-        console.log(res);
         if (res.data.result.length < limit + 1) {
           dispatch(getAlarm(res.data.result, null));
           return;

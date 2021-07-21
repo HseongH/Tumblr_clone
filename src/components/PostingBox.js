@@ -75,20 +75,34 @@ const PostingBox = ({ type, modalClose, post }) => {
     title: post ? post.title : '',
     content: post ? post.content : '',
   });
+  const [tagList, setTagList] = useState([]);
+
+  const removeTag = (idx) => {
+    const newTagList = tagList.filter((tag, index) => idx !== index);
+
+    setTagList(newTagList);
+  };
+
+  const addTag = (event) => {
+    setTagList([...tagList, event.target.value]);
+    event.target.value = '';
+  };
 
   const setInitialState = () => {
     setContents({ title: '', content: '' });
+    setTagList([]);
+    modalClose();
   };
 
   const createPost = () => {
     const postContents = {
       ...contents,
-      tag: [],
+      tag: tagList,
       reBlog: null,
     };
 
     dispatch(postActions.createPostDB(postContents));
-    // setInitialState();
+    setInitialState();
   };
 
   const updatePost = () => {
@@ -114,8 +128,8 @@ const PostingBox = ({ type, modalClose, post }) => {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        dispatch(imgActions.setPreview(reader.result));
-        dispatch(imgActions.setFile(file));
+        dispatch(imgActions.setPreview([reader.result]));
+        dispatch(imgActions.setFile([file]));
       };
     }
   };
@@ -129,7 +143,10 @@ const PostingBox = ({ type, modalClose, post }) => {
       submit={post ? '저장' : '포스팅'}
       color="white"
       padding="15px 0"
-      modalClose={modalClose}
+      modalClose={() => {
+        setInitialState();
+        dispatch(imgActions.setInitialState());
+      }}
       submitEvent={post ? updatePost : createPost}
     >
       <PostHeader
@@ -150,7 +167,6 @@ const PostingBox = ({ type, modalClose, post }) => {
             value={contents.title}
             changeEvent={(event) => {
               setContents({ ...contents, title: event.target.value });
-              console.log(contents);
             }}
           />
 
@@ -161,12 +177,69 @@ const PostingBox = ({ type, modalClose, post }) => {
               setContents({ ...contents, content: event.target.value });
             }}
           ></TextAreaStyle>
+
+          {tagList.map((tag, idx) => {
+            return (
+              <Button
+                key={(Date.now() + Math.random()).toString(36)}
+                color="gray"
+                padding="8px"
+                radius="10px"
+                addstyle={() => {
+                  return css`
+                    position: relative;
+
+                    &:hover {
+                      background: rgb(${(props) => props.theme.palette.follow});
+
+                      svg {
+                        display: inline-block;
+                      }
+                    }
+
+                    & svg {
+                      color: white;
+                      font-size: 10px;
+                      padding: 3px;
+                      border-radius: 50%;
+                      position: absolute;
+                      top: -4px;
+                      right: -4px;
+                      background: rgb(${(props) => props.theme.palette.accent});
+                      display: none;
+                    }
+                  `;
+                }}
+                clickEvent={() => {
+                  removeTag(idx);
+                }}
+              >
+                #{tag}
+                <CloseIcon />
+              </Button>
+            );
+          })}
+
+          <Input
+            placeholder="#태그"
+            keyPress={(event) => {
+              if (event.key === 'Enter' && event.target.value) {
+                addTag(event);
+              }
+            }}
+            addstyle={() => {
+              return css`
+                margin-top: 15px;
+                width: 80px;
+              `;
+            }}
+          />
         </Grid>
       )}
 
       {type === 'image' && (
         <>
-          {preview.length ? (
+          {preview.length || contents.content ? (
             <>
               {preview.map((img, idx) => (
                 <Grid
@@ -220,6 +293,64 @@ const PostingBox = ({ type, modalClose, post }) => {
                   setContents({ ...contents, content: event.target.value });
                 }}
               ></TextAreaStyle>
+
+              {tagList.map((tag, idx) => {
+                return (
+                  <Button
+                    key={(Date.now() + Math.random()).toString(36)}
+                    color="gray"
+                    padding="8px"
+                    radius="10px"
+                    addstyle={() => {
+                      return css`
+                        position: relative;
+
+                        &:hover {
+                          background: rgb(${(props) => props.theme.palette.follow});
+
+                          svg {
+                            display: inline-block;
+                          }
+                        }
+
+                        & svg {
+                          color: white;
+                          font-size: 10px;
+                          padding: 3px;
+                          border-radius: 50%;
+                          position: absolute;
+                          top: -4px;
+                          right: -4px;
+                          background: rgb(${(props) => props.theme.palette.accent});
+                          display: none;
+                        }
+                      `;
+                    }}
+                    clickEvent={() => {
+                      removeTag(idx);
+                    }}
+                  >
+                    #{tag}
+                    <CloseIcon />
+                  </Button>
+                );
+              })}
+
+              <Input
+                placeholder="#태그"
+                keyPress={(event) => {
+                  if (event.key === 'Enter' && event.target.value) {
+                    addTag(event);
+                  }
+                }}
+                addstyle={() => {
+                  return css`
+                    margin-top: 15px;
+                    width: 80px;
+                    padding: 0 20px;
+                  `;
+                }}
+              />
             </>
           ) : (
             <InputFile changeEvent={selectFile} height="150px">

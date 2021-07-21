@@ -57,6 +57,7 @@ const Input = ({
   changeEvent,
   focusEvent,
   blurEvent,
+  keyPress,
   ...props
 }) => {
   return (
@@ -69,6 +70,7 @@ const Input = ({
       onChange={changeEvent}
       onFocus={focusEvent}
       onBlur={blurEvent}
+      onKeyPress={keyPress}
       {...props}
     />
   );
@@ -85,6 +87,7 @@ Input.defaultProps = {
   changeEvent: () => {},
   focusEvent: () => {},
   blurEvent: () => {},
+  keyPress: () => {},
 };
 
 export default Input;

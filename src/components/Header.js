@@ -76,42 +76,6 @@ const Header = (props) => {
         </Grid>
       </Grid>
 
-      {/* <Grid
-        addstyle={() => {
-          return css`
-            position: relative;
-            ${flexVer()};
-
-            & > button {
-              margin-right: 30px;
-
-              &:last-child {
-                margin-right: 0;
-              }
-
-              & a {
-                color: rgba(${(props) => props.theme.palette.white}, ${path === '/' ? 1 : 0.5});
-              }
-            }
-          `;
-        }}
-        width="auto"
-      >
-        <Button>
-          <Link to="/">
-            <HomeIcon fontSize="large" />
-          </Link>
-        </Button>
-
-        <Alarm nickname={nickname} />
-
-        <User opacity={path === '/mypage' ? '1' : '0.5'} nickname={nickname} profile={profile} />
-
-        <Button padding="0 12px" bgColor="blue" color="black">
-          <CreateIcon fontSize="large" />
-        </Button>
-      </Grid> */}
-
       {is_login ? (
         <Grid
           addstyle={() => {

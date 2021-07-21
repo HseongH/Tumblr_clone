@@ -36,29 +36,29 @@ const initialState = {
 };
 
 // MIDDLEWARE
-const getPostListDB = (query, limit = 10) => {
+const getPostListDB = (limit = 10) => {
   return function (dispatch) {
-    if (query) {
-      instance
-        .get(`/api/post${query}`)
-        .then((res) => {
-          if (res.data.result.length < limit + 1) {
-            dispatch(getPostList(res.data.result, null));
-            return;
-          }
-
-          res.data.result.pop();
-          dispatch(getPostList(res.data.result, limit));
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
-      return;
-    }
-
     instance
       .get(`/api/post/posts?start=0&limit=${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getPostList(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getPostList(res.data.result, limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getDetailPostDB = (query, limit = 10) => {
+  return function (dispatch) {
+    instance
+      .get(`/api/post${query}`)
       .then((res) => {
         if (res.data.result.length < limit + 1) {
           dispatch(getPostList(res.data.result, null));
@@ -102,37 +102,37 @@ const createPostDB = (post) => {
     const imgFile = getState().image.file;
 
     if (imgFile.length) {
-      dispatch(imgActions.uploadImageDB());
-
-      const imgUrl = getState().image.imageUrl;
-      const postInfo = {
-        ...post,
-        img: imgUrl,
-      };
-
-      instance
-        .post('/api/post', { ...postInfo })
-        .then((res) => {
-          const userInfo = getState().user;
-
-          const newPost = {
-            ...postInfo,
-            ...userInfo,
-            postId: res.data.postId,
-            reactionCount: 0,
-            favorite: 'N',
-            follow: 'N',
-            createdAt: moment(),
+      dispatch(
+        imgActions.uploadImageDB(() => {
+          const imgUrl = getState().image.imageUrl;
+          const postInfo = {
+            ...post,
+            img: imgUrl,
           };
 
-          dispatch(createPost(newPost));
-          dispatch(imgActions.delImage());
-          dispatch(imgActions.setPreview([]));
-          dispatch(imgActions.setFile([]));
+          instance
+            .post('/api/post', { ...postInfo })
+            .then((res) => {
+              const userInfo = getState().user;
+
+              const newPost = {
+                ...postInfo,
+                ...userInfo,
+                postId: res.data.postId,
+                reactionCount: 0,
+                favorite: 'N',
+                follow: 'N',
+                createdAt: moment(),
+              };
+
+              dispatch(createPost(newPost));
+              dispatch(imgActions.setInitialState());
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         })
-        .catch((error) => {
-          console.error(error);
-        });
+      );
 
       return;
     }
@@ -158,7 +158,7 @@ const createPostDB = (post) => {
         };
 
         dispatch(createPost({ ...newPost, postId: res.data.postId }));
-        dispatch(imgActions.delImage());
+        dispatch(imgActions.setInitialState());
       })
       .catch((error) => {
         console.error(error);
@@ -169,23 +169,28 @@ const createPostDB = (post) => {
 const updatePostDB = (postId, post) => {
   return function (dispatch, getState) {
     if (post.img.length) {
-      dispatch(imgActions.uploadImageDB());
+      dispatch(
+        imgActions.uploadImageDB(() => {
+          const imgUrl = getState().image.imageUrl;
+          const postInfo = {
+            ...post,
+            img: imgUrl,
+          };
+          const { title, reBlog, tag, content, img } = postInfo;
 
-      const imgUrl = getState().image.imageUrl;
-      const postInfo = {
-        ...post,
-        img: imgUrl,
-      };
-      const { title, reBlog, tag, content, img } = postInfo;
-
-      instance
-        .put('/api/post', { postId, title, reBlog, tag, content, img })
-        .then((res) => {
-          dispatch(updatePost(postId, postInfo));
+          instance
+            .put('/api/post', { postId, title, reBlog, tag, content, img })
+            .then((res) => {
+              dispatch(updatePost(postId, postInfo));
+              dispatch(imgActions.setInitialState());
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         })
-        .catch((error) => {
-          console.error(error);
-        });
+      );
+
+      return;
     }
 
     const { title, reBlog, tag, content, img } = post;
@@ -194,12 +199,11 @@ const updatePostDB = (postId, post) => {
       .put('/api/post', { postId, title, reBlog, tag, content, img })
       .then((res) => {
         dispatch(updatePost(postId, post));
+        dispatch(imgActions.setInitialState());
       })
       .catch((error) => {
         console.error(error);
       });
-
-    return;
   };
 };
 
@@ -309,6 +313,7 @@ export const postActions = {
   deletePost,
   getReaction,
   getPostListDB,
+  getDetailPostDB,
   getMorePostListDB,
   createPostDB,
   updatePostDB,

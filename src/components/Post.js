@@ -219,6 +219,42 @@ const Post = ({ post }) => {
 
         <Text margin="15px 0">{post.content}</Text>
 
+        {post.tag.length ? (
+          <Grid
+            width="100%"
+            margin="0 0 15px"
+            addstyle={() => {
+              return css`
+                line-height: 2;
+              `;
+            }}
+          >
+            {post.tag.map((tag) => {
+              return (
+                <Button
+                  key={(Date.now() + Math.random()).toString(36)}
+                  color="gray"
+                  addstyle={() => {
+                    return css`
+                      margin-right: 12px;
+
+                      &:last-child {
+                        margin-right: 0;
+                      }
+
+                      &:hover {
+                        text-decoration: underline;
+                      }
+                    `;
+                  }}
+                >
+                  #{tag}
+                </Button>
+              );
+            })}
+          </Grid>
+        ) : null}
+
         <Grid
           width="100%"
           addstyle={() => {

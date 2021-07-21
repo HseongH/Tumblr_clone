@@ -192,7 +192,7 @@ const Following = (props) => {
                     `;
                   }}
                 >
-                  hangulteam
+                  staff
                 </Text>
 
                 <Text

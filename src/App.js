@@ -21,6 +21,7 @@ import Home from './pages/Home';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import Likes from './pages/Likes';
 
 // COMPONENTS
 import Header from './components/Header';
@@ -49,6 +50,7 @@ function App() {
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={SignUp} />
+          <Route path="/likes" exact component={Likes} />
         </Switch>
       </Container>
     </ThemeProvider>

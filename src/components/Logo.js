@@ -19,6 +19,7 @@ const LogoStyle = styled.h1`
   height: ${(props) => props.height};
   padding: 3px;
   ${flexBox()};
+  ${(props) => props.addstyle()};
 
   a {
     color: ${(props) => `rgba(${props.theme.palette[props.color]}, ${props.opacity})`};
@@ -29,6 +30,7 @@ Logo.defaultProps = {
   color: 'white',
   width: '50px',
   height: '50px',
+  addstyle: () => {},
 };
 
 export default Logo;

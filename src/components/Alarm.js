@@ -108,7 +108,7 @@ const Alarm = ({ nickname }) => {
               addstyle={type === idx ? Selected : () => {}}
               clickEvent={() => {
                 setType(idx);
-                dispatch(alarmActions.getAlarmDB(type));
+                dispatch(alarmActions.getAlarmDB(idx));
               }}
               key={idx}
             >
@@ -124,7 +124,9 @@ const Alarm = ({ nickname }) => {
         padding="15px 20px"
         addstyle={() => {
           return css`
+            max-height: 270px;
             text-align: center;
+            overflow: auto;
 
             & > div {
               margin-bottom: 15px;

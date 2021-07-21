@@ -1,9 +1,9 @@
 // AXIOS
-import instance from "../../common/axios";
-import MyPage from "../../pages/MyPage";
+import instance from '../../common/axios';
+import MyPage from '../../pages/MyPage';
 
 // ACTION
-const GET_LIKE_POST = "GET_LIKE_POST";
+const GET_LIKE_POST = 'GET_LIKE_POST';
 
 // ACTION CREATOR
 const getLikePost = (likeList, start) => ({

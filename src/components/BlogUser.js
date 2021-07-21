@@ -55,7 +55,7 @@ const BlogUser = (props) => {
         <Text color="white" margin="0 10%">
           asfdsdfds
         </Text>
-        <Text color="blue" margin="0 0 0 15%">
+        <Text fontWeight="bold" fontSize="14px" color="blue" margin="0 0 0 15%">
           팔로우
         </Text>
       </Grid>

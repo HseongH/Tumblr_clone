@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { flexBox } from "../common/style";
 
 // ELEMENTS
-import { Grid, Text } from "../elements";
+import { Grid } from "../elements";
 
 // COMPONENTS
 import Post from "../components/Post";

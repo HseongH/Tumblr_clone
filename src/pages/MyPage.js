@@ -1,7 +1,7 @@
 // LIBRARY
 import React, { useEffect } from 'react';
 import { css } from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 // STYLE
 import { flexBox, flexVer } from '../common/style';
@@ -13,18 +13,27 @@ import { Image, Text, Grid } from '../elements';
 import InputBox from '../components/InputBox';
 import Post from '../components/Post';
 import { postActions } from '../redux/modules/post';
+import { myPageActions } from '../redux/modules/mypage';
 import Permit from '../components/Permit';
 
 const MyPage = (post) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const postList = useSelector((state) => state.post.list);
+  const { postList, userId, nickname, profileImg } = useSelector(
+    (state) => ({
+      postList: state.mypage.list,
+      userId: state.user.userId,
+      nickname: state.user.nickname,
+      profileImg: state.user.profileImg,
+    }),
+    shallowEqual
+  );
 
-  // useEffect(() => {
-  //   dispatch(postActions.getPostListDB());
+  useEffect(() => {
+    dispatch(myPageActions.getMyPostDB());
 
-  //   return () => dispatch(postActions.getPostList([], 0));
-  // }, []);
+    // return () => dispatch(postActions.getPostList([], 0));
+  }, []);
 
   return (
     <Permit>
@@ -101,12 +110,11 @@ const MyPage = (post) => {
               <InputBox />
             </Grid>
 
-            {/* {postList.map((post) => (
-              <Post
-                post={post}
-                key={(Date.now() + Math.random()).toString(36)}
-              />
-            ))} */}
+            {postList.map((post) => {
+              const postInfo = { ...post, userId, nickname, profileImg };
+
+              return <Post post={postInfo} key={(Date.now() + Math.random()).toString(36)} />;
+            })}
           </Grid>
         </Grid>
 

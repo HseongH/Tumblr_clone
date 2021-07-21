@@ -1,7 +1,7 @@
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { css } from 'styled-components';
 
-import { Grid, Image, Text } from "../elements";
+import { Grid, Image, Text } from '../elements';
 
 const BlogUser = (props) => {
   return (
@@ -26,7 +26,7 @@ const BlogUser = (props) => {
         요런 블로그 어때요!
       </Text>
 
-      <hr style={{ marginRight: "20%" }} />
+      <hr style={{ marginRight: '20%' }} />
 
       <Grid
         width="100%"

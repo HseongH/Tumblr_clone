@@ -55,7 +55,7 @@ const Alarm = ({ nickname }) => {
       alarmActions.getAlarm([], 0);
       setType(0);
     };
-  }, [type]);
+  }, []);
 
   return (
     <Dropdown
@@ -108,6 +108,7 @@ const Alarm = ({ nickname }) => {
               addstyle={type === idx ? Selected : () => {}}
               clickEvent={() => {
                 setType(idx);
+                dispatch(alarmActions.getAlarmDB(type));
               }}
               key={idx}
             >
@@ -124,6 +125,14 @@ const Alarm = ({ nickname }) => {
         addstyle={() => {
           return css`
             text-align: center;
+
+            & > div {
+              margin-bottom: 15px;
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+            }
           `;
         }}
       >
@@ -136,7 +145,12 @@ const Alarm = ({ nickname }) => {
             ];
 
             return (
-              <Reaction width="100%" padding="0" isFollow={true}>
+              <Reaction
+                width="100%"
+                padding="0"
+                isFollow={true}
+                key={(Date.now() + Math.random()).toString(36)}
+              >
                 <Grid
                   width="36px"
                   height="36px"
@@ -147,7 +161,13 @@ const Alarm = ({ nickname }) => {
                     `;
                   }}
                 >
-                  <Image src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png" />
+                  <Image
+                    src={
+                      alarm.profileImg
+                        ? alarm.profileImg
+                        : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
+                    }
+                  />
                 </Grid>
 
                 <Text

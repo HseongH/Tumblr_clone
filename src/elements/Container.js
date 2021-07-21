@@ -11,7 +11,7 @@ const ConStyle = styled.div`
   line-height: 1.25;
   min-height: 100vh;
   width: 100%;
-  padding-top: 80px;
+  padding: 80px 0;
   overflow: hidden;
 `;
 

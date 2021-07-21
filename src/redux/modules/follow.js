@@ -2,6 +2,7 @@
 import instance from '../../common/axios';
 
 const addFollowDB = (userId) => {
+  console.log(userId);
   instance.post('/api/follow', { userId }).catch((error) => {
     console.error(error);
   });

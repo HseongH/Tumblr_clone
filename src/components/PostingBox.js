@@ -73,7 +73,7 @@ const PostingBox = ({ type, modalClose, post }) => {
 
   const [contents, setContents] = useState({
     title: post ? post.title : '',
-    content: post ? post.contents : '',
+    content: post ? post.content : '',
   });
 
   const setInitialState = () => {

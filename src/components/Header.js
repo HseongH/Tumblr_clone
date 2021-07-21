@@ -76,7 +76,7 @@ const Header = (props) => {
         </Grid>
       </Grid>
 
-      <Grid
+      {/* <Grid
         addstyle={() => {
           return css`
             position: relative;
@@ -110,9 +110,9 @@ const Header = (props) => {
         <Button padding="0 12px" bgColor="blue" color="black">
           <CreateIcon fontSize="large" />
         </Button>
-      </Grid>
+      </Grid> */}
 
-      {/* {is_login ? (
+      {is_login ? (
         <Grid
           addstyle={() => {
             return css`
@@ -140,7 +140,7 @@ const Header = (props) => {
             </Link>
           </Button>
 
-          <Alarm />
+          <Alarm nickname={nickname} />
 
           <User opacity={path === '/mypage' ? '1' : '0.5'} nickname={nickname} profile={profile} />
 
@@ -163,7 +163,7 @@ const Header = (props) => {
             {path === '/signup' ? '로그인' : '가입'}
           </Button>
         </Link>
-      )} */}
+      )}
     </HeaderStyle>
   );
 };

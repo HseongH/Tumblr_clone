@@ -14,6 +14,9 @@ const POST_CREATE = 'POST_CREATE';
 const POST_UPDATE = 'POST_UPDATE';
 const POST_DELETE = 'POST_DELETE';
 
+const GET_REACTION = 'GET_REACTION';
+const GET_MORE_REACTION = 'GET_MORE_REACTION';
+
 // ACTION CREATOR
 const getPostList = (postList, start) => ({ type: GET_POST, postList, start });
 const getMorePostList = (postList, start) => ({ type: GET_MORE_POST, postList, start });
@@ -21,10 +24,15 @@ const createPost = (post) => ({ type: POST_CREATE, post });
 const updatePost = (postId, post) => ({ type: POST_UPDATE, postId, post });
 const deletePost = (postId) => ({ type: POST_DELETE, postId });
 
+const getReaction = (reactionList, start) => ({ type: GET_REACTION, reactionList, start });
+const getMoreReaction = (reactionList, start) => ({ type: GET_MORE_REACTION, reactionList, start });
+
 // INITIAL STATE
 const initialState = {
   list: [],
   start: 0,
+  reaction: [],
+  reactionStart: 0,
 };
 
 // MIDDLEWARE
@@ -99,6 +107,7 @@ const createPostDB = (post) => {
               };
 
               dispatch(createPost(newPost));
+              dispatch(imgActions.delImage());
             })
             .catch((error) => {
               console.error(error);
@@ -117,7 +126,8 @@ const createPostDB = (post) => {
     instance
       .post('/api/post', { ...postInfo })
       .then((res) => {
-        dispatch(createPost({ post, postId: res.data.postId }));
+        dispatch(createPost({ ...postInfo, postId: res.data.postId }));
+        dispatch(imgActions.delImage());
       })
       .catch((error) => {
         console.error(error);
@@ -127,9 +137,7 @@ const createPostDB = (post) => {
 
 const updatePostDB = (postId, post) => {
   return function (dispatch, getState) {
-    const imgFile = getState().image.file;
-
-    if (imgFile.length) {
+    if (post.img.length) {
       dispatch(
         imgActions.uploadImageDB(() => {
           const imgUrl = getState().image.imageUrl;
@@ -180,6 +188,48 @@ const deletePostDB = (postId) => {
   };
 };
 
+const getReactionDB = (postId, limit = 20) => {
+  return function (dispatch) {
+    instance
+      .get(`/api/reaction?postId=${postId}&start=0&limit=${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getReaction(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getReaction(res.data.result, limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getMoreReactionDB = (postId, limit = 10) => {
+  return function (dispatch, getState) {
+    const start = getState().post.reactionStart;
+
+    if (start === null) return;
+
+    instance
+      .get(`/api/reaction?postId=${postId}&start=${start}&limit=${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getMoreReaction(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getMoreReaction(res.data.result, start + limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
 // REDUCER
 export default function post(state = initialState, action) {
   switch (action.type) {
@@ -208,6 +258,16 @@ export default function post(state = initialState, action) {
 
       return { ...state, list: deleteList };
 
+    case GET_REACTION:
+      return { ...state, reaction: action.reactionList, reactionStart: action.start };
+
+    case GET_MORE_REACTION:
+      return {
+        ...state,
+        reaction: [...state.reaction, ...action.reactionList],
+        reactionStart: action.start,
+      };
+
     default:
       return state;
   }
@@ -218,9 +278,12 @@ export const postActions = {
   createPost,
   updatePost,
   deletePost,
+  getReaction,
   getPostListDB,
   getMorePostListDB,
   createPostDB,
   updatePostDB,
   deletePostDB,
+  getReactionDB,
+  getMoreReactionDB,
 };

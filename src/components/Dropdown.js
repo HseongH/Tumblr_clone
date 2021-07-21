@@ -20,6 +20,7 @@ const DropdownStyle = styled.div`
       font-size: ${props.fontSize};
       ${borderBox(props.radius, props.padding)};
       ${props.position()};
+      ${props.addstyle()};
     `;
   }};
 
@@ -43,7 +44,14 @@ const Dropdown = (props) => {
 
   return (
     <>
-      <Button clickEvent={handleToggle} color={props.color} opacity={alpha}>
+      <Button
+        clickEvent={() => {
+          handleToggle();
+          props.callNext();
+        }}
+        color={props.color}
+        opacity={alpha}
+      >
         {props.icon}
       </Button>
 
@@ -58,7 +66,9 @@ const Dropdown = (props) => {
 
 Dropdown.defaultProps = {
   shadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+  callNext: () => {},
   position: () => {},
+  addstyle: () => {},
 };
 
 export default Dropdown;

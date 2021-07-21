@@ -9,6 +9,7 @@ AWS.config.update({
 
 // ACTION
 const UPLOAD_IMAGE = 'IMAGE';
+const DELETE_IMAGE = 'DELETE_IMAGE';
 const SET_PREVIEW = 'SET_PREVIEW';
 const DEL_PREVIEW = 'DEL_PREVIEW';
 const SET_FILE = 'SET_FILE';
@@ -16,6 +17,7 @@ const DEL_FILE = 'DEL_FILE';
 
 // ACTION CREATER
 const uploadImage = (imgUrl) => ({ type: UPLOAD_IMAGE, imgUrl });
+const delImage = () => ({ type: DELETE_IMAGE });
 const setPreview = (preview) => ({ type: SET_PREVIEW, preview });
 const delPreview = (index) => ({ type: DEL_PREVIEW, index });
 const setFile = (file) => ({ type: SET_FILE, file });
@@ -38,7 +40,10 @@ const uploadImageDB = (callNext) => {
     const imgList = getState().image.file;
 
     await imgList.forEach((img) => {
-      if (typeof img !== 'object') return;
+      if (typeof img !== 'object') {
+        dispatch(uploadImage(img));
+        return;
+      }
 
       const upload = new AWS.S3.ManagedUpload({
         params: {
@@ -53,7 +58,6 @@ const uploadImageDB = (callNext) => {
       promise
         .then((data) => {
           dispatch(uploadImage(data.Location));
-          console.log('대기');
         })
         .catch((error) => {
           console.error(error);
@@ -70,6 +74,9 @@ function image(state = initialState, action) {
   switch (action.type) {
     case UPLOAD_IMAGE:
       return { ...state, imageUrl: [...state.imageUrl, action.imgUrl] };
+
+    case DELETE_IMAGE:
+      return { ...state, imageUrl: [] };
 
     case SET_PREVIEW:
       return { ...state, preview: [...state.preview, action.preview] };
@@ -96,6 +103,7 @@ export default image;
 
 export const imgActions = {
   uploadImage,
+  delImage,
   setPreview,
   delPreview,
   setFile,

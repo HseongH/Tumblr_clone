@@ -36,7 +36,6 @@ const authUserDB = () => {
     instance
       .post('/api/user/me')
       .then((res) => {
-        console.log(res);
         dispatch(authUser(res.data));
       })
       .catch((error) => {
@@ -91,9 +90,11 @@ export default handleActions(
   {
     [AUTH_USER]: (state, action) =>
       produce(state, (draft) => {
-        draft.userId = action.payload.userInfo.userId;
-        draft.nickname = action.payload.userInfo.nickname;
-        draft.profileImg = action.patload.userInfo.profileImg;
+        const userInfo = action.payload.userInfo;
+
+        draft.userId = userInfo.userId;
+        draft.nickname = userInfo.nickname;
+        if (userInfo.profileImg) draft.profileImg = userInfo.profileImg;
         draft.is_login = true;
       }),
 

@@ -1,6 +1,6 @@
 // LIBRARY
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { css } from 'styled-components';
 import moment from 'moment';
 
@@ -22,6 +22,7 @@ import Dropdown from '../components/Dropdown';
 import PostHeader from './PostHeader';
 import PostingBox from './PostingBox';
 import Auth from './Auth';
+import ShowReacion from './ShowReacion';
 
 // ICON
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -32,6 +33,8 @@ import CreateIcon from '@material-ui/icons/Create';
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
+
+  const userId = useSelector((state) => state.user.userId);
 
   const [inputType, setInputType] = useState('');
   const [follow, setFollow] = useState(post.follow !== 'N');
@@ -47,6 +50,7 @@ const Post = ({ post }) => {
   const updatePost = () => {
     setInputType(post.img.length ? 'image' : 'text');
     dispatch(imgActions.setPreview(post.img));
+    dispatch(imgActions.setFile(post.img));
   };
 
   const deletePost = () => {
@@ -95,10 +99,10 @@ const Post = ({ post }) => {
 
             {follow || (
               <Follow
-                useId={post.userId}
+                userId={post.userId}
                 margin="0 0 0 8px"
                 isFollow={!follow}
-                clickEvent={() => {
+                callNext={() => {
                   setFollow(true);
                 }}
               />
@@ -153,25 +157,27 @@ const Post = ({ post }) => {
               링크 복사
             </Button>
 
-            <Button
-              width="100%"
-              color="black"
-              padding="10px 0 15px"
-              fontWeight="700"
-              clickEvent={() => {
-                setFollow((follow) => !follow);
-                follow ? removeFollow() : addFollow();
-              }}
-              addstyle={() => {
-                return css`
-                  &:hover {
-                    background: rgb(${(props) => props.theme.palette.secondaryAccent});
-                  }
-                `;
-              }}
-            >
-              {follow ? '언팔로우' : '팔로우'}
-            </Button>
+            {userId !== post.userId ? (
+              <Button
+                width="100%"
+                color="black"
+                padding="10px 0 15px"
+                fontWeight="700"
+                clickEvent={() => {
+                  setFollow((follow) => !follow);
+                  follow ? removeFollow() : addFollow();
+                }}
+                addstyle={() => {
+                  return css`
+                    &:hover {
+                      background: rgb(${(props) => props.theme.palette.secondaryAccent});
+                    }
+                  `;
+                }}
+              >
+                {follow ? '언팔로우' : '팔로우'}
+              </Button>
+            ) : null}
           </Dropdown>
         </PostHeader>
 
@@ -193,16 +199,7 @@ const Post = ({ post }) => {
             `;
           }}
         >
-          <Button
-            color="black"
-            addstyle={() => {
-              return css`
-                font-weight: 700;
-              `;
-            }}
-          >
-            반응 {post.reactionCount}개
-          </Button>
+          <ShowReacion count={post.reactionCount} postId={post.postId} />
 
           <Grid
             width="auto"
@@ -226,7 +223,7 @@ const Post = ({ post }) => {
               <ShareIcon />
             </Button>
 
-            <Like active={post.favorite === 'N' ? false : true} postId={post.postId} />
+            <Like isFavorite={post.favorite === 'N' ? false : true} postId={post.postId} />
 
             <Auth userId={post.userId}>
               <Button color="black" clickEvent={deletePost}>
@@ -243,6 +240,7 @@ const Post = ({ post }) => {
 
       {inputType && (
         <PostingBox
+          post={post}
           type={inputType}
           modalClose={() => {
             setInputType('');

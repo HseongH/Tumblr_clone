@@ -20,6 +20,7 @@ const getAlarmDB = (type, limit = 5) => {
     instance
       .get(`/api/alarm?alarmType=${type}&start=0&limit=${limit + 1}`)
       .then((res) => {
+        console.log(res);
         if (res.data.result.length < limit + 1) {
           dispatch(getAlarm(res.data.result, null));
           return;

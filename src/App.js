@@ -22,6 +22,8 @@ import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Likes from './pages/Likes';
+import Following from './pages/Following';
+import Followers from './pages/Followers';
 
 // COMPONENTS
 import Header from './components/Header';
@@ -51,6 +53,8 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={SignUp} />
           <Route path="/likes" exact component={Likes} />
+          <Route path="/following" exact component={Following} />
+          <Route path="/followers" exact component={Followers} />
         </Switch>
       </Container>
     </ThemeProvider>

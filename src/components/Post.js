@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from 'styled-components';
 import moment from 'moment';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 // REDUX
 import { postActions } from '../redux/modules/post';
@@ -33,6 +34,8 @@ import CreateIcon from '@material-ui/icons/Create';
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
+
+  const url = window.location.origin;
 
   const userId = useSelector((state) => state.user.userId);
 
@@ -141,21 +144,46 @@ const Post = ({ post }) => {
               {date}
             </Button>
 
-            <Button
-              width="100%"
-              color="black"
-              padding="10px 0"
-              fontWeight="700"
-              addstyle={() => {
-                return css`
-                  &:hover {
-                    background: rgb(${(props) => props.theme.palette.secondaryAccent});
-                  }
-                `;
-              }}
-            >
-              링크 복사
-            </Button>
+            <CopyToClipboard text={`${url}?postId=${post.postId}&start=0&limit=10`}>
+              <Button
+                width="100%"
+                color="black"
+                padding="10px 0"
+                fontWeight="700"
+                addstyle={() => {
+                  return css`
+                    overflow: hidden;
+                    position: relative;
+
+                    &:hover {
+                      background: rgb(${(props) => props.theme.palette.secondaryAccent});
+                    }
+
+                    &:after {
+                      content: '';
+                      background: rgb(${(props) => props.theme.palette.green});
+                      display: block;
+                      position: absolute;
+                      padding-top: 300%;
+                      padding-left: 350%;
+                      margin-left: -20px !important;
+                      margin-top: -120%;
+                      opacity: 0;
+                      transition: all 0.8s;
+                    }
+
+                    &:active:after {
+                      padding: 0;
+                      margin: 0;
+                      opacity: 1;
+                      transition: 0s;
+                    }
+                  `;
+                }}
+              >
+                링크 복사
+              </Button>
+            </CopyToClipboard>
 
             {userId !== post.userId ? (
               <Button
@@ -185,7 +213,7 @@ const Post = ({ post }) => {
           {post.title}
         </Title>
 
-        {post.img.map((img, idx) => (
+        {post.img.map((img) => (
           <Image src={img} key={(Date.now() + Math.random()).toString(36)} />
         ))}
 
@@ -215,9 +243,30 @@ const Post = ({ post }) => {
               `;
             }}
           >
-            <Button color="black">
-              <FileCopyIcon />
-            </Button>
+            <CopyToClipboard text={`${url}?postId=${post.postId}&start=0&limit=10`}>
+              <Button
+                color="black"
+                addstyle={() => {
+                  return css`
+                    @keyframes selected {
+                      from {
+                        color: rgb(${(props) => props.theme.palette.green});
+                      }
+
+                      to {
+                        color: rgb(${(props) => props.theme.palette.black});
+                      }
+                    }
+
+                    &:focus {
+                      animation: selected 0.8s;
+                    }
+                  `;
+                }}
+              >
+                <FileCopyIcon />
+              </Button>
+            </CopyToClipboard>
 
             <Button color="black">
               <ShareIcon />

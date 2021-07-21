@@ -40,23 +40,6 @@ const Following = (props) => {
             `;
           }}
         >
-          <Text
-            color="white"
-            fontSize="24px"
-            fontWeight="bold"
-            addstyle={() => {
-              return css``;
-            }}
-          >
-            요런 블로그 어때요!
-          </Text>
-
-          <hr style={{ marginRight: "20%" }} />
-
-          <BlogUser />
-          <BlogUser />
-          <BlogUser />
-          <BlogUser />
           <BlogUser />
         </Grid>
       </Grid>

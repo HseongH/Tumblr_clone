@@ -10,14 +10,12 @@ import { setCookie, delCookie } from '../../common/cookie';
 // function
 
 //actions
-const LOG_IN = 'LOG_IN';
 const LOG_OUT = 'LOG_OUT';
 const AUTH_USER = 'AUTH_USER';
 const CHECK_EMAIL = 'CHECK_EMAIL';
 
 // userId, nickname, profileImg
 // action creators
-const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const authUser = createAction(AUTH_USER, (userInfo) => ({ userInfo }));
 const checkEmail = createAction(CHECK_EMAIL, (email) => ({ email }));
@@ -49,12 +47,8 @@ const loginAction = (user) => {
     instance
       .post('/api/login', user)
       .then((res) => {
-        const userInfo = {
-          ...res.data,
-        };
-
         setCookie(res.data.token);
-        dispatch(logIn(userInfo));
+        dispatch(authUserDB());
 
         history.push('/');
       })
@@ -91,16 +85,6 @@ export default handleActions(
     [AUTH_USER]: (state, action) =>
       produce(state, (draft) => {
         const userInfo = action.payload.userInfo;
-
-        draft.userId = userInfo.userId;
-        draft.nickname = userInfo.nickname;
-        if (userInfo.profileImg) draft.profileImg = userInfo.profileImg;
-        draft.is_login = true;
-      }),
-
-    [LOG_IN]: (state, action) =>
-      produce(state, (draft) => {
-        const userInfo = action.payload.user;
 
         draft.userId = userInfo.userId;
         draft.nickname = userInfo.nickname;

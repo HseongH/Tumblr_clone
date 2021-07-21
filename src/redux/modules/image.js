@@ -30,42 +30,43 @@ const initialState = {
   file: [],
 };
 
-// .then((res) => {
-//   callNext();
-// })
-
 // MIDDLEWARE
 const uploadImageDB = (callNext) => {
-  return async function (dispatch, getState) {
+  return function (dispatch, getState) {
     const imgList = getState().image.file;
 
-    await imgList.forEach((img) => {
-      if (typeof img !== 'object') {
-        dispatch(uploadImage(img));
-        return;
-      }
+    new Promise((resolve) => {
+      imgList.forEach((img) => {
+        if (typeof img !== 'object') {
+          dispatch(uploadImage(img));
+          return;
+        }
 
-      const upload = new AWS.S3.ManagedUpload({
-        params: {
-          Bucket: 'tumblr-image',
-          Key: img.name,
-          Body: img,
-        },
+        const upload = new AWS.S3.ManagedUpload({
+          params: {
+            Bucket: 'tumblr-image',
+            Key: img.name,
+            Body: img,
+          },
+        });
+
+        const promise = upload.promise();
+
+        promise
+          .then((data) => {
+            dispatch(uploadImage(data.Location));
+            console.log('대기');
+          })
+          .catch((error) => {
+            console.error(error);
+            return alert('오류가 발생했습니다: ', error.message);
+          });
       });
 
-      const promise = upload.promise();
-
-      promise
-        .then((data) => {
-          dispatch(uploadImage(data.Location));
-        })
-        .catch((error) => {
-          console.error(error);
-          return alert('오류가 발생했습니다: ', error.message);
-        });
+      resolve();
+    }).then((res) => {
+      callNext();
     });
-
-    callNext();
   };
 };
 

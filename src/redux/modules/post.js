@@ -86,6 +86,7 @@ const createPostDB = (post) => {
       dispatch(
         imgActions.uploadImageDB(() => {
           const imgUrl = getState().image.imageUrl;
+          console.log('완료');
           const postInfo = {
             ...post,
             img: imgUrl,
@@ -108,6 +109,8 @@ const createPostDB = (post) => {
 
               dispatch(createPost(newPost));
               dispatch(imgActions.delImage());
+              dispatch(imgActions.setPreview([]));
+              dispatch(imgActions.setFile([]));
             })
             .catch((error) => {
               console.error(error);
@@ -150,25 +153,23 @@ const createPostDB = (post) => {
 const updatePostDB = (postId, post) => {
   return function (dispatch, getState) {
     if (post.img.length) {
-      dispatch(
-        imgActions.uploadImageDB(() => {
-          const imgUrl = getState().image.imageUrl;
-          const postInfo = {
-            ...post,
-            img: imgUrl,
-          };
-          const { title, reBlog, tag, content, img } = postInfo;
+      dispatch(imgActions.uploadImageDB());
 
-          instance
-            .put('/api/post', { postId, title, reBlog, tag, content, img })
-            .then((res) => {
-              dispatch(updatePost(postId, postInfo));
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+      const imgUrl = getState().image.imageUrl;
+      const postInfo = {
+        ...post,
+        img: imgUrl,
+      };
+      const { title, reBlog, tag, content, img } = postInfo;
+
+      instance
+        .put('/api/post', { postId, title, reBlog, tag, content, img })
+        .then((res) => {
+          dispatch(updatePost(postId, postInfo));
         })
-      );
+        .catch((error) => {
+          console.error(error);
+        });
     }
 
     const { title, reBlog, tag, content, img } = post;

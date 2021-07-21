@@ -58,7 +58,6 @@ const Post = ({ post }) => {
   };
 
   const date = moment(post.createdAt).local().format('YY년 M월 D일, HH시 mm분');
-  console.log(post.createdAt);
 
   return (
     <>

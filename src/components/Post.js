@@ -57,7 +57,8 @@ const Post = ({ post }) => {
     dispatch(postActions.deletePostDB(post.postId));
   };
 
-  const date = moment.utc(post.createdAt).format('YY년 M월 D일, H시 M분');
+  const date = moment(post.createdAt).local().format('YY년 M월 D일, HH시 mm분');
+  console.log(post.createdAt);
 
   return (
     <>

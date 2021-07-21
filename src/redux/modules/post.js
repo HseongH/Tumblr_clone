@@ -95,15 +95,15 @@ const createPostDB = (post) => {
             .post('/api/post', { ...postInfo })
             .then((res) => {
               const userInfo = getState().user;
+
               const newPost = {
                 ...postInfo,
+                ...userInfo,
                 postId: res.data.postId,
-                nickname: userInfo.nickname,
-                profileImg: userInfo.profileImg,
                 reactionCount: 0,
-                favorite: false,
-                follow: false,
-                createAt: moment().utc(new Date()).format('YY년 M월 D일, H시 M분'),
+                favorite: 'N',
+                follow: 'N',
+                createdAt: moment(),
               };
 
               dispatch(createPost(newPost));
@@ -126,7 +126,19 @@ const createPostDB = (post) => {
     instance
       .post('/api/post', { ...postInfo })
       .then((res) => {
-        dispatch(createPost({ ...postInfo, postId: res.data.postId }));
+        const userInfo = getState().user;
+
+        const newPost = {
+          ...postInfo,
+          ...userInfo,
+          postId: res.data.postId,
+          reactionCount: 0,
+          favorite: 'N',
+          follow: 'N',
+          createdAt: moment(),
+        };
+
+        dispatch(createPost({ ...newPost, postId: res.data.postId }));
         dispatch(imgActions.delImage());
       })
       .catch((error) => {

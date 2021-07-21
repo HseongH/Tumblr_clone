@@ -77,8 +77,6 @@ const PostingBox = ({ type, modalClose, post }) => {
   });
 
   const setInitialState = () => {
-    dispatch(imgActions.setPreview([]));
-    dispatch(imgActions.setFile([]));
     setContents({ title: '', content: '' });
   };
 
@@ -90,7 +88,7 @@ const PostingBox = ({ type, modalClose, post }) => {
     };
 
     dispatch(postActions.createPostDB(postContents));
-    setInitialState();
+    // setInitialState();
   };
 
   const updatePost = () => {
@@ -121,6 +119,8 @@ const PostingBox = ({ type, modalClose, post }) => {
       };
     }
   };
+
+  if (!type) return null;
 
   return (
     <Modal

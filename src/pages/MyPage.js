@@ -20,9 +20,9 @@ import { myPageActions } from "../redux/modules/mypage";
 const MyPage = (post) => {
   const dispatch = useDispatch();
 
-  const { postList, userId, nickname, profileImg } = useSelector(
+  const { myPostList, userId, nickname, profileImg } = useSelector(
     (state) => ({
-      postList: state.mypage.list,
+      myPostList: state.mypage.list,
       userId: state.user.userId,
       nickname: state.user.nickname,
       profileImg: state.user.profileImg,
@@ -109,12 +109,12 @@ const MyPage = (post) => {
               <InputBox />
             </Grid>
 
-            {postList.map((post) => {
-              const postInfo = { ...post, userId, nickname, profileImg };
+            {myPostList.map((post) => {
+              // const postInfo = { ...post, userId, nickname, profileImg };
 
               return (
                 <Post
-                  post={postInfo}
+                  post={post}
                   key={(Date.now() + Math.random()).toString(36)}
                 />
               );

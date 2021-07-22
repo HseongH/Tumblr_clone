@@ -1,17 +1,17 @@
 // AXIOS
-import instance from '../../common/axios';
+import instance from "../../common/axios";
 
 // redux-actions & immer
-import { createAction, handleActions } from 'redux-actions';
-import { produce } from 'immer';
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
 
 // ACTION
-const GET_MYPAGE_POST = 'GET_MYPAGE_POST';
-const GET_MYPAGE_MORE_POST = 'GET_MYPAGE_MORE_POST';
-const GET_MYPAGE_LIKE = 'GET_MYPAGE_LIKE';
-const GET_MYPAGE_MORE_LIKE = 'GET_MYPAGE_MORE_LIKE';
-const GET_MYPAGE_FOLLOWER = 'GET_MYPAGE_FOLLOWER';
-const GET_MYPAGE_FOLLOWING = 'GET_MYPAGE_FOLLOWING';
+const GET_MYPAGE_POST = "GET_MYPAGE_POST";
+const GET_MYPAGE_MORE_POST = "GET_MYPAGE_MORE_POST";
+const GET_MYPAGE_LIKE = "GET_MYPAGE_LIKE";
+const GET_MYPAGE_MORE_LIKE = "GET_MYPAGE_MORE_LIKE";
+const GET_MYPAGE_FOLLOWER = "GET_MYPAGE_FOLLOWER";
+const GET_MYPAGE_FOLLOWING = "GET_MYPAGE_FOLLOWING";
 
 // ACTION CREATOR
 const getMyPagePost = createAction(GET_MYPAGE_POST, (list, start) => ({
@@ -22,29 +22,29 @@ const getMoreMyPost = createAction(GET_MYPAGE_MORE_POST, (list, start) => ({
   list,
   start,
 }));
-const getMyPageLike = createAction(GET_MYPAGE_LIKE, (likeList, start) => ({
-  likeList,
+const getMyPageLike = createAction(GET_MYPAGE_LIKE, (list, start) => ({
+  list,
   start,
 }));
-const getMoreMyLike = createAction(GET_MYPAGE_MORE_LIKE, (likeList, start) => ({
-  likeList,
+const getMoreMyLike = createAction(GET_MYPAGE_MORE_LIKE, (list, start) => ({
+  list,
   start,
 }));
-const getMyPageFollower = createAction(GET_MYPAGE_FOLLOWER, (followerList, start) => ({
-  followerList,
+const getMyPageFollower = createAction(GET_MYPAGE_FOLLOWER, (list, start) => ({
+  list,
   start,
 }));
-const getMyPageFollowing = createAction(GET_MYPAGE_FOLLOWING, (followingList, start) => ({
-  followingList,
-  start,
-}));
+const getMyPageFollowing = createAction(
+  GET_MYPAGE_FOLLOWING,
+  (list, start) => ({
+    list,
+    start,
+  })
+);
 
 // INITIAL STATE
 const initialState = {
   list: [],
-  likeList: [],
-  followerList: [],
-  followingList: [],
   start: 0,
 };
 
@@ -122,7 +122,26 @@ const getMyFollowerDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageFollower(res.data.result, null));
+        dispatch(getMyPageFollower(res.data.result, limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getMyFollowingDB = (limit = 5) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/api/user/following?start=0&${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getMyPageFollowing(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getMyPageFollowing(res.data.result, limit));
       })
       .catch((error) => {
         console.error(error);
@@ -151,13 +170,19 @@ export default handleActions(
 
     [GET_MYPAGE_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        draft.likeList = action.payload.likeList;
+        draft.list = action.payload.list;
         draft.start = action.payload.start;
       }),
 
     [GET_MYPAGE_FOLLOWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.followerList = action.payload.followerList;
+        draft.list = action.payload.list;
+        draft.start = action.payload.start;
+      }),
+
+    [GET_MYPAGE_FOLLOWING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.list;
         draft.start = action.payload.start;
       }),
   },
@@ -169,6 +194,7 @@ const myPageActions = {
   getMoreMyPost,
   getMyLikeDB,
   getMyFollowerDB,
+  getMyFollowingDB
 };
 
 export { myPageActions };

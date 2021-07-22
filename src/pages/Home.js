@@ -37,7 +37,9 @@ const Home = (props) => {
     if (query) dispatch(postActions.getDetailPostDB(query));
     else dispatch(postActions.getPostListDB());
 
-    return () => dispatch(postActions.getPostList([], 0));
+    return () => {
+      dispatch(postActions.getPostList([], 0));
+    };
   }, [userId, query]);
 
   return (

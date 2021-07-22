@@ -95,6 +95,7 @@ const Login = (props) => {
 
         <Link to="/" style={{ margin: '1% auto' }}>
           <Button
+            disabled={!(userInfo.email && userInfo.password)}
             clickEvent={login}
             color="black"
             bgColor="blue"
@@ -110,23 +111,6 @@ const Login = (props) => {
             로그인
           </Button>
         </Link>
-
-        {/* <Button
-            color="black"
-            bgColor="blue"
-            padding="10px 15px"
-            margin="0 auto"
-            addstyle={() => {
-              return css`
-                width: 60px;
-                font-weight: bold;
-              `;
-            }}
-            
-            
-          >
-            가입
-          </Button> */}
       </Grid>
     </Grid>
   );

@@ -6,6 +6,7 @@ import instance from '../../common/axios';
 
 // REDUX
 import { imgActions } from './image';
+import { searchActions } from './search';
 
 // ACTION
 const GET_POST = 'GET_POST';
@@ -168,6 +169,7 @@ const updatePostDB = (postId, post) => {
             .then((res) => {
               dispatch(updatePost(postId, postInfo));
               dispatch(imgActions.setInitialState());
+              dispatch(searchActions.updateSearchPost(postId, postInfo));
             })
             .catch((error) => {
               console.error(error);
@@ -185,6 +187,7 @@ const updatePostDB = (postId, post) => {
       .then((res) => {
         dispatch(updatePost(postId, post));
         dispatch(imgActions.setInitialState());
+        dispatch(searchActions.updateSearchPost(postId, post));
       })
       .catch((error) => {
         console.error(error);
@@ -193,12 +196,12 @@ const updatePostDB = (postId, post) => {
 };
 
 const deletePostDB = (postId) => {
-  return function (dispatch, getState, { history }) {
+  return function (dispatch) {
     instance
       .delete('/api/post', { data: { postId } })
       .then((res) => {
         dispatch(deletePost(postId));
-        history.push('/');
+        dispatch(searchActions.delSearchPost(postId));
       })
       .catch((error) => {
         console.error(error);

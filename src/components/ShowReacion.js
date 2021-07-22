@@ -38,12 +38,6 @@ const ShowReacion = ({ count, postId }) => {
     dispatch(postActions.getMoreReactionDB(postId));
   };
 
-  useEffect(() => {
-    return () => {
-      dispatch(postActions.getReaction([], 0));
-    };
-  }, []);
-
   return (
     <Dropdown
       icon={`반응 ${count}개`}

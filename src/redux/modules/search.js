@@ -4,10 +4,14 @@ import instance from '../../common/axios';
 // ACTION
 const SEARCH_POST = 'SEARCH_POST';
 const GET_MORE_SEARCH_RESULT = 'GET_MORE_SEARCH_RESULT';
+const UPDATE_SEARCH_POST = 'UPDATE_SEARCH_POST';
+const DEL_SEARCH_POST = 'DEL_SEARCH_POST';
 
 // ACTION CREATOR
 const searchPost = (list, start, keyword) => ({ type: SEARCH_POST, list, start, keyword });
 const getMoreSearchResult = (list, start) => ({ type: GET_MORE_SEARCH_RESULT, list, start });
+const updateSearchPost = (postId, post) => ({ type: UPDATE_SEARCH_POST, postId, post });
+const delSearchPost = (postId) => ({ type: DEL_SEARCH_POST, postId });
 
 // INITIAL STATE
 const initialState = {
@@ -46,6 +50,22 @@ export default function search(state = initialState, action) {
     case GET_MORE_SEARCH_RESULT:
       return { ...state, list: [...state.list, ...action.list], start: action.start };
 
+    case UPDATE_SEARCH_POST:
+      const updatePostList = state.list.map((post) => {
+        if (post.postId === action.postId) {
+          return action.post;
+        }
+
+        return post;
+      });
+
+      return { ...state, list: updatePostList };
+
+    case DEL_SEARCH_POST:
+      const delPostList = state.list.filter((post) => post.postId !== action.postId);
+
+      return { ...state, list: delPostList };
+
     default:
       return state;
   }
@@ -53,6 +73,8 @@ export default function search(state = initialState, action) {
 
 const searchActions = {
   searchPost,
+  updateSearchPost,
+  delSearchPost,
   searchPostDB,
 };
 

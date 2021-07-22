@@ -76,10 +76,7 @@ const signupDB = (email, password, nickname) => {
         console.log(res);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.log(errorCode, errorMessage);
+        return window.alert('회원가입 실패!!!');
       });
   };
 };

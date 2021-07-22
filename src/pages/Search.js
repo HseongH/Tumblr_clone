@@ -28,7 +28,9 @@ const Search = (props) => {
   useEffect(() => {
     dispatch(searchActions.searchPostDB(keyword));
 
-    return () => dispatch(searchActions.searchPost([], 0));
+    return () => {
+      dispatch(searchActions.searchPost([], 0));
+    };
   }, []);
 
   if (!postList.length) {
@@ -41,16 +43,20 @@ const Search = (props) => {
     );
   }
 
-  return postList.map((post, idx) => (
-    <InfinityScroll
-      next={getMoreSearchResult}
-      index={idx}
-      length={postList.length}
-      key={(post.postId + Date.now() + Math.random()).toString(36)}
-    >
-      <Post post={post} />
-    </InfinityScroll>
-  ));
+  return (
+    <Grid>
+      {postList.map((post, idx) => (
+        <InfinityScroll
+          next={getMoreSearchResult}
+          index={idx}
+          length={postList.length}
+          key={(post.postId + Date.now() + Math.random()).toString(36)}
+        >
+          <Post post={post} />
+        </InfinityScroll>
+      ))}
+    </Grid>
+  );
 };
 
 export default Search;

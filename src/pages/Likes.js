@@ -1,30 +1,27 @@
 // LIBRARY
-import React, { useEffect } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 // ELEMENTS
-import { Grid } from "../elements";
+import { Grid } from '../elements';
 
 // COMPONENTS
-import Post from "../components/Post";
-import BlogUser from "../components/BlogUser";
-import Permit from "../components/Permit";
+import Post from '../components/Post';
+import BlogUser from '../components/BlogUser';
+import Permit from '../components/Permit';
 
 // REDUX
-import { myPageActions } from "../redux/modules/mypage";
+import { myPageActions } from '../redux/modules/mypage';
 
 // FUNCTION
-import InfinityScroll from "../common/infinityScroll";
+import InfinityScroll from '../common/infinityScroll';
 
 const Likes = (props) => {
   const dispatch = useDispatch();
 
-  const { likeList } = useSelector(
-    (state) => ({
-      likeList: state.mypage.list,
-    }),
-    shallowEqual
-  );
+  const { likeList } = useSelector((state) => ({
+    likeList: state.mypage.list,
+  }));
 
   const getMoreLike = () => {
     dispatch(myPageActions.getMoreMyLikeDB());

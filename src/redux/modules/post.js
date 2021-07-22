@@ -203,6 +203,25 @@ const deletePostDB = (postId) => {
 };
 
 const getReactionDB = (postId, limit = 20) => {
+  return function (dispatch) {
+    instance
+      .get(`/api/reaction?postId=${postId}&start=0&limit=${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getReaction(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getReaction(res.data.result, limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getMoreReactionDB = (postId, limit = 20) => {
   return function (dispatch, getState) {
     const start = getState().post.reactionStart;
 
@@ -280,4 +299,5 @@ export const postActions = {
   updatePostDB,
   deletePostDB,
   getReactionDB,
+  getMoreReactionDB,
 };

@@ -57,14 +57,14 @@ const Alarm = ({ nickname }) => {
   };
 
   const getMoreAlarm = () => {
-    dispatch(alarmActions.getAlarmDB(type));
+    dispatch(alarmActions.getMoreAlarmDB(type));
   };
 
   useEffect(() => {
     dispatch(alarmActions.getAlarmDB(type));
 
     return () => {
-      alarmActions.getAlarm([], 0);
+      dispatch(alarmActions.getAlarm([], 0));
       setType(0);
     };
   }, []);
@@ -168,7 +168,9 @@ const Alarm = ({ nickname }) => {
             return (
               <InfinityScroll
                 root={alarmContainer.current}
-                next={getMoreAlarm}
+                next={() => {
+                  getMoreAlarm(idx);
+                }}
                 index={idx}
                 length={alarmList.length}
                 key={(alarm.userId + idx * Date.now() + Math.random()).toString(36)}

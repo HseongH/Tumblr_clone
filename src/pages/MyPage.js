@@ -1,21 +1,21 @@
 // LIBRARY
-import React, { useEffect } from "react";
-import { css } from "styled-components";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { css } from 'styled-components';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 // STYLE
-import { flexBox, flexVer } from "../common/style";
+import { flexBox, flexVer } from '../common/style';
 
 // ELEMENTS
-import { Image, Text, Grid } from "../elements";
+import { Image, Text, Grid } from '../elements';
 
 // COMPONENTS
-import InputBox from "../components/InputBox";
-import Post from "../components/Post";
-import Permit from "../components/Permit";
+import InputBox from '../components/InputBox';
+import Post from '../components/Post';
+import Permit from '../components/Permit';
 
 // REDUX
-import { myPageActions } from "../redux/modules/mypage";
+import { myPageActions } from '../redux/modules/mypage';
 
 const MyPage = (post) => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const MyPage = (post) => {
           width="100%"
           addstyle={() => {
             return css`
-              ${flexVer("flex-end")}
+              ${flexVer('flex-end')}
               max-width: 580px;
               flex-direction: column;
               margin-right: 10%;
@@ -81,43 +81,13 @@ const MyPage = (post) => {
                 `;
               }}
             >
-              <Grid
-                addstyle={() => {
-                  return css`
-                    width: 64px;
-                    height: 64px;
-                    position: absolute;
-                    top: 0;
-                    left: -76px;
-                  `;
-                }}
-              >
-                <Image
-                  addstyle={() => {
-                    return css`
-                      border-radius: 3px;
-                    `;
-                  }}
-                  src={
-                    post.profileImg
-                      ? post.profileImg
-                      : "https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
-                  }
-                  margin="0 0 20px"
-                />
-              </Grid>
               <InputBox />
             </Grid>
 
             {myPostList.map((post) => {
               const postInfo = { ...post, userId, nickname, profileImg };
 
-              return (
-                <Post
-                  post={postInfo}
-                  key={(Date.now() + Math.random()).toString(36)}
-                />
-              );
+              return <Post post={postInfo} key={(Date.now() + Math.random()).toString(36)} />;
             })}
           </Grid>
         </Grid>

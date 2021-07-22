@@ -1,5 +1,5 @@
 // LIBRARY
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from 'styled-components';
 
@@ -33,6 +33,16 @@ const ShowReacion = ({ count, postId }) => {
   const getReactionList = () => {
     dispatch(postActions.getReactionDB(postId));
   };
+
+  const getMoreReactionList = () => {
+    dispatch(postActions.getMoreReactionDB(postId));
+  };
+
+  useEffect(() => {
+    return () => {
+      dispatch(postActions.getReaction([], 0));
+    };
+  }, []);
 
   return (
     <Dropdown
@@ -80,7 +90,7 @@ const ShowReacion = ({ count, postId }) => {
 
             return (
               <InfinityScroll
-                next={getReactionList}
+                next={getMoreReactionList}
                 index={idx}
                 length={reactionList.length}
                 root={reactionContainer.current}

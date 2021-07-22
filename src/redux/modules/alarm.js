@@ -23,6 +23,25 @@ const initialState = {
 };
 
 const getAlarmDB = (type, limit = 10) => {
+  return function (dispatch) {
+    instance
+      .get(`/api/alarm?alarmType=${type}&start=0&limit=${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getAlarm(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getAlarm(res.data.result, limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getMoreAlarmDB = (type, limit = 10) => {
   return function (dispatch, getState) {
     const start = getState().alarm.start;
 
@@ -37,7 +56,7 @@ const getAlarmDB = (type, limit = 10) => {
         }
 
         res.data.result.pop();
-        dispatch(getMoreAlarm(res.data.result, limit));
+        dispatch(getMoreAlarm(res.data.result, start + limit));
       })
       .catch((error) => {
         console.error(error);
@@ -78,6 +97,7 @@ const getRecommendDB = () => {
 export default function alarm(state = initialState, action) {
   switch (action.type) {
     case GET_ALARM:
+      console.log(action.alarmList);
       return { ...state, list: action.alarmList, start: action.start };
 
     case GET_MORE_ALARM:
@@ -111,6 +131,7 @@ export const alarmActions = {
   getRecommend,
   deleteAllAlarms,
   getAlarmDB,
+  getMoreAlarmDB,
   getRecommendDB,
   addFollow,
 };

@@ -29,8 +29,8 @@ const MyFollower = ({ post }) => {
         }}
       >
         <Grid width="100%" margin="0 10% 0 0">
-          <Grid width="100%" margin="3% 0 0 0">
-            <Grid margin="0 0 0 0">
+          <Grid width="100%" margin="0 0 0 0">
+            <Grid margin="-2% 0 0 0">
               <Grid
                 padding="12px"
                 bgColor="white"

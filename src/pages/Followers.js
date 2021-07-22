@@ -36,7 +36,6 @@ const Followers = (props) => {
     <Permit>
       <Grid
         width="100%"
-        margin="-10% 0 0 0"
         addstyle={() => {
           flexBox();
           return css`
@@ -53,6 +52,7 @@ const Followers = (props) => {
             }}>
           <Grid width="100%" margin="0 10% 0 0" >
             <Grid
+              margin="-16% 0 0 0"
               width="100%"
               addstyle={() => {
                 return css`
@@ -86,7 +86,7 @@ const Followers = (props) => {
 
           <Grid
             width="100%"
-            margin="15% 0 0 0"
+            margin="4% 0 0 0"
             addstyle={() => {
               return css`
                 display: flex;

@@ -12,7 +12,7 @@ import { Grid, Text, Image } from "../elements";
 // ICON
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-const MyFollowing = ({post}) => {
+const MyFollowing = ({ post }) => {
   return (
     <React.Fragment>
       <Grid margin="2% 0 0 0">
@@ -55,7 +55,7 @@ const MyFollowing = ({post}) => {
                 `;
               }}
             >
-              hangulteam
+              {post.nickname}
             </Text>
 
             <Text

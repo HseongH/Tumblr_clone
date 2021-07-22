@@ -2,14 +2,18 @@
 import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
+// STYLE
+import { css } from "styled-components";
+
 // ELEMENTS
-import { Grid } from "../elements";
+import { Grid, Text } from "../elements";
 
 // COMPONENTS
 import InputBox from "../components/InputBox";
 import Post from "../components/Post";
 import Permit from "../components/Permit";
 import BlogUser from "../components/BlogUser";
+import NoInfo from "../components/NoInfo";
 
 // REDUX
 import { myPageActions } from "../redux/modules/mypage";
@@ -58,6 +62,22 @@ const MyPage = (post) => {
             </InfinityScroll>
           );
         })}
+
+        <Grid width="100%" margin="0 0 0 0">
+          <NoInfo />
+          <Text
+            color="gray"
+            fontSize="32px"
+            fontWeight="bold"
+            addstyle={() => {
+              return css`
+                position: absolute;
+                /* top: 70%;
+                left: 21%; */
+              `;
+            }}
+          ></Text>
+        </Grid>
       </Grid>
 
       <BlogUser />

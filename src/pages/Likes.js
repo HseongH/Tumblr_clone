@@ -1,14 +1,18 @@
 // LIBRARY
 import React, { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+// STYLE
+import { css } from 'styled-components';
 
 // ELEMENTS
-import { Grid } from '../elements';
+import { Grid, Text } from '../elements';
 
 // COMPONENTS
 import Post from '../components/Post';
 import BlogUser from '../components/BlogUser';
 import Permit from '../components/Permit';
+import NoInfo from '../components/NoInfo';
 
 // REDUX
 import { myPageActions } from '../redux/modules/mypage';
@@ -46,6 +50,20 @@ const Likes = (props) => {
             <Post post={like} />
           </InfinityScroll>
         ))}
+
+        <Grid width="100%" margin="0 0 0 0">
+          <NoInfo />
+          <Text
+            color="gray"
+            fontSize="32px"
+            fontWeight="bold"
+            addstyle={() => {
+              return css`
+                position: absolute;
+              `;
+            }}
+          ></Text>
+        </Grid>
       </Grid>
 
       <BlogUser />

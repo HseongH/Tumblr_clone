@@ -1,5 +1,5 @@
 // LIBRARY
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
@@ -22,6 +22,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const Header = (props) => {
   const path = useLocation().pathname;
+
   const [searchBar, setSearchBar] = useState({
     alpha: 0.3,
     color: 'white',

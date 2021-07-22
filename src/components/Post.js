@@ -308,7 +308,9 @@ const Post = ({ post }) => {
               <ShareIcon />
             </Button>
 
-            <Like isFavorite={post.favorite === 'N' ? false : true} post={post} />
+            {userId !== post.userId ? (
+              <Like isFavorite={post.favorite === 'N' ? false : true} post={post} />
+            ) : null}
 
             <Auth userId={post.userId}>
               <Button color="black" clickEvent={deletePost}>

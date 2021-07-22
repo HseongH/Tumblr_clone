@@ -71,7 +71,7 @@ const uploadImageDB = (callNext) => {
 function image(state = initialState, action) {
   switch (action.type) {
     case UPLOAD_IMAGE:
-      return { ...state, imageUrl: [...state.list, action.imgUrl] };
+      return { ...state, imageUrl: [...state.imageUrl, action.imgUrl] };
 
     case SET_PREVIEW:
       return { ...state, preview: [...state.preview, ...action.preview] };

@@ -1,5 +1,5 @@
 // LIBRARY
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 // ELEMENTS
@@ -41,6 +41,10 @@ const Dropdown = (props) => {
     setOpen(false);
     setAlpha(props.opacity);
   };
+
+  useEffect(() => {
+    setAlpha(props.opacity);
+  }, [props.opacity]);
 
   return (
     <>

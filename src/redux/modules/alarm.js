@@ -111,7 +111,6 @@ export const alarmActions = {
   getRecommend,
   deleteAllAlarms,
   getAlarmDB,
-  getMoreAlarmDB,
   getRecommendDB,
   addFollow,
 };

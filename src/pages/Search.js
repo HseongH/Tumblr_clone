@@ -13,6 +13,7 @@ import { Text, Grid } from '../elements/index';
 
 // COMPONENTS
 import Post from '../components/Post';
+import NoInfo from '../components/NoInfo';
 
 const Search = (props) => {
   const keyword = window.location.search.slice(1).split('=')[1];

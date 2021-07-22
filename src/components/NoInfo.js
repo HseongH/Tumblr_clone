@@ -1,16 +1,15 @@
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { css } from 'styled-components';
 
-import { Grid } from "../elements";
+import { Grid } from '../elements';
 
-import SpeakerNotesOffIcon from "@material-ui/icons/SpeakerNotesOff";
+import SpeakerNotesOffIcon from '@material-ui/icons/SpeakerNotesOff';
 
 const NoInfo = (props) => {
   return (
     <React.Fragment>
       <Grid
-        width="100%"
-        heigh="100%"
+        heigh="350px"
         addstyle={() => {
           return css`
             background-color: rgba(255, 255, 255, 0.15);
@@ -20,12 +19,12 @@ const NoInfo = (props) => {
       >
         <SpeakerNotesOffIcon
           style={{
-            fontSize: "100px",
-            color: "gray",
-            textAlign: "center",
-            margin: "5% auto",
-            display: "block",
-            height:"400px"
+            fontSize: '100px',
+            color: 'gray',
+            textAlign: 'center',
+            margin: '5% auto',
+            display: 'block',
+            height: '400px',
           }}
         />
       </Grid>

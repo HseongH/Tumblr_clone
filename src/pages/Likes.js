@@ -37,6 +37,8 @@ const Likes = (props) => {
 
   if (likeList.length && !likeList[0].img) return null;
 
+  if (!likeList.length) return <NoInfo />;
+
   return (
     <Permit>
       <Grid>
@@ -50,20 +52,6 @@ const Likes = (props) => {
             <Post post={like} />
           </InfinityScroll>
         ))}
-
-        <Grid width="100%" margin="0 0 0 0">
-          <NoInfo />
-          <Text
-            color="gray"
-            fontSize="32px"
-            fontWeight="bold"
-            addstyle={() => {
-              return css`
-                position: absolute;
-              `;
-            }}
-          ></Text>
-        </Grid>
       </Grid>
 
       <BlogUser />

@@ -23,25 +23,6 @@ const initialState = {
 };
 
 const getAlarmDB = (type, limit = 10) => {
-  return function (dispatch) {
-    instance
-      .get(`/api/alarm?alarmType=${type}&start=0&limit=${limit + 1}`)
-      .then((res) => {
-        if (res.data.result.length < limit + 1) {
-          dispatch(getAlarm(res.data.result, null));
-          return;
-        }
-
-        res.data.result.pop();
-        dispatch(getAlarm(res.data.result, limit));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-};
-
-const getMoreAlarmDB = (type, limit = 5) => {
   return function (dispatch, getState) {
     const start = getState().alarm.start;
 

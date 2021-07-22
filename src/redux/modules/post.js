@@ -17,6 +17,8 @@ const POST_DELETE = 'POST_DELETE';
 const GET_REACTION = 'GET_REACTION';
 const GET_MORE_REACTION = 'GET_MORE_REACTION';
 
+const EDIT_PROFILE_IMAGE = 'EDIT_PROFILE_IMAGE';
+
 // ACTION CREATOR
 const getPostList = (postList, start) => ({ type: GET_POST, postList, start });
 const getMorePostList = (postList, start) => ({ type: GET_MORE_POST, postList, start });
@@ -26,6 +28,8 @@ const deletePost = (postId) => ({ type: POST_DELETE, postId });
 
 const getReaction = (reactionList, start) => ({ type: GET_REACTION, reactionList, start });
 const getMoreReaction = (reactionList, start) => ({ type: GET_MORE_REACTION, reactionList, start });
+
+const editProfileImg = (userId, imgUrl) => ({ type: EDIT_PROFILE_IMAGE, userId, imgUrl });
 
 // INITIAL STATE
 const initialState = {
@@ -282,6 +286,17 @@ export default function post(state = initialState, action) {
         reactionStart: action.start,
       };
 
+    case EDIT_PROFILE_IMAGE:
+      const editProfile = state.list.map((post) => {
+        if (post.userId === action.userId) {
+          return { ...post, profileImg: action.imgUrl };
+        }
+
+        return post;
+      });
+
+      return { ...state, list: editProfile };
+
     default:
       return state;
   }
@@ -293,6 +308,7 @@ export const postActions = {
   updatePost,
   deletePost,
   getReaction,
+  editProfileImg,
   getPostListDB,
   getDetailPostDB,
   createPostDB,

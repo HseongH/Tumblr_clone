@@ -5,6 +5,10 @@ import instance from '../../common/axios';
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 
+// REDUX
+import { imgActions } from './image';
+import { postActions } from './post';
+
 // COOKIE
 import { setCookie, delCookie } from '../../common/cookie';
 
@@ -12,12 +16,14 @@ import { setCookie, delCookie } from '../../common/cookie';
 const LOG_OUT = 'LOG_OUT';
 const AUTH_USER = 'AUTH_USER';
 const CHECK_EMAIL = 'CHECK_EMAIL';
+const SET_PROFILE = 'SET_PROFILE';
 
 // userId, nickname, profileImg
 // action creators
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const authUser = createAction(AUTH_USER, (userInfo) => ({ userInfo }));
 const checkEmail = createAction(CHECK_EMAIL, (email) => ({ email }));
+const setProfile = createAction(SET_PROFILE, (profile) => ({ profile }));
 
 // initialState
 const initialState = {
@@ -78,6 +84,27 @@ const signupDB = (email, password, nickname) => {
   };
 };
 
+const setProfileDB = () => {
+  return function (dispatch, getState) {
+    dispatch(
+      imgActions.uploadImageDB(() => {
+        const [profileImg] = getState().image.imageUrl;
+        const userId = getState().user.userId;
+
+        instance
+          .post('/api/user/profile', { profileImg })
+          .then((res) => {
+            dispatch(setProfile(profileImg));
+            dispatch(postActions.editProfileImg(userId, profileImg));
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
+    );
+  };
+};
+
 // reducer
 export default handleActions(
   {
@@ -99,6 +126,11 @@ export default handleActions(
         draft.profileImg = null;
         draft.is_login = false;
       }),
+
+    [SET_PROFILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.profileImg = action.payload.profile;
+      }),
   },
   initialState
 );
@@ -109,8 +141,7 @@ const userActions = {
   signupDB,
   authUserDB,
   loginAction,
-  // loginCheck,
-  // emailCheck,
+  setProfileDB,
 };
 
 export { userActions };

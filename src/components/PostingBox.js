@@ -145,6 +145,7 @@ const PostingBox = ({ type, modalClose, post }) => {
       submit={post ? '저장' : '포스팅'}
       color="white"
       padding="15px 0"
+      disabled={!contents.content}
       modalClose={() => {
         setInitialState();
         dispatch(imgActions.setInitialState());

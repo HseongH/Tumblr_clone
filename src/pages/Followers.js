@@ -37,8 +37,6 @@ const Followers = (props) => {
     };
   }, []);
 
-  if (!followerList.length) return <NoInfo />;
-
   return (
     <Permit>
       <Grid
@@ -59,15 +57,20 @@ const Followers = (props) => {
           팔로워
         </Text>
 
-        {followerList.map((follower) => {
-          return (
-            <MyFollower
-              post={follower}
-              key={(Date.now() + Math.random()).toString(36)}
-            ></MyFollower>
-          );
-        })}
+        {followerList.length ? (
+          followerList.map((follower) => {
+            return (
+              <MyFollower
+                post={follower}
+                key={(Date.now() + Math.random()).toString(36)}
+              ></MyFollower>
+            );
+          })
+        ) : (
+          <NoInfo />
+        )}
       </Grid>
+
       <BlogUser />
     </Permit>
   );

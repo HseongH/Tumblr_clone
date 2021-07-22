@@ -27,10 +27,6 @@ const SignUp = (props) => {
       return;
     }
     dispatch(userActions.signupDB(email, password, nickname));
-
-    window.alert('회원가입이 완료되었습니다. 로그인을 해주세요.');
-
-    window.location.replace('/login');
   };
 
   useEffect(() => {

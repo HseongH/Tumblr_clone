@@ -37,21 +37,23 @@ const Likes = (props) => {
 
   if (likeList.length && !likeList[0].img) return null;
 
-  if (!likeList.length) return <NoInfo />;
-
   return (
     <Permit>
       <Grid>
-        {likeList.map((like, idx) => (
-          <InfinityScroll
-            next={getMoreLike}
-            index={idx}
-            length={likeList.length}
-            key={(Date.now() + Math.random()).toString(36)}
-          >
-            <Post post={like} />
-          </InfinityScroll>
-        ))}
+        {likeList.length ? (
+          likeList.map((like, idx) => (
+            <InfinityScroll
+              next={getMoreLike}
+              index={idx}
+              length={likeList.length}
+              key={(Date.now() + Math.random()).toString(36)}
+            >
+              <Post post={like} />
+            </InfinityScroll>
+          ))
+        ) : (
+          <NoInfo />
+        )}
       </Grid>
 
       <BlogUser />

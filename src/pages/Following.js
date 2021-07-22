@@ -31,8 +31,6 @@ const Following = (props) => {
     dispatch(myPageActions.getMyFollowingDB());
   }, []);
 
-  if (!followingList.length) return <NoInfo />;
-
   return (
     <Permit>
       <Grid
@@ -53,9 +51,13 @@ const Following = (props) => {
           팔로잉
         </Text>
 
-        {followingList.map((following) => {
-          return <MyFollowing post={following} key={(Date.now() + Math.random()).toString(36)} />;
-        })}
+        {followingList.length ? (
+          followingList.map((following) => {
+            return <MyFollowing post={following} key={(Date.now() + Math.random()).toString(36)} />;
+          })
+        ) : (
+          <NoInfo />
+        )}
       </Grid>
 
       <BlogUser />

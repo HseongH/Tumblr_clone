@@ -69,16 +69,26 @@ const loginAction = (user) => {
 const signupDB = (email, password, nickname) => {
   return function () {
     instance
-      .post('/api/sign', {
-        email,
-        password,
-        nickname,
-      })
+      .post('/api/login/email', { email })
       .then((res) => {
-        console.log(res);
+        instance
+          .post('/api/sign', {
+            email,
+            password,
+            nickname,
+          })
+          .then((res) => {
+            window.alert('회원가입이 완료되었습니다. 로그인을 해주세요.');
+            window.location.href('/login');
+          })
+          .catch((error) => {
+            window.alert('회원가입 실패!!!');
+            window.location.replace('/signup');
+          });
       })
       .catch((error) => {
-        return window.alert('회원가입 실패!!!');
+        window.alert('이미 가입된 이메일이 있습니다!!!');
+        window.location.replace('/signup');
       });
   };
 };

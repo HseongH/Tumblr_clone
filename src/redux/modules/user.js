@@ -94,6 +94,7 @@ const setProfileDB = () => {
         instance
           .post('/api/user/profile', { profileImg })
           .then((res) => {
+            dispatch(setProfile(profileImg));
             dispatch(postActions.editProfileImg(userId, profileImg));
           })
           .catch((error) => {
@@ -124,6 +125,11 @@ export default handleActions(
         draft.nickname = null;
         draft.profileImg = null;
         draft.is_login = false;
+      }),
+
+    [SET_PROFILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.profileImg = action.payload.profile;
       }),
   },
   initialState

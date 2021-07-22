@@ -8,7 +8,7 @@ import { flexBox, flexVer } from '../common/style';
 // ELEMETS
 import { Grid, Button, FixedBox } from '../elements/index';
 
-const Modal = ({ children, cancle, submit, modalClose, submitEvent, ...props }) => {
+const Modal = ({ disabled, children, cancle, submit, modalClose, submitEvent, ...props }) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
@@ -77,6 +77,7 @@ const Modal = ({ children, cancle, submit, modalClose, submitEvent, ...props }) 
                 bgColor="accent"
                 padding="5px 7px"
                 clickEvent={submitEvent}
+                disabled={disabled}
               >
                 {submit}
               </Button>

@@ -16,12 +16,16 @@ const ButtonStyle = styled.button`
   cursor: pointer;
   ${(props) => borderBox(props.radius, props.padding)};
 
+  &:disabled {
+    opacity: 0.3;
+  }
+
   ${(props) => props.addstyle()};
 `;
 
-const Button = ({ clickEvent, children, ...props }) => {
+const Button = ({ disabled, clickEvent, children, ...props }) => {
   return (
-    <ButtonStyle onClick={clickEvent} {...props}>
+    <ButtonStyle disabled={disabled} onClick={clickEvent} {...props}>
       {children}
     </ButtonStyle>
   );

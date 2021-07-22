@@ -37,6 +37,7 @@ const Profile = ({ nickname, profile }) => {
 
   const updateProfile = () => {
     dispatch(userActions.setProfileDB());
+    dispatch(imgActions.setInitialState());
   };
 
   const selectFile = (event) => {
@@ -81,7 +82,13 @@ const Profile = ({ nickname, profile }) => {
       >
         {nickname}
 
-        <Button fontSize="14px" color="accent" padding="8px 0" clickEvent={updateProfile}>
+        <Button
+          disabled={!preview}
+          fontSize="14px"
+          color="accent"
+          padding="8px 0"
+          clickEvent={updateProfile}
+        >
           프로필 편집
         </Button>
       </PostHeader>
@@ -106,6 +113,7 @@ const Profile = ({ nickname, profile }) => {
           addstyle={() => {
             return css`
               position: relative;
+              ${flexBox()};
             `;
           }}
         >

@@ -1,21 +1,39 @@
 // LIBRARY
-import React from 'react';
-import { css } from 'styled-components';
+import React, { useEffect } from "react";
+import { css } from "styled-components";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 // STYLE
-import { flexBox } from '../common/style';
+import { flexBox } from "../common/style";
 
 // ELEMENTS
-import { Grid, Text, Input, Button, Image } from '../elements';
+import { Grid, Text, Input, Button, Image } from "../elements";
 
 // COMPONENTS
-import BlogUser from '../components/BlogUser';
-import Permit from '../components/Permit';
+import BlogUser from "../components/BlogUser";
+import Permit from "../components/Permit";
+import MyFollowing from "../components/MyFollowing";
 
 // ICON
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+
+// REDUX
+import { myPageActions } from "../redux/modules/mypage";
 
 const Following = (props) => {
+  const dispatch = useDispatch();
+
+  const { followingList } = useSelector(
+    (state) => ({
+      followingList: state.mypage.list,
+    }),
+    shallowEqual
+  );
+
+  useEffect(() => {
+    dispatch(myPageActions.getMyFollowingDB());
+  }, []);
+
   return (
     <Permit>
       <Grid
@@ -77,7 +95,11 @@ const Following = (props) => {
 
           {/* 구분선 -------------------------------- */}
 
-          <Grid margin="2% 0 0 0">
+              {followingList.map((following) => {
+                return <MyFollowing post={following} key={(Date.now() + Math.random()).toString(36)} />
+              })}
+          
+          {/* <Grid margin="2% 0 0 0">
             <Grid
               padding="12px"
               bgColor="white"
@@ -149,11 +171,11 @@ const Following = (props) => {
 
               <MoreVertIcon />
             </Grid>
-          </Grid>
+          </Grid> */}
 
           {/* 구분선 -------------------------------- */}
 
-          <Grid margin="0 0 0 0">
+          {/* <Grid margin="0 0 0 0">
             <Grid
               padding="12px"
               bgColor="white"
@@ -225,7 +247,7 @@ const Following = (props) => {
 
               <MoreVertIcon />
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
 
         {/* 구분선 -------------------------------- */}

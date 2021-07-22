@@ -1,27 +1,21 @@
 // LIBRARY
-import React, { useState } from "react";
+import React from "react";
 import { css } from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
 
 // STYLE
 import { flexBox } from "../common/style";
 
-// REDUX
-// import { postActions } from "../redux/modules/post";
-
-// COMPONENTS
-
 // ELEMENTS
-import { Grid, Text, Input, Image } from "../elements";
+import { Grid, Text, Image } from "../elements";
 
 // ICON
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
+// REDUX
+
+// COMPONENTS
+
 const MyFollower = ({ post }) => {
-  // const dispatch = useDispatch();
-
-  // const userId = useSelector((state) => state.user.userId);
-
   return (
     <React.Fragment>
       <Grid

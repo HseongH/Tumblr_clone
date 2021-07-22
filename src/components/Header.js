@@ -1,5 +1,5 @@
 // LIBRARY
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
@@ -11,13 +11,13 @@ import { flexBox, flexVer, borderBox } from '../common/style';
 import Logo from './Logo';
 import Alarm from './Alarm';
 import User from './User';
+import Profile from './Profile';
 
 // ELEMENTS
 import { Input, Button, Grid, Image } from '../elements/index';
 
 // ICON
 import HomeIcon from '@material-ui/icons/Home';
-import CreateIcon from '@material-ui/icons/Create';
 import SearchIcon from '@material-ui/icons/Search';
 
 const Header = (props) => {
@@ -92,10 +92,6 @@ const Header = (props) => {
               & > button {
                 margin-right: 30px;
 
-                &:last-child {
-                  margin-right: 0;
-                }
-
                 & a {
                   color: rgba(${(props) => props.theme.palette.white}, ${path === '/' ? 1 : 0.5});
                 }
@@ -113,6 +109,8 @@ const Header = (props) => {
           <Alarm nickname={nickname} />
 
           <User opacity={path === '/mypage' ? '1' : '0.5'} nickname={nickname} profile={profile} />
+
+          <Profile nickname={nickname} profile={profile} />
         </Grid>
       ) : (
         <Link to={path === '/signup' ? '/login' : 'signup'}>

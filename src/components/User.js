@@ -80,7 +80,7 @@ const User = ({ opacity, nickname, profile }) => {
                 `;
               }}
             >
-              <Grid width="37px" height="37px" oveflow="hidden" margin="0 12px 0 0">
+              <Grid width="37px" height="37px" overflow="hidden" margin="0 12px 0 0">
                 <Image
                   src={
                     profile

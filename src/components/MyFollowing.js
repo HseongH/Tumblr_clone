@@ -2,15 +2,8 @@
 import React from "react";
 import { css } from "styled-components";
 
-// STYLE
-
-// COMPONENTS
-
 // ELEMENTS
 import { Grid, Text, Image } from "../elements";
-
-// ICON
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const MyFollowing = ({ post }) => {
   return (
@@ -57,35 +50,7 @@ const MyFollowing = ({ post }) => {
             >
               {post.nickname}
             </Text>
-
-            <Text
-              fontSize="14px"
-              fontWeight="300"
-              addstyle={() => {
-                return css`
-                  padding: 2px;
-                `;
-              }}
-            >
-              5일 전 업데이트됨
-            </Text>
           </Grid>
-
-          <Text
-            margin="0 -30% 0 30%"
-            fontSize="14px"
-            color="blue"
-            addstyle={() => {
-              return css`
-                padding: 2px;
-                width: 100%;
-              `;
-            }}
-          >
-            언팔로우
-          </Text>
-
-          <MoreVertIcon />
         </Grid>
       </Grid>
     </React.Fragment>

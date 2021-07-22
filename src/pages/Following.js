@@ -7,14 +7,12 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { flexBox } from "../common/style";
 
 // ELEMENTS
-import { Grid, Text, Input, Button } from "../elements";
+import { Grid, Text } from "../elements";
 
 // COMPONENTS
 import BlogUser from "../components/BlogUser";
 import Permit from "../components/Permit";
 import MyFollowing from "../components/MyFollowing";
-
-// ICON
 
 // REDUX
 import { myPageActions } from "../redux/modules/mypage";
@@ -50,7 +48,7 @@ const Following = (props) => {
       >
         <Grid
           width="100%"
-          margin="0 0 0 -35%"
+          margin="5% 0 0 -35%"
           addstyle={() => {
             return css`
               display: flex;
@@ -59,40 +57,8 @@ const Following = (props) => {
           }}
         >
           <Text fontSize="18px" color="white">
-            팔로잉 2명
+            팔로잉
           </Text>
-
-          <Grid
-            addstyle={() => {
-              return css`
-                display: flex;
-              `;
-            }}
-          >
-            <Input
-              margin="1% 2% 1% 0"
-              width="100%"
-              bgColor="rgba(255, 255, 255, 0.25)"
-              placeholder="팔로우하려면 사용자 이름, URL 또는 이메일 주소를 입력하세요."
-            />
-
-            <Button
-              fontWeight="bold"
-              padding="14px 8px"
-              margin="1% 0"
-              addstyle={() => {
-                return css`
-                  border: 2px solid rgba(255, 255, 255, 0.4);
-                  background-color: none;
-                  color: rgba(255, 255, 255, 0.65);
-                `;
-              }}
-            >
-              팔로우
-            </Button>
-          </Grid>
-
-          {/* 구분선 -------------------------------- */}
 
           {followingList.map((following) => {
             return (
@@ -104,14 +70,11 @@ const Following = (props) => {
           })}
         </Grid>
 
-        {/* 구분선 -------------------------------- */}
-
         <Grid
           width="100%"
-          bgColor=""
           addstyle={() => {
             return css`
-              margin: 0 -50% 38px 10%;
+              margin: -0% -50% 38px 25%;
               height: 300px;
             `;
           }}

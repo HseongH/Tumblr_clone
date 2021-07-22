@@ -99,7 +99,7 @@ const getMyLikeDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageLike(res.data.result, null));
+        dispatch(getMyPageLike(res.data.result, limit));
       })
       .catch((error) => {
         console.error(error);
@@ -160,7 +160,7 @@ const getMyFollowingDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageFollowing(res.data.result, null));
+        dispatch(getMyPageFollowing(res.data.result, limit));
       })
       .catch((error) => {
         console.error(error);

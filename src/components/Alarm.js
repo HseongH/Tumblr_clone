@@ -171,7 +171,7 @@ const Alarm = ({ nickname }) => {
                 next={getMoreAlarm}
                 index={idx}
                 length={alarmList.length}
-                key={(Date.now() + Math.random()).toString(36)}
+                key={(alarm.userId + idx * Date.now() + Math.random()).toString(36)}
               >
                 <Grid
                   width="100%"

@@ -72,35 +72,7 @@ const MyFollower = ({ post }) => {
                   >
                     {post.nickname}
                   </Text>
-
-                  <Text
-                    fontSize="14px"
-                    fontWeight="400"
-                    addstyle={() => {
-                      return css`
-                        padding: 2px;
-                      `;
-                    }}
-                  >
-                    {/* {post.nickname} */}
-                  </Text>
                 </Grid>
-
-                <Text
-                  margin="0 -35% 0 30%"
-                  fontSize="14px"
-                  color="blue"
-                  addstyle={() => {
-                    return css`
-                      padding: 2px;
-                      width: 100%;
-                    `;
-                  }}
-                >
-                  팔로우
-                </Text>
-
-                <MoreVertIcon />
               </Grid>
             </Grid>
           </Grid>

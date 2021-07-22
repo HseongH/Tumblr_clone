@@ -7,12 +7,13 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { flexBox, flexVer } from "../common/style";
 
 // ELEMENTS
-import { Image, Text, Grid } from "../elements";
+import { Image, Grid } from "../elements";
 
 // COMPONENTS
 import InputBox from "../components/InputBox";
 import Post from "../components/Post";
 import Permit from "../components/Permit";
+import BlogUser from "../components/BlogUser";
 
 // REDUX
 import { myPageActions } from "../redux/modules/mypage";
@@ -33,6 +34,8 @@ const MyPage = (post) => {
   useEffect(() => {
     dispatch(myPageActions.getMyPostDB());
   }, []);
+
+  if (myPostList.length && !myPostList[0].img) return null;
 
   return (
     <Permit>
@@ -96,6 +99,7 @@ const MyPage = (post) => {
                   addstyle={() => {
                     return css`
                       border-radius: 3px;
+                      margin: 0 0 0 60%;
                     `;
                   }}
                   src={
@@ -122,47 +126,7 @@ const MyPage = (post) => {
           </Grid>
         </Grid>
 
-        <Grid
-          width="100%"
-          addstyle={() => {
-            return css`
-              display: flex;
-              flex-direction: column;
-              padding: 4px 0;
-            `;
-          }}
-        >
-          <Text color="white" fontSize="20px">
-            userID
-          </Text>
-          <Text color="gray" fontSize="20px" margin="0 0 5% 0">
-            제목 없음
-          </Text>
-          <Text color="white" fontSize="20px" margin="0 0 5% 0">
-            포스트
-          </Text>
-          <Text color="white" fontSize="20px" margin="0 0 5% 0">
-            팔로워
-          </Text>
-          <Text color="white" fontSize="20px" margin="0 0 5% 0">
-            활동
-          </Text>
-          <Text color="white" fontSize="20px" margin="0 0 5% 0">
-            임시 저장
-          </Text>
-          <Text color="white" fontSize="20px" margin="0 0 5% 0">
-            대기
-          </Text>
-          <Text color="white" fontSize="20px" margin="0 0 5% 0">
-            블로그 스타일 편집
-          </Text>
-          <Text color="white" fontSize="20px" margin="0 0 10% 0">
-            포스트 일괄 편집
-          </Text>
-          <Text color="white" fontSize="20px">
-            레이더
-          </Text>
-        </Grid>
+        <BlogUser />
       </Grid>
     </Permit>
   );

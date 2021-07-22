@@ -1,84 +1,50 @@
 // LIBRARY
-import React from "react";
-import { css } from "styled-components";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { css } from 'styled-components';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox, flexVer } from '../common/style';
 
 // ELEMENTS
-import { Grid, Text, Image } from "../elements";
-
-// ICON
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Grid, Text, Image } from '../elements';
 
 // REDUX
 
 // COMPONENTS
+import Follow from './Follow';
 
 const MyFollower = ({ post }) => {
   return (
-    <React.Fragment>
+    <Grid
+      bgColor="white"
+      padding="15px"
+      addstyle={() => {
+        return css`
+          ${flexBox('space-between')};
+        `;
+      }}
+    >
       <Grid
-        width="100%"
-        margin="5% 0 0 0"
+        width="auto"
         addstyle={() => {
-          flexBox();
           return css`
-            display: flex;
+            ${flexVer()};
           `;
         }}
       >
-        <Grid width="100%" margin="0 10% 0 0">
-          <Grid width="100%" margin="0 0 0 0">
-            <Grid margin="-2% 0 0 0">
-              <Grid
-                padding="12px"
-                bgColor="white"
-                addstyle={() => {
-                  return css`
-                    display: flex;
-                    align-items: center;
-                  `;
-                }}
-              >
-                <Image
-                  addstyle={() => {
-                    return css`
-                      width: 36px;
-                    `;
-                  }}
-                  height="36px"
-                  src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
-                />
-
-                <Grid
-                  magin="0 0 3% 0"
-                  addstyle={() => {
-                    return css`
-                      display: flex;
-                      flex-direction: column;
-                      padding: 4px;
-                    `;
-                  }}
-                >
-                  <Text
-                    fontSize="13px"
-                    fontWeight="bold"
-                    addstyle={() => {
-                      return css`
-                        padding: 2px;
-                      `;
-                    }}
-                  >
-                    {post.nickname}
-                  </Text>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+        <Grid width="36px" height="36px" overflow="hidden" margin="0 12px 0 0">
+          <Image
+            src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
+            alt="profile image"
+          />
         </Grid>
+
+        <Text fontWeight="bold">{post.nickname}</Text>
       </Grid>
-    </React.Fragment>
+
+      <Follow isFollow={!post.follows} userId={post.userId} />
+    </Grid>
   );
 };
 

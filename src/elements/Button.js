@@ -10,7 +10,7 @@ const ButtonStyle = styled.button`
   background: ${(props) => (props.bgColor ? `rgb(${props.theme.palette[props.bgColor]})` : 'none')};
   color: ${(props) => `rgba(${props.theme.palette[props.color]}, ${props.opacity})`};
   font-size: ${(props) => props.fontSize};
-  font-weight: ${(props) => props.fontWeight};
+  font-weight: 700;
   margin: ${(props) => props.margin};
   border: none;
   cursor: pointer;

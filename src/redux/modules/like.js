@@ -33,7 +33,7 @@ const removeLikeDB = (postId, post) => {
       .then((res) => {
         const newPost = { ...post, reactionCount: post.reactionCount - 1, favorite: 'N' };
 
-        const likePostList = likePosts.filter((likePost) => likePost.posId !== postId);
+        const likePostList = likePosts.filter((likePost) => likePost.postId !== postId);
 
         dispatch(postActions.updatePost(postId, newPost));
         dispatch(myPageActions.getMyPageLike(likePostList, start));

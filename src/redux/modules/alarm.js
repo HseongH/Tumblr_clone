@@ -97,7 +97,6 @@ const getRecommendDB = () => {
 export default function alarm(state = initialState, action) {
   switch (action.type) {
     case GET_ALARM:
-      console.log(action.alarmList);
       return { ...state, list: action.alarmList, start: action.start };
 
     case GET_MORE_ALARM:

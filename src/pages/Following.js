@@ -35,8 +35,21 @@ const Following = (props) => {
 
   return (
     <Permit>
-      <Grid margin="3% 0 0 0">
-        <Text fontSize="18px" color="white">
+      <Grid
+        margin="3% 0 0 0"
+        addstyle={() => {
+          return css`
+            & > div {
+              margin-bottom: 20px;
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+            }
+          `;
+        }}
+      >
+        <Text fontSize="18px" color="white" margin="0 0 20px">
           팔로잉
         </Text>
 

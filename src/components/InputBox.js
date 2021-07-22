@@ -14,9 +14,6 @@ import PostingBox from './PostingBox';
 // ICON
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
-import FormatQuoteIcon from '@material-ui/icons/FormatQuote';
-import ChatIcon from '@material-ui/icons/Chat';
-import VideocamIcon from '@material-ui/icons/Videocam';
 
 const InputBox = (props) => {
   const [inputType, setInputType] = useState('');
@@ -60,24 +57,6 @@ const InputBox = (props) => {
 
           <Text>사진</Text>
         </Button>
-
-        {/* <Button color="orange">
-          <FormatQuoteIcon style={{ fontSize: '48px' }} />
-
-          <Text>인용구</Text>
-        </Button>
-
-        <Button color="blue">
-          <ChatIcon style={{ fontSize: '48px' }} />
-
-          <Text>채팅</Text>
-        </Button>
-
-        <Button color="pink">
-          <VideocamIcon style={{ fontSize: '48px' }} />
-
-          <Text>동영상</Text>
-        </Button> */}
       </Grid>
 
       {inputType && (

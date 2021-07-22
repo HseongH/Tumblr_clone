@@ -44,26 +44,28 @@ const MyPage = (post) => {
 
   if (myPostList.length && !myPostList[0].img) return null;
 
-  if (!myPostList.length) return <NoInfo />;
-
   return (
     <Permit>
       <Grid>
         <InputBox />
 
-        {myPostList.map((post, idx) => {
-          const postInfo = { ...post, userId, nickname, profileImg };
-          return (
-            <InfinityScroll
-              next={getMoreMyPost}
-              index={idx}
-              length={myPostList.length}
-              key={(Date.now() + Math.random()).toString(36)}
-            >
-              <Post post={postInfo} />
-            </InfinityScroll>
-          );
-        })}
+        {myPostList.length ? (
+          myPostList.map((post, idx) => {
+            const postInfo = { ...post, userId, nickname, profileImg };
+            return (
+              <InfinityScroll
+                next={getMoreMyPost}
+                index={idx}
+                length={myPostList.length}
+                key={(Date.now() + Math.random()).toString(36)}
+              >
+                <Post post={postInfo} />
+              </InfinityScroll>
+            );
+          })
+        ) : (
+          <NoInfo />
+        )}
       </Grid>
 
       <BlogUser />

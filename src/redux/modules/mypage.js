@@ -67,7 +67,7 @@ const getMyPostDB = (limit = 5) => {
 
 const getMoreMyPostDB = (limit = 5) => {
   return function (dispatch, getState) {
-    const start = getState().post.start;
+    const start = getState().mypage.start;
 
     if (start === null) return;
 
@@ -109,12 +109,12 @@ const getMyLikeDB = (limit = 5) => {
 
 const getMoreMyLikeDB = (limit = 5) => {
   return function (dispatch, getState) {
-    const start = getState().post.start;
+    const start = getState().mypage.start;
 
     if (start === null) return;
 
     instance
-      .get(`/api/post/like?start=0&limit=${limit + 1}`)
+      .get(`/api/post/like?start=${start}&limit=${limit + 1}`)
       .then((res) => {
         if (res.data.result.length < limit + 1) {
           dispatch(getMoreMyLike(res.data.result, null));
@@ -181,10 +181,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list.push(...action.payload.list);
         draft.start = action.payload.start;
-        // draft.list.push(...action.payload.post_list);
-        //   draft.paging = action.payload.paging;
-        //   draft.is_loading = false;
-        // return { ...state, list: [...state.list, ...action.postList], start: action.start };
       }),
 
     [GET_MYPAGE_LIKE]: (state, action) =>
@@ -216,6 +212,9 @@ export default handleActions(
 );
 
 const myPageActions = {
+  getMyPagePost,
+  getMyPageLike,
+  getMyPageFollowing,
   getMyPageFollower,
   getMyPostDB,
   getMoreMyPostDB,

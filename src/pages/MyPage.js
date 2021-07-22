@@ -1,18 +1,21 @@
 // LIBRARY
-import React, { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 // ELEMENTS
-import { Grid } from '../elements';
+import { Grid } from "../elements";
 
 // COMPONENTS
-import InputBox from '../components/InputBox';
-import Post from '../components/Post';
-import Permit from '../components/Permit';
-import BlogUser from '../components/BlogUser';
+import InputBox from "../components/InputBox";
+import Post from "../components/Post";
+import Permit from "../components/Permit";
+import BlogUser from "../components/BlogUser";
 
 // REDUX
-import { myPageActions } from '../redux/modules/mypage';
+import { myPageActions } from "../redux/modules/mypage";
+
+// FUNCTION
+import InfinityScroll from "../common/infinityScroll";
 
 const MyPage = (post) => {
   const dispatch = useDispatch();
@@ -27,6 +30,10 @@ const MyPage = (post) => {
     shallowEqual
   );
 
+  const getMoreMyPost = () => {
+    dispatch(myPageActions.getMoreMyPostDB());
+  };
+
   useEffect(() => {
     dispatch(myPageActions.getMyPostDB());
   }, []);
@@ -38,10 +45,18 @@ const MyPage = (post) => {
       <Grid>
         <InputBox />
 
-        {myPostList.map((post) => {
+        {myPostList.map((post, idx) => {
           const postInfo = { ...post, userId, nickname, profileImg };
-
-          return <Post post={postInfo} key={(Date.now() + Math.random()).toString(36)} />;
+          return (
+            <InfinityScroll
+              next={getMoreMyPost}
+              index={idx}
+              length={myPostList.length}
+              key={(Date.now() + Math.random()).toString(36)}
+            >
+              <Post post={postInfo} />
+            </InfinityScroll>
+          );
         })}
       </Grid>
 

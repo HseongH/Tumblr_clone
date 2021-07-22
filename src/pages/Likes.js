@@ -1,42 +1,38 @@
 // LIBRARY
-import React, { useEffect } from 'react';
-import { css } from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { css } from "styled-components";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 // STYLE
-import { flexBox } from '../common/style';
+import { flexBox } from "../common/style";
 
 // ELEMENTS
-import { Grid } from '../elements';
+import { Grid } from "../elements";
 
 // COMPONENTS
-// import Post from "../components/Post";
-// import { postActions } from "../redux/modules/post";
-import BlogUser from '../components/BlogUser';
-import Permit from '../components/Permit';
+import Post from "../components/Post";
+import BlogUser from "../components/BlogUser";
+import Permit from "../components/Permit";
 
-// MODULES
-// import { likeActions } from "../redux/modules/mypage";
+// REDUX
+import { myPageActions } from "../redux/modules/mypage";
 
 const Likes = (props) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const likeList = useSelector((state) => state.like.list);
-  // const postList = useSelector((state) => state.post.list);
+  const { likeList, userId, nickname, profileImg } = useSelector(
+    (state) => ({
+      likeList: state.mypage.likeList,
+      userId: state.user.userId,
+      nickname: state.user.nickname,
+      profileImg: state.user.profileImg,
+    }),
+    shallowEqual
+  );
 
-  // React.useEffect(() => {
-  //   dispatch(likeActions.getLikeDB());
-
-  //   return () => {
-  //     dispatch(likeActions.getLikePost([], 0));
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   dispatch(postActions.getPostListDB());
-
-  //   return () => dispatch(postActions.getPostList([], 0));
-  // }, []);
+  useEffect(() => {
+    dispatch(myPageActions.getMyLikeDB());
+  }, []);
 
   return (
     <Permit>
@@ -63,12 +59,16 @@ const Likes = (props) => {
               `;
             }}
           >
-            {/* {postList.map((post) => (
-              <Post
-                post={post}
-                key={(Date.now() + Math.random()).toString(36)}
-              />
-            ))} */}
+            {likeList.map((like) => {
+              const postInfo = { ...like, userId, nickname, profileImg };
+
+              return (
+                <Post
+                  post={postInfo}
+                  key={(Date.now() + Math.random()).toString(36)}
+                />
+              );
+            })}
           </Grid>
         </Grid>
 

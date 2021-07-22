@@ -103,7 +103,30 @@ const getMyLikeDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageLike(res.data.result, limit));
+        dispatch(getMyPageLike(res.data.result, null));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getMoreMyLikeDB = (limit = 5) => {
+  return function (dispatch, getState) {
+    const start = getState().post.start;
+
+    if (start === null) return;
+
+    instance
+      .get(`/api/post/like?start=0&limit=${limit + 1}`)
+      .then((res) => {
+        if (res.data.result.length < limit + 1) {
+          dispatch(getMoreMyLike(res.data.result, null));
+          return;
+        }
+
+        res.data.result.pop();
+        dispatch(getMoreMyLike(res.data.result, start + limit));
       })
       .catch((error) => {
         console.error(error);
@@ -122,7 +145,7 @@ const getMyFollowerDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageFollower(res.data.result, limit));
+        dispatch(getMyPageFollower(res.data.result, null));
       })
       .catch((error) => {
         console.error(error);
@@ -133,7 +156,7 @@ const getMyFollowerDB = (limit = 5) => {
 const getMyFollowingDB = (limit = 5) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/api/user/following?start=0&${limit + 1}`)
+      .get(`/api/user/following?start=0&limit=${limit + 1}`)
       .then((res) => {
         if (res.data.result.length < limit + 1) {
           dispatch(getMyPageFollowing(res.data.result, null));
@@ -141,7 +164,7 @@ const getMyFollowingDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageFollowing(res.data.result, limit));
+        dispatch(getMyPageFollowing(res.data.result, null));
       })
       .catch((error) => {
         console.error(error);
@@ -174,6 +197,12 @@ export default handleActions(
         draft.start = action.payload.start;
       }),
 
+    [GET_MYPAGE_MORE_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list.push(...action.payload.list);
+        draft.start = action.payload.start;
+      }),
+
     [GET_MYPAGE_FOLLOWER]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.list;
@@ -191,10 +220,11 @@ export default handleActions(
 
 const myPageActions = {
   getMyPostDB,
-  getMoreMyPost,
+  getMoreMyPostDB,
   getMyLikeDB,
+  getMoreMyLikeDB,
   getMyFollowerDB,
-  getMyFollowingDB
+  getMyFollowingDB,
 };
 
 export { myPageActions };

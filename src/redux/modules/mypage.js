@@ -72,7 +72,7 @@ const getMoreMyPostDB = (limit = 5) => {
     if (start === null) return;
 
     instance
-      .get(`/api/post/user?start=${start}&limit${limit + 1}`)
+      .get(`/api/post/user?start=${start}&limit=${limit + 1}`)
       .then((res) => {
         if (res.data.result.length < limit + 1) {
           dispatch(getMoreMyPost(res.data.result, null));

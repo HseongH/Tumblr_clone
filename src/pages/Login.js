@@ -1,9 +1,9 @@
 // LIBRARY
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-// import { getCookie, setCookie, deleteCookie } from "../common/cookie";
+import { getCookie } from '../common/cookie';
 
 // STYLE
 import { flexBox } from '../common/style';
@@ -33,6 +33,10 @@ const Login = (props) => {
 
     dispatch(userActions.loginAction(userInfo));
   };
+
+  useEffect(() => {
+    if (getCookie()) window.location.replace('/');
+  }, []);
 
   return (
     <Grid

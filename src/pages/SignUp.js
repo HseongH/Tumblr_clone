@@ -1,6 +1,8 @@
 // LIBRARY
-import React from 'react';
+import React, { useEffect } from 'react';
 import { css } from 'styled-components';
+
+import { getCookie } from '../common/cookie';
 
 // STYLE
 import { flexBox } from '../common/style';
@@ -30,6 +32,10 @@ const SignUp = (props) => {
 
     window.location.replace('/login');
   };
+
+  useEffect(() => {
+    if (getCookie()) window.location.replace('/');
+  }, []);
 
   return (
     <Grid

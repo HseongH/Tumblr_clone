@@ -1,22 +1,22 @@
 // LIBRARY
-import React, { useEffect } from "react";
-import { css } from "styled-components";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { css } from 'styled-components';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox } from '../common/style';
 
 // ELEMENTS
-import { Grid, Text, Input } from "../elements";
+import { Grid, Text, Input } from '../elements';
 
 // COMPONENTS
-import Permit from "../components/Permit";
-import MyFollower from "../components/MyFollower";
+import Permit from '../components/Permit';
+import MyFollower from '../components/MyFollower';
 
 // ICON
 
 // REDUX
-import { myPageActions } from "../redux/modules/mypage";
+import { myPageActions } from '../redux/modules/mypage';
 
 const Followers = (props) => {
   const dispatch = useDispatch();
@@ -30,6 +30,10 @@ const Followers = (props) => {
 
   useEffect(() => {
     dispatch(myPageActions.getMyFollowerDB());
+
+    return () => {
+      dispatch(myPageActions.getMyPageFollower([], 0));
+    };
   }, []);
 
   return (
@@ -43,14 +47,17 @@ const Followers = (props) => {
           `;
         }}
       >
-        <Grid width="100%" addstyle={() => {
-              return css`
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-              `;
-            }}>
-          <Grid width="100%" margin="0 10% 0 0" >
+        <Grid
+          width="100%"
+          addstyle={() => {
+            return css`
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            `;
+          }}
+        >
+          <Grid width="100%" margin="0 10% 0 0">
             <Grid
               margin="-16% 0 0 0"
               width="100%"

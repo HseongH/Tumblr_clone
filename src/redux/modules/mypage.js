@@ -1,17 +1,17 @@
 // AXIOS
-import instance from "../../common/axios";
+import instance from '../../common/axios';
 
 // redux-actions & immer
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
 
 // ACTION
-const GET_MYPAGE_POST = "GET_MYPAGE_POST";
-const GET_MYPAGE_MORE_POST = "GET_MYPAGE_MORE_POST";
-const GET_MYPAGE_LIKE = "GET_MYPAGE_LIKE";
-const GET_MYPAGE_MORE_LIKE = "GET_MYPAGE_MORE_LIKE";
-const GET_MYPAGE_FOLLOWER = "GET_MYPAGE_FOLLOWER";
-const GET_MYPAGE_FOLLOWING = "GET_MYPAGE_FOLLOWING";
+const GET_MYPAGE_POST = 'GET_MYPAGE_POST';
+const GET_MYPAGE_MORE_POST = 'GET_MYPAGE_MORE_POST';
+const GET_MYPAGE_LIKE = 'GET_MYPAGE_LIKE';
+const GET_MYPAGE_MORE_LIKE = 'GET_MYPAGE_MORE_LIKE';
+const GET_MYPAGE_FOLLOWER = 'GET_MYPAGE_FOLLOWER';
+const GET_MYPAGE_FOLLOWING = 'GET_MYPAGE_FOLLOWING';
 
 // ACTION CREATOR
 const getMyPagePost = createAction(GET_MYPAGE_POST, (list, start) => ({
@@ -34,13 +34,10 @@ const getMyPageFollower = createAction(GET_MYPAGE_FOLLOWER, (list, start) => ({
   list,
   start,
 }));
-const getMyPageFollowing = createAction(
-  GET_MYPAGE_FOLLOWING,
-  (list, start) => ({
-    list,
-    start,
-  })
-);
+const getMyPageFollowing = createAction(GET_MYPAGE_FOLLOWING, (list, start) => ({
+  list,
+  start,
+}));
 
 // INITIAL STATE
 const initialState = {
@@ -60,7 +57,7 @@ const getMyPostDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPagePost(res.data.result, null));
+        dispatch(getMyPagePost(res.data.result, limit));
       })
       .catch((error) => {
         console.error(error);
@@ -96,7 +93,6 @@ const getMyLikeDB = (limit = 5) => {
     instance
       .get(`/api/post/like?start=0&limit=${limit + 1}`)
       .then((res) => {
-        // console.log(res)
         if (res.data.result.length < limit + 1) {
           dispatch(getMyPageLike(res.data.result, null));
           return;
@@ -145,7 +141,7 @@ const getMyFollowerDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageFollower(res.data.result, null));
+        dispatch(getMyPageFollower(res.data.result, limit));
       })
       .catch((error) => {
         console.error(error);
@@ -205,6 +201,7 @@ export default handleActions(
 
     [GET_MYPAGE_FOLLOWER]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload.list);
         draft.list = action.payload.list;
         draft.start = action.payload.start;
       }),
@@ -219,6 +216,7 @@ export default handleActions(
 );
 
 const myPageActions = {
+  getMyPageFollower,
   getMyPostDB,
   getMoreMyPostDB,
   getMyLikeDB,

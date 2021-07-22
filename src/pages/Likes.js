@@ -31,6 +31,8 @@ const Likes = (props) => {
     dispatch(myPageActions.getMyLikeDB());
   }, []);
 
+  if (likeList.length && !likeList[0].img) return null;
+
   return (
     <Permit>
       <Grid
@@ -49,7 +51,6 @@ const Likes = (props) => {
         <Grid width="100%">
           <Grid
             width="100%"
-            // bgColor="white"
             addstyle={() => {
               return css`
                 max-width: 540px;

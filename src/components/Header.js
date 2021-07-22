@@ -113,10 +113,6 @@ const Header = (props) => {
           <Alarm nickname={nickname} />
 
           <User opacity={path === '/mypage' ? '1' : '0.5'} nickname={nickname} profile={profile} />
-
-          <Button padding="0 12px" bgColor="blue" color="black">
-            <CreateIcon fontSize="large" />
-          </Button>
         </Grid>
       ) : (
         <Link to={path === '/signup' ? '/login' : 'signup'}>

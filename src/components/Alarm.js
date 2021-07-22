@@ -1,10 +1,13 @@
 // LIBRARY
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { css } from 'styled-components';
 
 // REDUX
 import { alarmActions } from '../redux/modules/alarm';
+
+// FUNCTION
+import InfinityScroll from '../common/infinityScroll';
 
 // ELEMENTS
 import { Grid, Button, Text, Image } from '../elements/index';
@@ -45,10 +48,16 @@ const Alarm = ({ nickname }) => {
   const dispatch = useDispatch();
   const alarmList = useSelector((state) => state.alarm.list);
 
+  const alarmContainer = useRef();
+
   const [type, setType] = useState(0);
 
   const deleteAllAlarms = () => {
     dispatch(alarmActions.deleteAllAlarms());
+  };
+
+  const getMoreAlarm = () => {
+    dispatch(alarmActions.getMoreAlarmDB(type));
   };
 
   useEffect(() => {
@@ -128,6 +137,7 @@ const Alarm = ({ nickname }) => {
       </Grid>
 
       <Grid
+        ref={alarmContainer}
         width="100%"
         bgColor={alarmList.length ? 'white' : 'secondaryAccent'}
         padding="15px 20px"
@@ -148,7 +158,7 @@ const Alarm = ({ nickname }) => {
         }}
       >
         {alarmList.length ? (
-          alarmList.map((alarm) => {
+          alarmList.map((alarm, idx) => {
             const actionText = [
               `${alarm.nickname} 님이 ${nickname} 님을 팔로우 합니다.`,
               `${alarm.nickname} 님이 ${nickname} 님을 리블로그 합니다.`,
@@ -156,49 +166,56 @@ const Alarm = ({ nickname }) => {
             ];
 
             return (
-              <Grid
-                width="100%"
-                padding="0"
+              <InfinityScroll
+                root={alarmContainer.current}
+                next={getMoreAlarm}
+                index={idx}
+                length={alarmList.length}
                 key={(Date.now() + Math.random()).toString(36)}
-                addstyle={() => {
-                  return css`
-                    ${flexVer()};
-                  `;
-                }}
               >
                 <Grid
-                  width="36px"
-                  height="36px"
+                  width="100%"
+                  padding="0"
                   addstyle={() => {
                     return css`
-                      overflow: hidden;
-                      margin-right: 8px;
+                      ${flexVer()};
                     `;
                   }}
                 >
-                  <Image
-                    src={
-                      alarm.profileImg
-                        ? alarm.profileImg
-                        : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
-                    }
-                  />
-                </Grid>
+                  <Grid
+                    width="36px"
+                    height="36px"
+                    addstyle={() => {
+                      return css`
+                        overflow: hidden;
+                        margin-right: 8px;
+                      `;
+                    }}
+                  >
+                    <Image
+                      src={
+                        alarm.profileImg
+                          ? alarm.profileImg
+                          : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
+                      }
+                    />
+                  </Grid>
 
-                <Text
-                  addstyle={() => {
-                    return css`
-                      width: calc(100% - 44px);
-                      white-space: nowrap;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      text-align: left;
-                    `;
-                  }}
-                >
-                  {actionText[alarm.type - 1]}
-                </Text>
-              </Grid>
+                  <Text
+                    addstyle={() => {
+                      return css`
+                        width: calc(100% - 44px);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: left;
+                      `;
+                    }}
+                  >
+                    {actionText[alarm.type - 1]}
+                  </Text>
+                </Grid>
+              </InfinityScroll>
             );
           })
         ) : (

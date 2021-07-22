@@ -1,10 +1,13 @@
 // LIBRARY
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from 'styled-components';
 
 // REDUX
 import { postActions } from '../redux/modules/post';
+
+// FUNCTION
+import InfinityScroll from '../common/infinityScroll';
 
 // STYLE
 import { flexBox, flexVer } from '../common/style';
@@ -24,6 +27,8 @@ const ShowReacion = ({ count, postId }) => {
   const dispatch = useDispatch();
 
   const reactionList = useSelector((state) => state.post.reaction);
+
+  const reactionContainer = useRef();
 
   const getReactionList = () => {
     dispatch(postActions.getReactionDB(postId));
@@ -58,6 +63,7 @@ const ShowReacion = ({ count, postId }) => {
       </Grid>
 
       <Grid
+        ref={reactionContainer}
         width="100%"
         bgColor="secondaryAccent"
         padding="10px 0"
@@ -69,76 +75,83 @@ const ShowReacion = ({ count, postId }) => {
         }}
       >
         {reactionList.length ? (
-          reactionList.map((reaction) => {
+          reactionList.map((reaction, idx) => {
             const type = reaction.type;
 
             return (
-              <Grid
-                width="100%"
-                padding="7px 10px"
-                key={(Date.now() + Math.random()).toString(36)}
-                addstyle={() => {
-                  return css`
-                    ${flexVer()};
-                  `;
-                }}
+              <InfinityScroll
+                next={getReactionList}
+                index={idx}
+                length={reactionList.length}
+                root={reactionContainer.current}
+                key={(reaction.userId * Date.now() + Math.random()).toString(36)}
               >
                 <Grid
-                  width="30px"
-                  height="30px"
+                  width="100%"
+                  padding="7px 10px"
                   addstyle={() => {
                     return css`
-                      margin-right: 8px;
-                      position: relative;
+                      ${flexVer()};
+                    `;
+                  }}
+                >
+                  <Grid
+                    width="30px"
+                    height="30px"
+                    addstyle={() => {
+                      return css`
+                        margin-right: 8px;
+                        position: relative;
 
-                      & svg {
-                        padding: 3px;
-                        border-radius: 50%;
-                        position: absolute;
-                        bottom: -3px;
-                        right: -3px;
-                        font-size: 10px;
+                        & svg {
+                          padding: 3px;
+                          border-radius: 50%;
+                          position: absolute;
+                          bottom: -3px;
+                          right: -3px;
+                          font-size: 10px;
 
-                        ${({ theme }) => {
-                          const palette = theme.palette;
+                          ${({ theme }) => {
+                            const palette = theme.palette;
 
-                          return css`
-                            color: rgb(${palette.white});
-                            background: rgb(${type === 2 ? palette.green : palette.red});
-                          `;
-                        }}
+                            return css`
+                              color: rgb(${palette.white});
+                              background: rgb(${type === 2 ? palette.green : palette.red});
+                            `;
+                          }}
+                        }
+                      `;
+                    }}
+                  >
+                    <Image
+                      src={
+                        reaction.profileImg
+                          ? reaction.profileImg
+                          : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
                       }
-                    `;
-                  }}
-                >
-                  <Image
-                    src={
-                      reaction.profileImg
-                        ? reaction.profileImg
-                        : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
-                    }
-                    alt="profile image"
-                  />
+                      alt="profile image"
+                    />
 
-                  {type === 2 ? <ShareIcon /> : <FavoriteIcon />}
+                    {type === 2 ? <ShareIcon /> : <FavoriteIcon />}
+                  </Grid>
+
+                  <Text
+                    addstyle={() => {
+                      return css`
+                        font-size: 12px;
+                        font-weight: 600;
+                        width: calc(100% - 38px);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: left;
+                      `;
+                    }}
+                  >
+                    {reaction.nickname}
+                  </Text>
                 </Grid>
-
-                <Text
-                  addstyle={() => {
-                    return css`
-                      font-size: 12px;
-                      font-weight: 600;
-                      width: calc(100% - 38px);
-                      white-space: nowrap;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      text-align: left;
-                    `;
-                  }}
-                >
-                  {reaction.nickname}
-                </Text>
-              </Grid>
+              </InfinityScroll>
             );
           })
         ) : (

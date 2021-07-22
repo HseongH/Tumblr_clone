@@ -1,5 +1,5 @@
 // LIBRARY
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
 // STYLE
@@ -18,9 +18,13 @@ const GridStyle = styled.div`
   ${(props) => props.addstyle()};
 `;
 
-const Grid = ({ children, ...props }) => {
-  return <GridStyle {...props}>{children}</GridStyle>;
-};
+const Grid = forwardRef(({ children, ...props }, ref) => {
+  return (
+    <GridStyle ref={ref} {...props}>
+      {children}
+    </GridStyle>
+  );
+});
 
 Grid.defaultProps = {
   opacity: 1,

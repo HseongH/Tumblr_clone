@@ -48,7 +48,7 @@ const Search = (props) => {
       length={postList.length}
       key={(post.postId + Date.now() + Math.random()).toString(36)}
     >
-      <Post post={post} key={(Date.now() + Math.random()).toString(36)} />
+      <Post post={post} />
     </InfinityScroll>
   ));
 };

@@ -1,10 +1,6 @@
 // LIBRARY
 import React, { useEffect } from 'react';
-import { css } from 'styled-components';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-
-// STYLE
-import { flexBox } from '../common/style';
 
 // ELEMENTS
 import { Grid } from '../elements';
@@ -35,47 +31,13 @@ const Likes = (props) => {
 
   return (
     <Permit>
-      <Grid
-        width="100%"
-        addstyle={() => {
-          flexBox();
-          return css`
-            display: flex;
-            max-width: 990px;
-            padding: 0 8px;
-            box-sizing: border-box;
-            margin: 8% auto 0;
-          `;
-        }}
-      >
-        <Grid width="100%">
-          <Grid
-            width="100%"
-            addstyle={() => {
-              return css`
-                max-width: 540px;
-              `;
-            }}
-          >
-            {likeList.map((like) => {
-              return <Post post={like} key={(Date.now() + Math.random()).toString(36)} />;
-            })}
-          </Grid>
-        </Grid>
-
-        <Grid
-          width="100%"
-          bgColor=""
-          addstyle={() => {
-            return css`
-              margin: 0 -10% 38px 10%;
-              height: 300px;
-            `;
-          }}
-        >
-          <BlogUser />
-        </Grid>
+      <Grid>
+        {likeList.map((like) => {
+          return <Post post={like} key={(Date.now() + Math.random()).toString(36)} />;
+        })}
       </Grid>
+
+      <BlogUser />
     </Permit>
   );
 };

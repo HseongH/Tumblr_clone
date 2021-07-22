@@ -1,13 +1,9 @@
 // LIBRARY
 import React, { useEffect } from 'react';
-import { css } from 'styled-components';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-// STYLE
-import { flexBox, flexVer } from '../common/style';
-
 // ELEMENTS
-import { Image, Grid } from '../elements';
+import { Grid } from '../elements';
 
 // COMPONENTS
 import InputBox from '../components/InputBox';
@@ -39,90 +35,17 @@ const MyPage = (post) => {
 
   return (
     <Permit>
-      <Grid
-        width="100%"
-        addstyle={() => {
-          flexBox();
-          return css`
-            display: flex;
-          `;
-        }}
-      >
-        <Grid
-          width="100%"
-          addstyle={() => {
-            return css`
-              ${flexVer('flex-end')}
-              max-width: 580px;
-              flex-direction: column;
-              margin-right: 10%;
-            `;
-          }}
-        >
-          <Grid
-            addstyle={() => {
-              return css`
-                display: flex;
-              `;
-            }}
-          >
-            {/* <InputBox /> */}
-          </Grid>
+      <Grid>
+        <InputBox />
 
-          <Grid
-            addstyle={() => {
-              return css`
-                display: flex;
-                flex-direction: column;
-              `;
-            }}
-          >
-            <Grid
-              addstyle={() => {
-                return css`
-                  display: flex;
-                `;
-              }}
-            >
-              <Grid
-                addstyle={() => {
-                  return css`
-                    width: 64px;
-                    height: 64px;
-                    position: absolute;
-                    top: 0;
-                    left: -76px;
-                  `;
-                }}
-              >
-                <Image
-                  addstyle={() => {
-                    return css`
-                      border-radius: 3px;
-                      margin: 0 0 0 60%;
-                    `;
-                  }}
-                  src={
-                    post.profileImg
-                      ? post.profileImg
-                      : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
-                  }
-                  margin="0 0 20px"
-                />
-              </Grid>
-              <InputBox />
-            </Grid>
+        {myPostList.map((post) => {
+          const postInfo = { ...post, userId, nickname, profileImg };
 
-            {myPostList.map((post) => {
-              const postInfo = { ...post, userId, nickname, profileImg };
-
-              return <Post post={postInfo} key={(Date.now() + Math.random()).toString(36)} />;
-            })}
-          </Grid>
-        </Grid>
-
-        <BlogUser />
+          return <Post post={postInfo} key={(Date.now() + Math.random()).toString(36)} />;
+        })}
       </Grid>
+
+      <BlogUser />
     </Permit>
   );
 };

@@ -40,6 +40,10 @@ const MyPage = (post) => {
 
   useEffect(() => {
     dispatch(myPageActions.getMyPostDB());
+
+    return () => {
+      dispatch(myPageActions.getMyPagePost([], 0));
+    };
   }, []);
 
   if (myPostList.length && !myPostList[0].img) return null;

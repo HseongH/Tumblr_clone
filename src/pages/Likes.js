@@ -2,11 +2,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// STYLE
-import { css } from 'styled-components';
-
 // ELEMENTS
-import { Grid, Text } from '../elements';
+import { Grid } from '../elements';
 
 // COMPONENTS
 import Post from '../components/Post';
@@ -33,6 +30,10 @@ const Likes = (props) => {
 
   useEffect(() => {
     dispatch(myPageActions.getMyLikeDB());
+
+    return () => {
+      dispatch(myPageActions.getMyPageLike([], 0));
+    };
   }, []);
 
   if (likeList.length && !likeList[0].img) return null;

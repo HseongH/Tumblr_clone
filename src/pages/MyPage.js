@@ -110,11 +110,11 @@ const MyPage = (post) => {
             </Grid>
 
             {myPostList.map((post) => {
-              // const postInfo = { ...post, userId, nickname, profileImg };
+              const postInfo = { ...post, userId, nickname, profileImg };
 
               return (
                 <Post
-                  post={post}
+                  post={postInfo}
                   key={(Date.now() + Math.random()).toString(36)}
                 />
               );

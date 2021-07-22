@@ -12,6 +12,7 @@ import theme from './common/style';
 
 // PAGES
 import Home from './pages/Home';
+import Search from './pages/Search';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -40,6 +41,7 @@ function App() {
       <Container>
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/search" exact component={Search} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={SignUp} />

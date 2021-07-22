@@ -4,15 +4,22 @@ import instance from '../../common/axios';
 // ACTIONS
 const GET_ALARM = 'GET_ALARM';
 const GET_MORE_ALARM = 'GET_MORE_ALARM';
+const DELETE_ALARM = 'DELETE_ALARM';
+const GET_RECOMMEND = 'GET_RECOMMEND';
+const ADD_FOLLOW = 'ADD_FOLLOW';
 
 // ACTION CREATOR
 const getAlarm = (alarmList, start) => ({ type: GET_ALARM, alarmList, start });
 const getMoreAlarm = (alarmList, start) => ({ type: GET_MORE_ALARM, alarmList, start });
+const deleteAlarm = () => ({ type: DELETE_ALARM });
+const getRecommend = (recommendList) => ({ type: GET_RECOMMEND, recommendList });
+const addFollow = (userId) => ({ type: ADD_FOLLOW, userId });
 
 // INITIALSTATE
 const initialState = {
   list: [],
   start: 0,
+  recommend: [],
 };
 
 const getAlarmDB = (type, limit = 10) => {
@@ -57,13 +64,60 @@ const getMoreAlarmDB = (type, limit = 5) => {
   };
 };
 
+const deleteAllAlarms = () => {
+  return function (dispatch) {
+    instance
+      .delete('/api/alarm')
+      .then((res) => {
+        dispatch(deleteAlarm());
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getRecommendDB = () => {
+  return function (dispatch) {
+    instance
+      .get('/api/post/blogs')
+      .then((res) => {
+        const recommendList = res.data.map((recommend) => {
+          return { ...recommend, follow: false };
+        });
+
+        dispatch(getRecommend(recommendList));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
 export default function alarm(state = initialState, action) {
   switch (action.type) {
     case GET_ALARM:
-      return { list: action.alarmList, start: action.start };
+      return { ...state, list: action.alarmList, start: action.start };
 
     case GET_MORE_ALARM:
-      return { list: [...state.list, ...action.alarmList], start: action.start };
+      return { ...state, list: [...state.list, ...action.alarmList], start: action.start };
+
+    case DELETE_ALARM:
+      return { ...state, list: [], start: 0 };
+
+    case GET_RECOMMEND:
+      return { ...state, recommend: action.recommendList };
+
+    case ADD_FOLLOW:
+      const newRecommendList = state.recommend.map((recommend) => {
+        if (recommend.userId === action.userId) {
+          return { ...recommend, follow: true };
+        }
+
+        return recommend;
+      });
+
+      return { ...state, recommend: newRecommendList };
 
     default:
       return state;
@@ -73,6 +127,10 @@ export default function alarm(state = initialState, action) {
 export const alarmActions = {
   getAlarm,
   getMoreAlarm,
+  getRecommend,
+  deleteAllAlarms,
   getAlarmDB,
   getMoreAlarmDB,
+  getRecommendDB,
+  addFollow,
 };

@@ -43,11 +43,11 @@ const Post = ({ post }) => {
   const [follow, setFollow] = useState(post.follow !== 'N');
 
   const addFollow = () => {
-    followActions.addFollowDB(post.userId);
+    dispatch(followActions.addFollowDB(post.userId));
   };
 
   const removeFollow = () => {
-    followActions.removeFollowDB(post.userId);
+    dispatch(followActions.removeFollowDB(post.userId));
   };
 
   const updatePost = () => {
@@ -229,10 +229,10 @@ const Post = ({ post }) => {
               `;
             }}
           >
-            {post.tag.map((tag) => {
+            {post.tag.map((tag, idx) => {
               return (
                 <Button
-                  key={(Date.now() + Math.random()).toString(36)}
+                  key={(idx + Date.now() + Math.random()).toString(36)}
                   color="gray"
                   addstyle={() => {
                     return css`
@@ -246,6 +246,9 @@ const Post = ({ post }) => {
                         text-decoration: underline;
                       }
                     `;
+                  }}
+                  clickEvent={() => {
+                    window.location.href = `/search?keyword=${tag}`;
                   }}
                 >
                   #{tag}

@@ -1,23 +1,16 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 
-const InfinityScroll = ({ list, children, root }) => {
-  const dispatch = useDispatch();
-
+const InfinityScroll = ({ length, children, root, next, index }) => {
   const [target, setTarget] = useState(null);
+  const isLast = index === length - 1;
 
   useEffect(() => {
     const options = { threshold: 0.5, root: root };
 
-    const infiniteScroll = ([entries], observer) => {
+    const infiniteScroll = async ([entries], observer) => {
       if (entries.isIntersecting) {
-        new Promise((resolve) => {
-          // if (page === 'Home') resolve(dispatch(postActions.getMorePostListDB()));
-          // if (page === 'Search') resolve(dispatch(searchActions.searchMorePostDB(keyword)));
-          // if (page === 'Like') resolve(dispatch(likeActions.getMoreLikeListDB()));
-        }).then((res) => {
-          observer.unobserve(entries.target);
-        });
+        await next();
+        observer.unobserve(entries.target);
       }
     };
 
@@ -27,17 +20,7 @@ const InfinityScroll = ({ list, children, root }) => {
     return () => io && io.disconnect();
   }, [target]);
 
-  return (
-    <>
-      {list.map((elem, idx) => {
-        const isLast = idx === list.length - 1;
-
-        // if (elem.postId === parseInt(postId)) return null;
-
-        return <Fragment key={(Date.now() + Math.random()).toString(36)}>{children}</Fragment>;
-      })}
-    </>
-  );
+  return <div ref={isLast ? setTarget : null}>{children}</div>;
 };
 
 export default InfinityScroll;

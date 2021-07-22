@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // REDUX
 import { followActions } from '../redux/modules/follow';
@@ -8,13 +8,15 @@ import { followActions } from '../redux/modules/follow';
 import { Button } from '../elements/index';
 
 const Follow = ({ margin, isFollow, userId, callNext }) => {
+  const dispatch = useDispatch();
+
   const [visible, setVisible] = useState(isFollow);
 
   const curUserId = useSelector((state) => state.user.userId);
 
   const addFollow = () => {
     setVisible(false);
-    followActions.addFollowDB(userId);
+    dispatch(followActions.addFollowDB(userId));
     callNext();
   };
 
@@ -27,6 +29,10 @@ const Follow = ({ margin, isFollow, userId, callNext }) => {
   }
 
   return null;
+};
+
+Follow.defaultProps = {
+  callNext: () => {},
 };
 
 export default Follow;

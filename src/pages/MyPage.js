@@ -47,8 +47,6 @@ const MyPage = (post) => {
   return (
     <Permit>
       <Grid>
-        <InputBox />
-
         {myPostList.length ? (
           myPostList.map((post, idx) => {
             const postInfo = { ...post, userId, nickname, profileImg };

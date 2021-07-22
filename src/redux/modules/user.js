@@ -48,18 +48,20 @@ const authUserDB = () => {
 };
 
 const loginAction = (user) => {
-  return function (dispatch, getState, { history }) {
+  return function (dispatch) {
     instance
       .post('/api/login', user)
       .then((res) => {
         setCookie(res.data.token);
         dispatch(authUserDB());
 
-        history.push('/');
+        window.location.replace('/');
       })
       .catch((error) => {
         console.log(error);
         window.alert('아이디 또는 패스워드가 올바르지 않습니다.');
+
+        window.location.replace('/login');
       });
   };
 };

@@ -109,12 +109,12 @@ const getMyLikeDB = (limit = 5) => {
 
 const getMoreMyLikeDB = (limit = 5) => {
   return function (dispatch, getState) {
-    const start = getState().post.start;
+    const start = getState().mypage.start;
 
     if (start === null) return;
 
     instance
-      .get(`/api/post/like?start=0&limit=${limit + 1}`)
+      .get(`/api/post/like?start=${start}&limit=${limit + 1}`)
       .then((res) => {
         if (res.data.result.length < limit + 1) {
           dispatch(getMoreMyLike(res.data.result, null));
@@ -216,6 +216,9 @@ export default handleActions(
 );
 
 const myPageActions = {
+  getMyPagePost,
+  getMyPageLike,
+  getMyPageFollowing,
   getMyPageFollower,
   getMyPostDB,
   getMoreMyPostDB,

@@ -127,14 +127,16 @@ const ShowReacion = ({ count, postId }) => {
                       `;
                     }}
                   >
-                    <Image
-                      src={
-                        reaction.profileImg
-                          ? reaction.profileImg
-                          : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
-                      }
-                      alt="profile image"
-                    />
+                    <Grid width="30px" height="30px" overflow="hidden">
+                      <Image
+                        src={
+                          reaction.profileImg
+                            ? reaction.profileImg
+                            : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
+                        }
+                        alt="profile image"
+                      />
+                    </Grid>
 
                     {type === 2 ? <ShareIcon /> : <FavoriteIcon />}
                   </Grid>

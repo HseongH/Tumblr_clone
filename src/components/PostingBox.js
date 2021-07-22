@@ -109,6 +109,7 @@ const PostingBox = ({ type, modalClose, post }) => {
   const updatePost = () => {
     const postContents = {
       ...post,
+      tag: tagList,
       ...contents,
     };
 
@@ -182,7 +183,7 @@ const PostingBox = ({ type, modalClose, post }) => {
           {tagList.map((tag, idx) => {
             return (
               <Button
-                key={(Date.now() + Math.random()).toString(36)}
+                key={(idx + Date.now() + Math.random()).toString(36)}
                 color="gray"
                 padding="8px"
                 radius="10px"

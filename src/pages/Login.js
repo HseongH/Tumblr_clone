@@ -35,87 +35,83 @@ const Login = (props) => {
   };
 
   return (
-    <React.Fragment>
-      <Grid
-        width="100%"
+    <Grid
+      width="100%"
+      addstyle={() => {
+        return css`
+          height: calc(100vh - 160px);
+          ${flexBox()};
+          flex-direction: column;
+        `;
+      }}
+    >
+      <Title
+        fontSize="70px"
+        textAlign="center"
         addstyle={() => {
-          flexBox();
           return css`
-            flex-direction: column;
-            vertical-align: baseline;
+            display: block;
+            color: white;
+            width: 100%;
           `;
         }}
       >
-        <Title
-          fontSize="70px"
-          fontWeight="bold"
-          textAlign="center"
-          margin="15% 0 0 0"
-          addstyle={() => {
-            return css`
-              display: block;
-              color: white;
-              width: 100%;
-              height: 100%;
-            `;
-          }}
-        >
-          tumblr
-        </Title>
+        tumblr
+      </Title>
 
-        <Grid
-          width="100%"
+      <Grid
+        width="100%"
+        margin="0 auto"
+        addstyle={() => {
+          return css`
+            display: flex;
+            flex-direction: column;
+          `;
+        }}
+      >
+        <Input
+          bgColor="white"
+          width="330px"
+          padding="11px 13px"
+          type="email"
+          placeholder="이메일"
           margin="0 auto"
-          addstyle={() => {
-            return css`
-              display: flex;
-              flex-direction: column;
-            `;
+          changeEvent={(event) => {
+            setUserInfo({ ...userInfo, email: event.target.value });
           }}
-        >
-          <Input
-            bgColor="white"
-            width="330px"
-            padding="11px 13px"
-            type="email"
-            placeholder="이메일"
-            margin="0 auto"
-            changeEvent={(event) => {
-              setUserInfo({ ...userInfo, email: event.target.value });
+        />
+
+        <Input
+          bgColor="white"
+          width="330px"
+          padding="11px 13px"
+          type="password"
+          placeholder="비밀번호"
+          margin="1% auto 0 auto"
+          changeEvent={(event) => {
+            setUserInfo({ ...userInfo, password: event.target.value });
+          }}
+        />
+
+        <Link to="/" style={{ margin: '1% auto' }}>
+          <Button
+            clickEvent={login}
+            color="black"
+            bgColor="blue"
+            padding="10px 15px"
+            margin="1% auto"
+            addstyle={() => {
+              return css`
+                width: 330px;
+                font-weight: bold;
+              `;
             }}
-          />
+          >
+            로그인
+          </Button>
+        </Link>
 
-          <Input
-            bgColor="white"
-            width="330px"
-            padding="11px 13px"
-            type="password"
-            placeholder="비밀번호"
-            margin="1% auto 0 auto"
-            changeEvent={(event) => {
-              setUserInfo({ ...userInfo, password: event.target.value });
-            }}
-          />
-
-          <Link to="/" style={{ margin: '1% auto' }}>
-            <Button
-              clickEvent={login}
-              color="black"
-              bgColor="blue"
-              padding="10px 15px"
-              margin="1% auto"
-              addstyle={() => {
-                return css`
-                  width: 330px;
-                  font-weight: bold;
-                `;
-              }}
-            >
-              다음
-            </Button>
-          </Link>
-
-          {/* <Button
+        {/* <Button
             color="black"
             bgColor="blue"
             padding="10px 15px"
@@ -131,9 +127,8 @@ const Login = (props) => {
           >
             가입
           </Button> */}
-        </Grid>
       </Grid>
-    </React.Fragment>
+    </Grid>
   );
 };
 

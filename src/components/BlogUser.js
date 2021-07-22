@@ -1,63 +1,104 @@
-import React from 'react';
+// LIBRARY
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { css } from 'styled-components';
 
-import { Grid, Image, Text } from '../elements';
+// REDUX
+import { alarmActions } from '../redux/modules/alarm';
+
+// ELEMENTS
+import { Grid, Image, Title } from '../elements';
+
+// COMPONENTS
+import Follow from './Follow';
+
+// STYLE
+import { flexBox, flexVer } from '../common/style';
 
 const BlogUser = (props) => {
+  const dispatch = useDispatch();
+
+  const recommendList = useSelector((state) => state.alarm.recommend);
+
+  useEffect(() => {
+    dispatch(alarmActions.getRecommendDB());
+
+    return () => dispatch(alarmActions.getRecommend([]));
+  }, []);
+
+  if (!recommendList.length) return null;
+
   return (
-    <Grid
-      width="100%"
-      bgColor=""
-      addstyle={() => {
-        return css`
-          margin: 0 -10% 38px 10%;
-          height: 300px;
-        `;
-      }}
-    >
-      <Text
-        color="white"
-        fontSize="24px"
-        fontWeight="bold"
-        addstyle={() => {
-          return css``;
-        }}
-      >
-        요런 블로그 어때요!
-      </Text>
-
-      <hr style={{ marginRight: '20%' }} />
-
-      <Grid
-        width="100%"
+    <Grid width="320px" color="white">
+      <Title
+        fontSize="20px"
         addstyle={() => {
           return css`
-            display: flex;
-            align-items: center;
+            border-bottom: solid rgba(${(props) => props.theme.palette.gray}, 0.5);
+            padding: 15px 10px;
           `;
         }}
       >
-        <Image
-          addstyle={() => {
-            return css`
-              border-radius: 3px;
-              width: 40px;
-              margin: 3% 0 1% 0;
-              /* padding: 10px; */
-              align-items: center;
-              justify-content: center;
-            `;
-          }}
-          src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
-          margin="0 0 20px"
-        />
+        요런 블로그 어때요!
+      </Title>
 
-        <Text color="white" margin="0 10%">
-          asfdsdfds
-        </Text>
-        <Text fontWeight="bold" fontSize="14px" color="blue" margin="0 0 0 15%">
-          팔로우
-        </Text>
+      <Grid
+        width="100%"
+        padding="15px 20px"
+        addstyle={() => {
+          return css`
+            & > div {
+              margin-bottom: 15px;
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+            }
+          `;
+        }}
+      >
+        {recommendList.map((recommend, idx) => {
+          return (
+            <Grid
+              key={(idx + Date.now() + Math.random()).toString(36)}
+              width="100%"
+              addstyle={() => {
+                return css`
+                  ${flexBox('space-between')}
+                `;
+              }}
+            >
+              <Grid
+                width="auto"
+                addstyle={() => {
+                  return css`
+                    ${flexVer()};
+                  `;
+                }}
+              >
+                <Grid width="32px" height="32px" margin="0 12px 0 0" overflow="hidden">
+                  <Image
+                    src={
+                      recommend.profileImg
+                        ? recommend.profileImg
+                        : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
+                    }
+                    alt="profile image"
+                  />
+                </Grid>
+                {recommend.nickname}
+              </Grid>
+
+              <Follow
+                userId={recommend.userId}
+                isFollow={!recommend.follow}
+                callNext={() => {
+                  dispatch(alarmActions.addFollow(recommend.userId));
+                }}
+              />
+            </Grid>
+          );
+        })}
       </Grid>
     </Grid>
   );

@@ -11,7 +11,6 @@ import { Grid, Button, Image } from '../elements/index';
 
 // COMPONENTS
 import Dropdown from './Dropdown';
-import Reaction from './Reaction';
 
 // STYLE
 import { flexVer, flexBox } from '../common/style';
@@ -59,7 +58,17 @@ const User = ({ opacity, nickname, profile }) => {
           로그아웃
         </Button>
 
-        <Reaction padding="8px 10px" width="100%" isFollowed={true} hoverColor="secondaryAccent">
+        <Grid
+          padding="8px 10px"
+          width="100%"
+          isFollowed={true}
+          hoverColor="secondaryAccent"
+          addstyle={() => {
+            return css`
+              ${flexVer()};
+            `;
+          }}
+        >
           <Link to="/mypage">
             <Grid
               color="black"
@@ -84,7 +93,7 @@ const User = ({ opacity, nickname, profile }) => {
               <strong>{nickname}</strong>
             </Grid>
           </Link>
-        </Reaction>
+        </Grid>
 
         <Grid
           width="100%"

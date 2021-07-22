@@ -37,17 +37,21 @@ const initialState = {
 
 // MIDDLEWARE
 const getPostListDB = (limit = 10) => {
-  return function (dispatch) {
+  return function (dispatch, getState) {
+    const start = getState().post.start;
+
+    if (start === null) return;
+
     instance
-      .get(`/api/post/posts?start=0&limit=${limit + 1}`)
+      .get(`/api/post/posts?start=${start}&limit=${limit + 1}`)
       .then((res) => {
         if (res.data.result.length < limit + 1) {
-          dispatch(getPostList(res.data.result, null));
+          dispatch(getMorePostList(res.data.result, null));
           return;
         }
 
         res.data.result.pop();
-        dispatch(getPostList(res.data.result, limit));
+        dispatch(getMorePostList(res.data.result, start + limit));
       })
       .catch((error) => {
         console.error(error);
@@ -67,29 +71,6 @@ const getDetailPostDB = (query, limit = 10) => {
 
         res.data.result.pop();
         dispatch(getPostList(res.data.result, limit));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-};
-
-const getMorePostListDB = (limit = 10) => {
-  return function (dispatch, getState) {
-    const start = getState().post.start;
-
-    if (start === null) return;
-
-    instance
-      .get(`/api/post/posts?start=${start}&limit=${limit + 1}`)
-      .then((res) => {
-        if (res.data.result.length < limit + 1) {
-          dispatch(getMorePostList(res.data.result, null));
-          return;
-        }
-
-        res.data.result.pop();
-        dispatch(getMorePostList(res.data.result, start + limit));
       })
       .catch((error) => {
         console.error(error);
@@ -314,7 +295,6 @@ export const postActions = {
   getReaction,
   getPostListDB,
   getDetailPostDB,
-  getMorePostListDB,
   createPostDB,
   updatePostDB,
   deletePostDB,

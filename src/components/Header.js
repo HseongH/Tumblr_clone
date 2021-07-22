@@ -73,6 +73,11 @@ const Header = (props) => {
                 color: 'white',
               });
             }}
+            keyPress={(event) => {
+              if (event.key === 'Enter' && event.target.value) {
+                window.location.href = `/search?keyword=${event.target.value}`;
+              }
+            }}
           />
         </Grid>
       </Grid>

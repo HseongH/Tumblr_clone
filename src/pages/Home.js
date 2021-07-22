@@ -5,10 +5,17 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // REDUX
 import { postActions } from '../redux/modules/post';
 
+// FUNCTION
+import InfinityScroll from '../common/infinityScroll';
+
+// ELEMENTS
+import { Grid } from '../elements/index';
+
 // COMPONENTS
 import InputBox from '../components/InputBox';
 import Post from '../components/Post';
 import Permit from '../components/Permit';
+import BlogUser from '../components/BlogUser';
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -22,6 +29,10 @@ const Home = (props) => {
     shallowEqual
   );
 
+  const getMorePost = () => {
+    dispatch(postActions.getPostListDB());
+  };
+
   useEffect(() => {
     if (query) dispatch(postActions.getDetailPostDB(query));
     else dispatch(postActions.getPostListDB());
@@ -31,10 +42,22 @@ const Home = (props) => {
 
   return (
     <Permit>
-      <InputBox />
-      {postList.map((post) => (
-        <Post post={post} key={(Date.now() + Math.random()).toString(36)} />
-      ))}
+      <Grid>
+        <InputBox />
+
+        {postList.map((post, idx) => (
+          <InfinityScroll
+            next={getMorePost}
+            index={idx}
+            length={postList.length}
+            key={(post.postId + Date.now() + Math.random()).toString(36)}
+          >
+            <Post post={post} />
+          </InfinityScroll>
+        ))}
+      </Grid>
+
+      <BlogUser />
     </Permit>
   );
 };

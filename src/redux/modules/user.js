@@ -36,9 +36,7 @@ const authUserDB = () => {
         dispatch(authUser(res.data));
       })
       .catch((error) => {
-        const url = window.location.origin;
-
-        window.location.replace(`${url}/login`);
+        window.location.replace('/login');
       });
   };
 };

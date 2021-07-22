@@ -2,6 +2,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// STYLE
+import { flexHoz } from '../common/style';
+
 const ConStyle = styled.div`
   font-size: 16px;
   font-weight: 400;
@@ -12,6 +15,7 @@ const ConStyle = styled.div`
   min-height: 100vh;
   width: 100%;
   padding: 80px 0;
+  box-sizing: border-box;
   overflow: hidden;
 `;
 
@@ -21,6 +25,7 @@ const GridStyle = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   position: relative;
+  ${flexHoz('space-between')};
 `;
 
 const Container = ({ children, ...props }) => {

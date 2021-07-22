@@ -12,10 +12,9 @@ import { Grid, Button, Text, Image } from '../elements/index';
 // COMPONENTS
 import Dropdown from './Dropdown';
 import PostHeader from './PostHeader';
-import Reaction from './Reaction';
 
 // STYLE
-import { borderBox } from '../common/style';
+import { borderBox, flexVer } from '../common/style';
 
 // ICON
 import { FaBolt } from 'react-icons/fa';
@@ -48,6 +47,10 @@ const Alarm = ({ nickname }) => {
 
   const [type, setType] = useState(0);
 
+  const deleteAllAlarms = () => {
+    dispatch(alarmActions.deleteAllAlarms());
+  };
+
   useEffect(() => {
     dispatch(alarmActions.getAlarmDB(type));
 
@@ -78,6 +81,12 @@ const Alarm = ({ nickname }) => {
         }}
       >
         {nickname}
+
+        {alarmList.length ? (
+          <Button fontSize="14px" color="accent" padding="8px 0" clickEvent={deleteAllAlarms}>
+            알람 전체 삭제
+          </Button>
+        ) : null}
       </PostHeader>
 
       <Grid
@@ -147,11 +156,15 @@ const Alarm = ({ nickname }) => {
             ];
 
             return (
-              <Reaction
+              <Grid
                 width="100%"
                 padding="0"
-                isFollow={true}
                 key={(Date.now() + Math.random()).toString(36)}
+                addstyle={() => {
+                  return css`
+                    ${flexVer()};
+                  `;
+                }}
               >
                 <Grid
                   width="36px"
@@ -185,7 +198,7 @@ const Alarm = ({ nickname }) => {
                 >
                   {actionText[alarm.type - 1]}
                 </Text>
-              </Reaction>
+              </Grid>
             );
           })
         ) : (

@@ -12,7 +12,7 @@ const GridStyle = styled.div`
     props.bgColor && `rgba(${props.theme.palette[props.bgColor]}, ${props.opacity})`};
   color: ${(props) => props.color && `rgba(${props.theme.palette[props.color]}, ${props.opacity})`};
   margin: ${(props) => props.margin};
-  overflow: ${(props) => props.oveflow};
+  overflow: ${(props) => props.overflow};
   ${(props) => borderBox(props.radius, props.padding)};
 
   ${(props) => props.addstyle()};

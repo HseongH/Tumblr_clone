@@ -22,29 +22,26 @@ const getMoreMyPost = createAction(GET_MYPAGE_MORE_POST, (list, start) => ({
   list,
   start,
 }));
-const getMyPageLike = createAction(GET_MYPAGE_LIKE, (likeList, start) => ({
-  likeList,
+const getMyPageLike = createAction(GET_MYPAGE_LIKE, (list, start) => ({
+  list,
   start,
 }));
-const getMoreMyLike = createAction(GET_MYPAGE_MORE_LIKE, (likeList, start) => ({
-  likeList,
+const getMoreMyLike = createAction(GET_MYPAGE_MORE_LIKE, (list, start) => ({
+  list,
   start,
 }));
-const getMyPageFollower = createAction(GET_MYPAGE_FOLLOWER, (followerList, start) => ({
-  followerList,
+const getMyPageFollower = createAction(GET_MYPAGE_FOLLOWER, (list, start) => ({
+  list,
   start,
 }));
-const getMyPageFollowing = createAction(GET_MYPAGE_FOLLOWING, (followingList, start) => ({
-  followingList,
+const getMyPageFollowing = createAction(GET_MYPAGE_FOLLOWING, (list, start) => ({
+  list,
   start,
 }));
 
 // INITIAL STATE
 const initialState = {
   list: [],
-  likeList: [],
-  followerList: [],
-  followingList: [],
   start: 0,
 };
 
@@ -122,7 +119,7 @@ const getMyFollowerDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageFollower(res.data.result, null));
+        dispatch(getMyPageFollower(res.data.result, limit));
       })
       .catch((error) => {
         console.error(error);
@@ -151,13 +148,13 @@ export default handleActions(
 
     [GET_MYPAGE_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        draft.likeList = action.payload.likeList;
+        draft.list = action.payload.list;
         draft.start = action.payload.start;
       }),
 
     [GET_MYPAGE_FOLLOWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.followerList = action.payload.followerList;
+        draft.list = action.payload.list;
         draft.start = action.payload.start;
       }),
   },

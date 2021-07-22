@@ -20,12 +20,9 @@ import { myPageActions } from '../redux/modules/mypage';
 const Likes = (props) => {
   const dispatch = useDispatch();
 
-  const { likeList, userId, nickname, profileImg } = useSelector(
+  const { likeList } = useSelector(
     (state) => ({
-      likeList: state.mypage.likeList,
-      userId: state.user.userId,
-      nickname: state.user.nickname,
-      profileImg: state.user.profileImg,
+      likeList: state.mypage.list,
     }),
     shallowEqual
   );

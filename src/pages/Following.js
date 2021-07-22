@@ -29,6 +29,10 @@ const Following = (props) => {
 
   useEffect(() => {
     dispatch(myPageActions.getMyFollowingDB());
+
+    return () => {
+      dispatch(myPageActions.getMyPageFollowing([], 0));
+    };
   }, []);
 
   return (

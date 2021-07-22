@@ -39,5 +39,3 @@ export const likeActions = {
   addLikeDB,
   removeLikeDB,
 };
-
-// export default like;

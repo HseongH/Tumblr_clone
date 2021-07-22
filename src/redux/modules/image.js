@@ -34,8 +34,14 @@ const initialState = {
 const uploadImageDB = (callNext) => {
   return async function (dispatch, getState) {
     const imgList = getState().image.file;
-    const promiseArr = imgList.map((img) => {
-      if (typeof img !== 'object') return img;
+
+    for (let i = 0; i < imgList.length; i++) {
+      const img = imgList[i];
+
+      if (typeof img !== 'object') {
+        dispatch(uploadImage(img));
+        continue;
+      }
 
       const upload = new AWS.S3.ManagedUpload({
         params: {
@@ -45,14 +51,7 @@ const uploadImageDB = (callNext) => {
         },
       });
 
-      return upload.promise();
-    });
-
-    for (let promise of promiseArr) {
-      if (typeof promise !== 'object') {
-        dispatch(uploadImage(promise));
-        continue;
-      }
+      const promise = upload.promise();
 
       await promise
         .then((data) => {
@@ -72,7 +71,7 @@ const uploadImageDB = (callNext) => {
 function image(state = initialState, action) {
   switch (action.type) {
     case UPLOAD_IMAGE:
-      return { ...state, imageUrl: [...state.imageUrl, action.imgUrl] };
+      return { ...state, imageUrl: [...state.list, action.imgUrl] };
 
     case SET_PREVIEW:
       return { ...state, preview: [...state.preview, ...action.preview] };

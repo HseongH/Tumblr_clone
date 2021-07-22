@@ -160,6 +160,79 @@ const PostingBox = ({ type, modalClose, post }) => {
         {nickname}
       </PostHeader>
 
+      {type === 'text' && (
+        <Grid width="100%" padding="0 20px">
+          <Input
+            fontSize="30px"
+            placeholder="제목"
+            value={contents.title}
+            changeEvent={(event) => {
+              setContents({ ...contents, title: event.target.value });
+            }}
+          />
+
+          <TextAreaStyle
+            placeholder="여기에 내용을 쓰세요."
+            value={contents.content}
+            onChange={(event) => {
+              setContents({ ...contents, content: event.target.value });
+            }}
+          ></TextAreaStyle>
+
+          {tagList.map((tag, idx) => {
+            return (
+              <Button
+                key={(Date.now() + Math.random()).toString(36)}
+                color="gray"
+                padding="8px"
+                radius="10px"
+                addstyle={() => {
+                  return css`
+                    position: relative;
+
+                    &:hover {
+                      background: rgb(${(props) => props.theme.palette.follow});
+
+                      svg {
+                        display: inline-block;
+                      }
+                    }
+
+                    & svg {
+                      color: white;
+                      font-size: 10px;
+                      padding: 3px;
+                      border-radius: 50%;
+                      position: absolute;
+                      top: -4px;
+                      right: -4px;
+                      background: rgb(${(props) => props.theme.palette.accent});
+                      display: none;
+                    }
+                  `;
+                }}
+                clickEvent={() => {
+                  removeTag(idx);
+                }}
+              >
+                #{tag}
+                <CloseIcon />
+              </Button>
+            );
+          })}
+
+          <Input
+            width="80px"
+            placeholder="#태그"
+            keyPress={(event) => {
+              if (event.key === 'Enter' && event.target.value) {
+                addTag(event);
+              }
+            }}
+          />
+        </Grid>
+      )}
+
       {type === 'image' && (
         <>
           {preview.length || contents.content ? (
@@ -208,18 +281,7 @@ const PostingBox = ({ type, modalClose, post }) => {
                 </InputFile>
               )}
 
-              <Grid width="100%" padding="0 20px">
-                {type === 'text' && (
-                  <Input
-                    fontSize="30px"
-                    placeholder="제목"
-                    value={contents.title}
-                    changeEvent={(event) => {
-                      setContents({ ...contents, title: event.target.value });
-                    }}
-                  />
-                )}
-
+              <Grid width="100%" padding="0 20px" margin="20px 0 0">
                 <TextAreaStyle
                   placeholder="여기에 내용을 쓰세요."
                   value={contents.content}

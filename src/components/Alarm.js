@@ -57,7 +57,7 @@ const Alarm = ({ nickname }) => {
   };
 
   const getMoreAlarm = () => {
-    dispatch(alarmActions.getMoreAlarmDB(type));
+    dispatch(alarmActions.getAlarmDB(type));
   };
 
   useEffect(() => {

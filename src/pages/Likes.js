@@ -1,21 +1,21 @@
 // LIBRARY
-import React, { useEffect } from "react";
-import { css } from "styled-components";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { css } from 'styled-components';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 // STYLE
-import { flexBox } from "../common/style";
+import { flexBox } from '../common/style';
 
 // ELEMENTS
-import { Grid } from "../elements";
+import { Grid } from '../elements';
 
 // COMPONENTS
-import Post from "../components/Post";
-import BlogUser from "../components/BlogUser";
-import Permit from "../components/Permit";
+import Post from '../components/Post';
+import BlogUser from '../components/BlogUser';
+import Permit from '../components/Permit';
 
 // REDUX
-import { myPageActions } from "../redux/modules/mypage";
+import { myPageActions } from '../redux/modules/mypage';
 
 const Likes = (props) => {
   const dispatch = useDispatch();
@@ -60,14 +60,7 @@ const Likes = (props) => {
             }}
           >
             {likeList.map((like) => {
-              const postInfo = { ...like, userId, nickname, profileImg };
-
-              return (
-                <Post
-                  post={postInfo}
-                  key={(Date.now() + Math.random()).toString(36)}
-                />
-              );
+              return <Post post={like} key={(Date.now() + Math.random()).toString(36)} />;
             })}
           </Grid>
         </Grid>

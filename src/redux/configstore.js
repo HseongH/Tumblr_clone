@@ -9,11 +9,12 @@ import image from './modules/image';
 import post from './modules/post';
 import alarm from './modules/alarm';
 import mypage from './modules/mypage';
+import search from './modules/search';
 
 // HISTORY
 export const history = createBrowserHistory();
 
-const rootReducer = combineReducers({ user, image, post, alarm, mypage });
+const rootReducer = combineReducers({ user, image, post, alarm, mypage, search });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

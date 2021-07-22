@@ -1,17 +1,17 @@
 // AXIOS
-import instance from "../../common/axios";
+import instance from '../../common/axios';
 
 // redux-actions & immer
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
 
 // ACTION
-const GET_MYPAGE_POST = "GET_MYPAGE_POST";
-const GET_MYPAGE_MORE_POST = "GET_MYPAGE_MORE_POST";
-const GET_MYPAGE_LIKE = "GET_MYPAGE_LIKE";
-const GET_MYPAGE_MORE_LIKE = "GET_MYPAGE_MORE_LIKE";
-const GET_MYPAGE_FOLLOWER = "GET_MYPAGE_FOLLOWER";
-const GET_MYPAGE_FOLLOWING = "GET_MYPAGE_FOLLOWING";
+const GET_MYPAGE_POST = 'GET_MYPAGE_POST';
+const GET_MYPAGE_MORE_POST = 'GET_MYPAGE_MORE_POST';
+const GET_MYPAGE_LIKE = 'GET_MYPAGE_LIKE';
+const GET_MYPAGE_MORE_LIKE = 'GET_MYPAGE_MORE_LIKE';
+const GET_MYPAGE_FOLLOWER = 'GET_MYPAGE_FOLLOWER';
+const GET_MYPAGE_FOLLOWING = 'GET_MYPAGE_FOLLOWING';
 
 // ACTION CREATOR
 const getMyPagePost = createAction(GET_MYPAGE_POST, (list, start) => ({
@@ -26,18 +26,18 @@ const getMyPageLike = createAction(GET_MYPAGE_LIKE, (likeList, start) => ({
   likeList,
   start,
 }));
-const getMoreMyLike = createAction(
-  GET_MYPAGE_MORE_LIKE,
-  (likeList, start) => ({ likeList, start })
-);
-const getMyPageFollower = createAction(
-  GET_MYPAGE_FOLLOWER,
-  (followerList, start) => ({ followerList, start })
-);
-const getMyPageFollowing = createAction(
-  GET_MYPAGE_FOLLOWING,
-  (followingList, start) => ({ followingList, start })
-);
+const getMoreMyLike = createAction(GET_MYPAGE_MORE_LIKE, (likeList, start) => ({
+  likeList,
+  start,
+}));
+const getMyPageFollower = createAction(GET_MYPAGE_FOLLOWER, (followerList, start) => ({
+  followerList,
+  start,
+}));
+const getMyPageFollowing = createAction(GET_MYPAGE_FOLLOWING, (followingList, start) => ({
+  followingList,
+  start,
+}));
 
 // INITIAL STATE
 const initialState = {
@@ -79,7 +79,7 @@ const getMoreMyPostDB = (limit = 5) => {
       .then((res) => {
         if (res.data.result.length < limit + 1) {
           dispatch(getMoreMyPost(res.data.result, null));
-          return
+          return;
         }
 
         res.data.result.pop();
@@ -87,9 +87,9 @@ const getMoreMyPostDB = (limit = 5) => {
       })
       .catch((error) => {
         console.error(error);
-      })
-  }
-}
+      });
+  };
+};
 
 const getMyLikeDB = (limit = 5) => {
   return function (dispatch, getState, { history }) {
@@ -103,7 +103,7 @@ const getMyLikeDB = (limit = 5) => {
         }
 
         res.data.result.pop();
-        dispatch(getMyPageLike(res.data.result, null));
+        dispatch(getMyPageLike(res.data.result, limit));
       })
       .catch((error) => {
         console.error(error);
@@ -126,9 +126,9 @@ const getMyFollowerDB = (limit = 5) => {
       })
       .catch((error) => {
         console.error(error);
-      })
-  }
-}
+      });
+  };
+};
 
 // REDUCER
 export default handleActions(
@@ -140,14 +140,14 @@ export default handleActions(
       }),
 
     [GET_MYPAGE_MORE_POST]: (state, action) =>
-    produce(state, (draft) => {
-      draft.list.push(...action.payload.list)
-      draft.start = action.payload.start;
-      // draft.list.push(...action.payload.post_list);
-      //   draft.paging = action.payload.paging;
-      //   draft.is_loading = false;
-      // return { ...state, list: [...state.list, ...action.postList], start: action.start };
-    }),
+      produce(state, (draft) => {
+        draft.list.push(...action.payload.list);
+        draft.start = action.payload.start;
+        // draft.list.push(...action.payload.post_list);
+        //   draft.paging = action.payload.paging;
+        //   draft.is_loading = false;
+        // return { ...state, list: [...state.list, ...action.postList], start: action.start };
+      }),
 
     [GET_MYPAGE_LIKE]: (state, action) =>
       produce(state, (draft) => {
@@ -159,7 +159,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.followerList = action.payload.followerList;
         draft.start = action.payload.start;
-      })
+      }),
   },
   initialState
 );

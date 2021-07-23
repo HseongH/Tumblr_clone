@@ -76,16 +76,22 @@ const BlogUser = (props) => {
                   `;
                 }}
               >
-                <Grid width="32px" height="32px" margin="0 12px 0 0" overflow="hidden">
-                  <Image
-                    src={
-                      recommend.profileImg
+                <Grid
+                  width="32px"
+                  height="32px"
+                  margin="0 12px 0 0"
+                  overflow="hidden"
+                  addstyle={() => {
+                    return css`
+                      background-image: ${recommend.profileImg
                         ? recommend.profileImg
-                        : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
-                    }
-                    alt="profile image"
-                  />
-                </Grid>
+                        : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'};
+                      background-size: cover;
+                      background-repeat: no-repeat;
+                      background-position: center;
+                    `;
+                  }}
+                ></Grid>
                 {recommend.nickname}
               </Grid>
 

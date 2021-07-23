@@ -1,13 +1,12 @@
 // LIBRARY
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { css } from 'styled-components';
 
 // STYLE
 import { flexBox, flexVer } from '../common/style';
 
 // ELEMENTS
-import { Grid, Text, Image } from '../elements';
+import { Grid, Text } from '../elements';
 
 // REDUX
 
@@ -33,12 +32,22 @@ const MyFollower = ({ post }) => {
           `;
         }}
       >
-        <Grid width="36px" height="36px" overflow="hidden" margin="0 12px 0 0">
-          <Image
-            src="https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png"
-            alt="profile image"
-          />
-        </Grid>
+        <Grid
+          width="36px"
+          height="36px"
+          overflow="hidden"
+          margin="0 12px 0 0"
+          addstyle={() => {
+            return css`
+              background-image: ${post.profileImg
+                ? post.profileImg
+                : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'};
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center;
+            `;
+          }}
+        ></Grid>
 
         <Text fontWeight="bold">{post.nickname}</Text>
       </Grid>

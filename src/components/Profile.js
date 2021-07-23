@@ -114,11 +114,13 @@ const Profile = ({ nickname, profile }) => {
             return css`
               position: relative;
               ${flexBox()};
+              background-image: ${preview ? preview : profile};
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center;
             `;
           }}
         >
-          <Image src={preview ? preview : profile} />
-
           <LabelStyle htmlFor="input--file"></LabelStyle>
 
           <Input

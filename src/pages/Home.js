@@ -30,17 +30,24 @@ const Home = (props) => {
   );
 
   const getMorePost = () => {
-    dispatch(postActions.getPostListDB());
+    dispatch(postActions.getMorePostListDB());
   };
 
   useEffect(() => {
-    if (query) dispatch(postActions.getDetailPostDB(query));
-    else dispatch(postActions.getPostListDB());
+    if (!query) dispatch(postActions.getPostListDB());
 
     return () => {
       dispatch(postActions.getPostList([], 0));
     };
-  }, [userId, query]);
+  }, [userId]);
+
+  useEffect(() => {
+    if (query) dispatch(postActions.getDetailPostDB(query));
+
+    return () => {
+      dispatch(postActions.getPostList([], 0));
+    };
+  }, [query]);
 
   return (
     <Permit>

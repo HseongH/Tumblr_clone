@@ -42,6 +42,27 @@ const initialState = {
 
 // MIDDLEWARE
 const getPostListDB = (limit = 10) => {
+  return function (dispatch) {
+    instance
+      .get(`/api/post/posts?start=0&limit=${limit + 1}`)
+      .then((res) => {
+        const result = res.data.result;
+
+        if (result.length < limit + 1) {
+          dispatch(getPostList(result, null));
+          return;
+        }
+
+        result.pop();
+        dispatch(getPostList(result, limit));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+const getMorePostListDB = (limit = 10) => {
   return function (dispatch, getState) {
     const start = getState().post.start;
 
@@ -50,13 +71,15 @@ const getPostListDB = (limit = 10) => {
     instance
       .get(`/api/post/posts?start=${start}&limit=${limit + 1}`)
       .then((res) => {
-        if (res.data.result.length < limit + 1) {
-          dispatch(getMorePostList(res.data.result, null));
+        const result = res.data.result;
+
+        if (result.length < limit + 1) {
+          dispatch(getMorePostList(result, null));
           return;
         }
 
-        res.data.result.pop();
-        dispatch(getMorePostList(res.data.result, start + limit));
+        result.pop();
+        dispatch(getMorePostList(result, start + limit));
       })
       .catch((error) => {
         console.error(error);
@@ -69,13 +92,15 @@ const getDetailPostDB = (query, limit = 10) => {
     instance
       .get(`/api/post${query}`)
       .then((res) => {
-        if (res.data.result.length < limit + 1) {
-          dispatch(getPostList(res.data.result, null));
+        const result = res.data.result;
+
+        if (result.length < limit + 1) {
+          dispatch(getPostList(result, null));
           return;
         }
 
-        res.data.result.pop();
-        dispatch(getPostList(res.data.result, limit));
+        result.pop();
+        dispatch(getPostList(result, limit));
       })
       .catch((error) => {
         console.error(error);
@@ -313,6 +338,7 @@ export const postActions = {
   getReaction,
   editProfileImg,
   getPostListDB,
+  getMorePostListDB,
   getDetailPostDB,
   createPostDB,
   updatePostDB,

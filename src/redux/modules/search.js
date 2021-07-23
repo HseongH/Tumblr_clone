@@ -22,6 +22,22 @@ const initialState = {
 
 // MIDDLEWARE
 const searchPostDB = (keyword, limit = 10) => {
+  return function (dispatch) {
+    instance.get(`/api/search?keyword=${keyword}&start=0&limit=${limit + 1}`).then((res) => {
+      const result = res.data.result;
+
+      if (result.length < limit + 1) {
+        dispatch(searchPost(result, null));
+        return;
+      }
+
+      result.pop();
+      dispatch(searchPost(result, limit));
+    });
+  };
+};
+
+const searchMorePostDB = (keyword, limit = 10) => {
   return function (dispatch, getState) {
     const start = getState().search.start;
 
@@ -76,6 +92,7 @@ const searchActions = {
   updateSearchPost,
   delSearchPost,
   searchPostDB,
+  searchMorePostDB,
 };
 
 export { searchActions };

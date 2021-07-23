@@ -86,18 +86,15 @@ const Post = ({ post }) => {
                   top: 0;
                   left: -84px;
                   overflow: hidden;
+                  background-image: ${post.profileImg
+                    ? post.profileImg
+                    : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'};
+                  background-size: cover;
+                  background-repeat: no-repeat;
+                  background-position: center;
                 `;
               }}
-            >
-              <Image
-                src={
-                  post.profileImg
-                    ? post.profileImg
-                    : 'https://assets.tumblr.com/images/default_avatar/octahedron_open_128.png'
-                }
-                margin="0 0 20px"
-              />
-            </Grid>
+            ></Grid>
             {post.nickname}
 
             {follow || (

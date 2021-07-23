@@ -197,7 +197,6 @@ export default handleActions(
 
     [GET_MYPAGE_FOLLOWER]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.list);
         draft.list = action.payload.list;
         draft.start = action.payload.start;
       }),
